@@ -1,5 +1,4 @@
 import React from "react";
-import "./component styles/CardList.css";
 import {
   Button,
   Typography,
