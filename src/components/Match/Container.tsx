@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Box, Grid, Typography } from "@mui/material";
 import Form from "./Form";
 import CardList from "./CardList";
-import Header from "./Header";
 import { theme } from "../../utils/theme-2";
 
 interface Block {
@@ -27,7 +26,6 @@ const Container: React.FC = () => {
   };
   return (
     <>
-        <Header />
         <Box
           sx={{
             display: "flex",

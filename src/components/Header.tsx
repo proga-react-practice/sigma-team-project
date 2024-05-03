@@ -1,8 +1,8 @@
 import { AppBar, Box, Toolbar, Badge, Avatar, ThemeProvider, Tooltip, Menu, MenuItem, Typography, IconButton } from "@mui/material";
 import React from "react";
-import { theme } from "../../utils/theme-2";
+import { theme } from "../utils/theme-2";
 import { Instagram, Telegram } from "@mui/icons-material";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./Match/ProgressBar";
 
 const Header: React.FC = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<HTMLButtonElement | null>(null);
@@ -33,9 +33,6 @@ const Header: React.FC = () => {
         <AppBar
           position="static"
           sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
             "@media screen and (max-width: 426px)": {
               width: '100%'
             },

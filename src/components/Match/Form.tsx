@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./component styles/Form.css";
 import {
   Button,
   Typography,
