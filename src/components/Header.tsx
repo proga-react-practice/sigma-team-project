@@ -19,10 +19,14 @@ import ProgressBar from "./Match/ProgressBar";
 import {Link} from "react-router-dom";
 import sigmaLogoFavicon from "/sigma-team-favicon-black.png";
 import {HOME, STADIUM_ROUTE, MATCH_ROUTE} from "../router/pathConstants";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const Header: React.FC = () => {
     const [anchorElUser, setAnchorElUser] =
         React.useState<HTMLButtonElement | null>(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+        null
+    );
     const pages = [
         {label: "Home", path: HOME},
         {label: "Stadium", path: STADIUM_ROUTE},
@@ -32,8 +36,16 @@ const Header: React.FC = () => {
         setAnchorElUser(event.currentTarget as HTMLButtonElement);
     };
 
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNav(event.currentTarget);
+    };
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
     };
 
     const handleInstagramClick = () => {
@@ -73,6 +85,52 @@ const Header: React.FC = () => {
                                 alignItems: "center",
                             }}
                         >
+                            <Box
+                                sx={{
+                                    flexGrow: 1,
+                                    display: {xs: "flex", md: "none"},
+                                }}
+                            >
+                                <IconButton
+                                    size="large"
+                                    onClick={handleOpenNavMenu}
+                                    color="inherit"
+                                >
+                                    <MenuIcon fontSize="large" />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={anchorElNav}
+                                    anchorOrigin={{
+                                        vertical: "bottom",
+                                        horizontal: "left",
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: "top",
+                                        horizontal: "left",
+                                    }}
+                                    open={Boolean(anchorElNav)}
+                                    onClose={handleCloseNavMenu}
+                                    sx={{
+                                        display: {xs: "block", md: "none"},
+                                    }}
+                                >
+                                    {pages.map((page) => (
+                                        <IconButton
+                                            component={Link}
+                                            to={page.path}
+                                            key={page.label}
+                                            sx={{
+                                                my: 2,
+                                                color: "black",
+                                                display: "block",
+                                            }}
+                                        >
+                                            {page.label}
+                                        </IconButton>
+                                    ))}
+                                </Menu>
+                            </Box>
                             <Box component={Link} to={HOME}>
                                 <CardMedia
                                     sx={{maxHeight: "50px"}}
@@ -84,7 +142,6 @@ const Header: React.FC = () => {
                             <Typography
                                 variant="h6"
                                 sx={{
-                                    display: {xs: "none", md: "flex"},
                                     fontWeight: 700,
                                 }}
                             >
