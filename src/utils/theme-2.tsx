@@ -18,7 +18,8 @@ export const theme = createTheme({
         root: {
               borderRadius: '8px',
               fontSize: '12px',
-              marginTop: '20px',
+              marginTop: '5px',
+              marginBottom: '5px',
               height: '26px',
               width: '100px',
               mb: '20px',
