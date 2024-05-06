@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { theme } from '../../utils/theme-2'
 
 const ProgressBar: React.FC = () => {
-    const [progressHeight, setProgressHeight] = useState(0);
+    const [progressWidth, setProgressWidth] = useState(0);
 
     useEffect(() => {
         const handleScroll = () => {
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.scrollY / totalHeight) * 100;
-            setProgressHeight(progress);
+            setProgressWidth(progress);
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -22,20 +22,20 @@ const ProgressBar: React.FC = () => {
 
   return (
     <Box sx={{
-        height: '100%',
-        width: theme.spacing(2),
+        width: '100%',
+        height: theme.spacing(2),
         backgroundColor: 'primary.main',
         position: 'fixed',
         l: '0',
         r: '0',
         zIndex:999,
-        b: '0'
+        bottom: '0'
     }}>
         <Box sx={{
-            width: '100%',
+            height: '100%',
             background: 'linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898',
             backgroundBlendMode: 'multiply,multiply',
-            height: `${progressHeight}%`,
+            width: `${progressWidth}%`,
         }}>
         </Box>
     </Box>
