@@ -1,13 +1,15 @@
 import {useState} from "react";
-import {Box, Slide} from "@mui/material";
+import {Box, Slide, ThemeProvider} from "@mui/material";
 import Form from "./Form";
 import CardList from "./CardList";
 import {CardProps} from "./Card";
+import { theme } from "../../utils/theme";
 
 const Layout: React.FC = () => {
     const [cards, setCards] = useState<CardProps[]>([]);
 
     return (
+        <ThemeProvider theme={theme}>
         <Box
             sx={{
                 display: "flex",
@@ -27,6 +29,7 @@ const Layout: React.FC = () => {
                 </Box>
             </Slide>
         </Box>
+        </ThemeProvider>
     );
 };
 
