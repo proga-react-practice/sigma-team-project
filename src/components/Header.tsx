@@ -65,11 +65,6 @@ const Header: React.FC = () => {
             <Box sx={{flexGrow: 1}}>
                 <AppBar
                     position="static"
-                    sx={{
-                        "@media screen and (max-width: 426px)": {
-                            width: "100%",
-                        },
-                    }}
                 >
                     <ProgressBar />
                     <Toolbar
