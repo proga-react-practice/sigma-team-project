@@ -2,14 +2,12 @@ import {
     AppBar,
     Box,
     Toolbar,
-    ThemeProvider,
     Menu,
     Typography,
     IconButton,
     CardMedia,
 } from "@mui/material";
 import React from "react";
-import {theme} from "../utils/theme-2";
 import ProgressBar from "./Match/ProgressBar";
 import {Link} from "react-router-dom";
 import sigmaLogoFavicon from "/sigma-team-favicon-black.png";
@@ -30,97 +28,55 @@ const Header: React.FC = () => {
         setAnchorElNav(event.currentTarget);
     };
 
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
     return (
-        <ThemeProvider theme={theme}>
-            <Box sx={{flexGrow: 1}}>
-                <AppBar
-                    position="static"
+        <Box sx={{flexGrow: 1}}>
+            <AppBar position="static">
+                <ProgressBar />
+                <Toolbar
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                    }}
                 >
-                    <ProgressBar />
-                    <Toolbar
+                    <Box
                         sx={{
                             display: "flex",
                             alignItems: "center",
-                            justifyContent: "space-between",
                         }}
                     >
                         <Box
                             sx={{
-                                display: "flex",
-                                alignItems: "center",
+                                flexGrow: 1,
+                                display: {xs: "flex", md: "none"},
                             }}
                         >
-                            <Box
-                                sx={{
-                                    flexGrow: 1,
-                                    display: {xs: "flex", md: "none"},
-                                }}
+                            <IconButton
+                                size="large"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
                             >
-                                <IconButton
-                                    size="large"
-                                    onClick={handleOpenNavMenu}
-                                    color="inherit"
-                                >
-                                    <MenuIcon fontSize="large" />
-                                </IconButton>
-                                <Menu
-                                    anchorEl={anchorElNav}
-                                    anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "left",
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: "top",
-                                        horizontal: "left",
-                                    }}
-                                    open={Boolean(anchorElNav)}
-                                    onClose={handleCloseNavMenu}
-                                    sx={{
-                                        display: {xs: "block", md: "none"},
-                                    }}
-                                >
-                                    {pages.map((page) => (
-                                        <IconButton
-                                            component={Link}
-                                            to={page.path}
-                                            key={page.label}
-                                            sx={{
-                                                my: 2,
-                                                color: "black",
-                                                display: "block",
-                                            }}
-                                        >
-                                            {page.label}
-                                        </IconButton>
-                                    ))}
-                                </Menu>
-                            </Box>
-                            <Box component={Link} to={HOME}>
-                                <CardMedia
-                                    sx={{maxHeight: "50px"}}
-                                    component="img"
-                                    image={sigmaLogoFavicon}
-                                    alt="Sigma Team Logo"
-                                />
-                            </Box>
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    fontWeight: 700,
+                                <MenuIcon fontSize="large" />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
                                 }}
-                            >
-                                Team Sigma
-                            </Typography>
-                            <Box
-                                ml={10}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
                                 sx={{
-                                    display: {xs: "none", md: "flex"},
+                                    display: {xs: "block", md: "none"},
                                 }}
                             >
                                 {pages.map((page) => (
@@ -137,12 +93,49 @@ const Header: React.FC = () => {
                                         {page.label}
                                     </IconButton>
                                 ))}
-                            </Box>
+                            </Menu>
                         </Box>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-        </ThemeProvider>
+                        <Box component={Link} to={HOME}>
+                            <CardMedia
+                                sx={{maxHeight: "50px"}}
+                                component="img"
+                                image={sigmaLogoFavicon}
+                                alt="Sigma Team Logo"
+                            />
+                        </Box>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontWeight: 700,
+                            }}
+                        >
+                            Team Sigma
+                        </Typography>
+                        <Box
+                            ml={10}
+                            sx={{
+                                display: {xs: "none", md: "flex"},
+                            }}
+                        >
+                            {pages.map((page) => (
+                                <IconButton
+                                    component={Link}
+                                    to={page.path}
+                                    key={page.label}
+                                    sx={{
+                                        my: 2,
+                                        color: "black",
+                                        display: "block",
+                                    }}
+                                >
+                                    {page.label}
+                                </IconButton>
+                            ))}
+                        </Box>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+        </Box>
     );
 };
 
