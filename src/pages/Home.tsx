@@ -4,7 +4,15 @@ import sigmaLogo from "../assets/sigma-team-logo-black.png";
 
 const HomePage = () => {
     return (
-        <Container sx={{textAlign: "center"}}>
+        <Container 
+        sx={{
+            textAlign: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+        }}>
+            <Container sx={{padding: 0}}>
             <Typography variant="h4" gutterBottom>
                 Welcome to sigma team website
             </Typography>
@@ -46,6 +54,7 @@ const HomePage = () => {
                     Move to match form page
                 </Button>
             </Box>
+            </Container>
         </Container>
     );
 };

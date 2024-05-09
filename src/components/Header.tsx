@@ -39,7 +39,7 @@ const Header: React.FC = () => {
         <ThemeProvider theme={theme}>
             <Box sx={{flexGrow: 1}}>
                 <AppBar
-                    position="static"
+                    position="absolute"
                 >
                     <ProgressBar />
                     <Toolbar
