@@ -13,6 +13,9 @@ import StadiumIcon from "@mui/icons-material/Stadium";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import FormGroup from "@mui/material/FormGroup";
 
+import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools"
+
 interface FormProps {
   addButtonHandler: (block: Block) => void;
 }
@@ -53,41 +56,6 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
     }
   }, [formState]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    if (name === "tickets" && parseInt(value) < 0) {
-      setFormState((prevState) => ({
-        ...prevState,
-        [name]: value,
-        [`${name}Dirty`]: true,
-        [`${name}Error`]: "Quantity of tickets cannot be negative!",
-      }));
-    } else {
-      setFormState((prevState) => ({
-        ...prevState,
-        [name]: value,
-        [`${name}Dirty`]: true,
-        [`${name}Error`]: value ? "" : "Input can not be empty!",
-      }));
-    }
-  };
-
-  const handleBlur = (
-    e: React.FocusEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormState((prevState) => ({
-      ...prevState,
-      [`${name}Dirty`]: true,
-      [`${name}Error`]: value ? "" : "Input can not be empty!",
-    }));
-  };
 
   const resetHandler = () => {
     setFormState({
@@ -120,7 +88,11 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
     }
   };
 
+  const form = useForm()
+  const { register, control } = form;
+
   return (
+    <>
     <FormGroup
       sx={{
         display: "flex",
@@ -146,12 +118,9 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
           id="firstTeam"
           label="First Team:"
           variant="standard"
-          onChange={(e) => handleInputChange(e)}
-          onBlur={(e) => handleBlur(e)}
-          value={formState.firstTeam}
-          name="firstTeam"
           type="text"
           placeholder="Enter first team..."
+          {...register("firstTeam")}
         />
       </Box>
       {formState.firstTeamDirty && formState.firstTeamError && (
@@ -177,13 +146,9 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
           id="secondTeam"
           label="Second Team:"
           variant="standard"
-          onChange={(e) => handleInputChange(e)}
-          onBlur={(e) => handleBlur(e)}
-          value={formState.secondTeam}
-          name="secondTeam"
           type="text"
-          className="input"
           placeholder="Enter second team..."
+          {...register("secondTeam")}
         />
       </Box>
       {formState.secondTeamDirty && formState.secondTeamError && (
@@ -209,13 +174,9 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
           id="numberOfTickets"
           label="Tickets:"
           variant="standard"
-          onChange={(e) => handleInputChange(e)}
-          onBlur={(e) => handleBlur(e)}
-          value={formState.tickets}
-          name="tickets"
           type="number"
-          className="input"
           placeholder="Enter the quantity of tickets..."
+          {...register("numberOfTickets")}
         />
       </Box>
       {formState.ticketsDirty && formState.ticketsError && (
@@ -242,11 +203,8 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
           select
           label="Stadium:"
           variant="standard"
-          onChange={(e) => handleInputChange(e)}
-          onBlur={(e) => handleBlur(e)}
-          value={formState.stadium}
-          name="stadium"
           placeholder="Choose Stadium..."
+          {...register("stadium")}
         >
           <MenuItem value="">
             <em>None</em>
@@ -286,6 +244,8 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
         </Button>
       </Grid>
     </FormGroup>
+    <DevTool control={control}/>
+    </>
   );
 };
 
