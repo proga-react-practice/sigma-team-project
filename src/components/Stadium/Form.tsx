@@ -78,7 +78,7 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
         reset();
     };
     return (
-        <Paper elevation={0} sx={{width: {xs: "100%", lg: "400px"}}}>
+        <Paper elevation={0} sx={{width: {xs: "100%", lg: "80%"}}}>
             <Typography variant="h4">Stadium form</Typography>
             <Box
                 mt={1}
