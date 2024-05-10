@@ -1,5 +1,5 @@
 import TextField, {TextFieldProps} from "@mui/material/TextField";
-import {ChangeEvent} from "react";
+import React from "react";
 
 interface InputProps {
     type: "text" | "number";
@@ -7,16 +7,11 @@ interface InputProps {
     id?: string;
     name?: string;
     inputRef?: React.Ref<HTMLInputElement>;
-    value: string;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
-
-const Input: React.FC<InputProps & TextFieldProps> = ({
-    onChange,
-    inputRef,
-    ...props
-}) => {
-    return <TextField {...props} inputRef={inputRef} onChange={onChange} />;
-};
+const Input = React.forwardRef<HTMLInputElement, InputProps & TextFieldProps>(
+    ({...props}, ref) => {
+        return <TextField {...props} inputRef={ref} />;
+    }
+);
 
 export default Input;
