@@ -46,6 +46,7 @@ const Container: React.FC = () => {
               paddingLeft: theme.spacing(5),
               paddingRight: theme.spacing(5),
               borderRadius: theme.spacing(8),
+              maxHeight: '420px',
               "@media screen and (max-width: 426px)": {
                 pl: theme.spacing(2),
                 pr: theme.spacing(2)
