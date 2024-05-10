@@ -11,7 +11,6 @@ import { theme } from "../../utils/theme-2";
 import GroupsIcon from "@mui/icons-material/Groups";
 import StadiumIcon from "@mui/icons-material/Stadium";
 import ReceiptIcon from "@mui/icons-material/Receipt";
-import FormGroup from "@mui/material/FormGroup";
 
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
@@ -28,10 +27,8 @@ interface Block {
   stadium: string;
 }
 
-const Form: React.FC<FormProps> = () => {
-  const form = useForm<FormValues>();
-  const { register, control, handleSubmit, formState } = form;
-  const { errors } = formState;
+const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
+  const { register, control, reset, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>();
 
   type FormValues = {
     firstTeam: string;
@@ -41,12 +38,24 @@ const Form: React.FC<FormProps> = () => {
   };
 
   const onSubmit = (data: FormValues) => {
-    console.log("Form submitted", data);
+    addButtonHandler({
+      id: Date.now(),
+      firstTeam: data.firstTeam,
+      secondTeam: data.secondTeam,
+      tickets: data.numberOfTickets.toString(),
+      stadium: data.stadium,
+    });
+    reset();
+    setValue("stadium", "");
   };
 
+  const handleReset = () => {
+    reset();
+    setValue("stadium", "");
+  };
   return (
     <>
-      <FormGroup
+      <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -54,6 +63,10 @@ const Form: React.FC<FormProps> = () => {
           flexDirection: "column",
           maxHeight: "500px",
         }}
+        component = 'form'
+        onSubmit={handleSubmit(onSubmit)}
+        onReset={handleReset}
+        noValidate
       >
         <Box
           sx={{
@@ -77,6 +90,18 @@ const Form: React.FC<FormProps> = () => {
               required: {
                 value: true,
                 message: "Input cannot be empty!",
+              },
+              minLength: {
+                value: 5,
+                message: "Minimum length is 5 characters!",
+              },
+              maxLength: {
+                value: 30,
+                message: "Maximum length is 30 characters!",
+              },
+              pattern: {
+                value: /^[a-zA-Z\s]+$/,
+                message: "Only letters and spaces are allowed!",
               },
             })}
             error={!!errors.firstTeam}
@@ -104,6 +129,18 @@ const Form: React.FC<FormProps> = () => {
                 value: true,
                 message: "Input cannot be empty!",
               },
+              minLength: {
+                value: 5,
+                message: "Minimum length is 5 characters",
+              },
+              maxLength: {
+                value: 30,
+                message: "Maximum length is 30 characters",
+              },
+              pattern: {
+                value: /^[a-zA-Z\s]+$/,
+                message: "Only letters and spaces are allowed",
+              },
             })}
             error={!!errors.secondTeam}
           />
@@ -111,7 +148,6 @@ const Form: React.FC<FormProps> = () => {
         <FormHelperText error={!!errors.secondTeam}>
           {errors.secondTeam && errors.secondTeam.message}
         </FormHelperText>
-        
 
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
           <ReceiptIcon
@@ -130,6 +166,14 @@ const Form: React.FC<FormProps> = () => {
               required: {
                 value: true,
                 message: "Input cannot be empty!",
+              },
+              max: {
+                value: 300000,
+                message: "Maximum number of tickets is 300000!",
+              },
+              validate: {
+                positiveNumber: (value) =>
+                  value >= 0 || "Value must be a positive number!",
               },
             })}
             error={!!errors.numberOfTickets}
@@ -158,6 +202,7 @@ const Form: React.FC<FormProps> = () => {
                 message: "Please, select an option!",
               },
             })}
+            defaultValue=""
             error={!!errors.stadium}
           >
             <MenuItem value="">
@@ -177,14 +222,14 @@ const Form: React.FC<FormProps> = () => {
           justifyContent="space-around"
           alignItems="center"
         >
-          <Button type="reset" variant="outlined">
+          <Button type="reset" variant="outlined" onClick={handleReset}>
             Reset
           </Button>
-          <Button type="button" onClick={handleSubmit(onSubmit)}>
+          <Button type="submit" onClick={handleSubmit(onSubmit)}>
             <span className="button-content">Add</span>
           </Button>
         </Grid>
-      </FormGroup>
+      </Box>
       <DevTool control={control} />
     </>
   );
