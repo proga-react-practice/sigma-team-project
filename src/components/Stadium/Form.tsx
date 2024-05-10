@@ -1,13 +1,13 @@
-import React, {ChangeEvent, MouseEvent, useState, useRef} from "react";
 import Input from "./Input";
 import Button from "./Button";
 import Select from "./Select";
 import {CardProps} from "./Card";
 import {
-    specialChars,
-    specialCharsAndNumbers,
+    excludeSpecialCharsPattern,
+    excludeSpecialCharsAndNumbersPattern,
     positiveIntegerPattern,
 } from "../../utils/validationPatterns";
+import {useForm} from "react-hook-form";
 import {
     Typography,
     Stack,
@@ -16,170 +16,97 @@ import {
     InputLabel,
     FormControl,
 } from "@mui/material";
-import {SelectChangeEvent} from "@mui/material/Select";
 import ErrorIcon from "@mui/icons-material/Error";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import {theme} from "../../utils/theme";
 
+type StadiumFormValues = {
+    stadiumName: string;
+    city: string;
+    capacity: string;
+    fieldType: string;
+};
 interface FormProps {
     setCardInfo: React.Dispatch<React.SetStateAction<CardProps[]>>;
 }
 
 const Form: React.FC<FormProps> = ({setCardInfo}) => {
-    const [stadiumName, setStadiumName] = useState<string>("");
-    const [city, setCity] = useState<string>("");
-    const [capacity, setCapacity] = useState<string>("");
-    const [fieldType, setFieldType] = useState<string>("");
-
-    const [stadiumNameError, setStadiumNameError] = useState<string>("");
-    const [cityError, setCityError] = useState<string>("");
-    const [capacityError, setCapacityError] = useState<string>("");
-    const [fieldTypeError, setFieldTypeError] = useState<string>("");
-
-    const stadiumNameRef = useRef<HTMLInputElement>(null);
-    const cityRef = useRef<HTMLInputElement>(null);
-    const capacityRef = useRef<HTMLInputElement>(null);
-    const fieldTypeRef = useRef<HTMLSelectElement>(null);
-
-    const removeCard = (id: string) => {
-        setCardInfo((prevCardInfo) =>
-            prevCardInfo.filter((card) => card.id !== id)
-        );
-    };
-
-    const handleStadiumNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setStadiumName(value);
-        if (value.trim() === "") {
-            setStadiumNameError("This field cannot be empty");
-        } else if (specialChars.test(value)) {
-            setStadiumNameError("This field cannot contain special chars");
-        } else if (value.length > 40) {
-            setStadiumNameError(
-                "The field length must be less than 40 characters"
-            );
-        } else {
-            setStadiumNameError("");
-        }
-    };
-
-    const handleCityChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setCity(value);
-        if (value.trim() === "") {
-            setCityError("This field cannot be empty");
-        } else if (specialCharsAndNumbers.test(value)) {
-            setCityError("This field must contain only letters");
-        } else if (value.length > 40) {
-            setCityError("The field length must be less than 40 characters");
-        } else {
-            setCityError("");
-        }
-    };
-
-    const handleCapacityChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setCapacity(value);
-        if (!positiveIntegerPattern.test(value)) {
-            setCapacityError("This field must contain only positive integers");
-        } else {
-            setCapacityError("");
-        }
-    };
-
-    const handleFieldTypeChange = (e: SelectChangeEvent<string>) => {
-        const value = e.target.value;
-        setFieldType(value);
-        if (value.trim() === "") {
-            setFieldTypeError("Please select an option");
-        }
-        setFieldTypeError("");
-    };
-
-    const handleFormReset = () => {
-        setStadiumName("");
-        setCity("");
-        setCapacity("");
-        setFieldType("");
-        setCapacityError("");
-        setCityError("");
-        setFieldTypeError("");
-        setStadiumNameError("");
-    };
-
-    const formValidation = () => {
-        let isValid = false;
-        if (!stadiumName) {
-            setStadiumNameError(stadiumName || "This field cannot be empty");
-        }
-        if (!city) {
-            setCityError(city || "This field cannot be empty");
-        }
-        if (!capacity) {
-            setCapacityError(
-                capacity || "This field must contain positive integers"
-            );
-        }
-        if (!fieldType) {
-            setFieldTypeError(fieldType || "Please select an option");
-        }
-
-        if (!isValid) {
-            if (stadiumNameError || !stadiumName)
-                stadiumNameRef.current?.focus();
-            else if (cityError || !city) cityRef.current?.focus();
-            else if (capacityError || !capacity) capacityRef.current?.focus();
-            else if (fieldTypeError || !fieldType)
-                fieldTypeRef.current?.focus();
-            else isValid = true;
-        }
-
-        return isValid;
-    };
-
-    const handleSubmit = (event: MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        const isFormValid = formValidation();
-
-        if (isFormValid) {
-            const newCard: CardProps = {
-                stadiumName: stadiumName,
-                city: city,
-                capacity: capacity,
-                fieldType: fieldType,
-                id: Date.now().toString(),
-                onClick: (id) => removeCard(id),
-            };
-
-            setCardInfo((prevCardInfo) => [newCard, ...prevCardInfo]);
-            handleFormReset();
-        }
-    };
+    const {
+        handleSubmit,
+        register,
+        reset,
+        watch,
+        formState: {errors, isValid},
+    } = useForm<StadiumFormValues>({
+        defaultValues: {
+            stadiumName: "",
+            city: "",
+            capacity: "",
+            fieldType: "",
+        },
+        mode: "onChange",
+    });
 
     const fieldTypeOptions = [
         {label: "Natural", value: "natural"},
         {label: "Synthetic", value: "synthetic"},
         {label: "Mixed", value: "mixed"},
     ];
+    const removeCard = (id: string) => {
+        setCardInfo((prevCardInfo) =>
+            prevCardInfo.filter((card) => card.id !== id)
+        );
+    };
+    const onSubmit = (data: StadiumFormValues) => {
+        if (isValid) {
+            const newCard: CardProps = {
+                stadiumName: data.stadiumName,
+                city: data.city,
+                capacity: data.capacity,
+                fieldType: data.fieldType,
+                id: Date.now().toString(),
+                onClick: (id) => removeCard(id),
+            };
 
+            setCardInfo((prevCardInfo) => [newCard, ...prevCardInfo]);
+            handleReset();
+        }
+    };
+
+    const handleReset = () => {
+        reset();
+    };
     return (
         <Paper elevation={0} sx={{width: {xs: "100%", lg: "400px"}}}>
             <Typography variant="h4">Stadium form</Typography>
-            <Box mt={1} component="form">
+            <Box
+                mt={1}
+                component="form"
+                onSubmit={handleSubmit(onSubmit)}
+                onReset={handleReset}
+                noValidate
+            >
                 <Box sx={{minHeight: "80px"}}>
                     <Input
                         type="text"
-                        id="stadium-name"
-                        name="stadiumName"
-                        placeholder="Enter stadium name"
-                        label="Stadium"
-                        value={stadiumName}
-                        inputRef={stadiumNameRef}
-                        onChange={handleStadiumNameChange}
+                        label="Stadium name"
+                        value={watch("stadiumName") || ""} // отримання значення з форми
+                        {...register("stadiumName", {
+                            required: "This field cannot be empty",
+                            maxLength: {
+                                value: 40,
+                                message:
+                                    "The field length must be less than 40 characters",
+                            },
+                            pattern: {
+                                value: excludeSpecialCharsPattern,
+                                message:
+                                    "This field cannot contain special chars",
+                            },
+                        })}
                     />
-
-                    {stadiumNameError && (
+                    {errors.stadiumName && (
                         <Stack
                             direction="row"
                             gap={1}
@@ -187,7 +114,7 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                         >
                             <ErrorIcon fontSize="small" />
                             <Typography variant="body2">
-                                {stadiumNameError}
+                                {errors.stadiumName.message}
                             </Typography>
                         </Stack>
                     )}
@@ -195,47 +122,63 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                 <Box sx={{minHeight: "80px"}}>
                     <Input
                         type="text"
-                        id="city"
-                        name="city"
-                        placeholder="Enter city"
                         label="City"
-                        value={city}
-                        inputRef={cityRef}
-                        onChange={handleCityChange}
+                        value={watch("city") || ""}
+                        {...register("city", {
+                            required: "This field cannot be empty",
+                            maxLength: {
+                                value: 40,
+                                message:
+                                    "The field length must be less than 40 characters",
+                            },
+                            pattern: {
+                                value: excludeSpecialCharsAndNumbersPattern,
+                                message:
+                                    "This field cannot contain special chars and numbers",
+                            },
+                        })}
                     />
-                    {cityError && (
+                    {errors.city && (
                         <Stack
                             direction="row"
                             gap={1}
                             sx={{color: theme.palette.error.light}}
                         >
                             <ErrorIcon fontSize="small" />
-                            <Typography variant="body2">{cityError}</Typography>
+                            <Typography variant="body2">
+                                {errors.city.message}
+                            </Typography>
                         </Stack>
                     )}
                 </Box>
                 <Box sx={{minHeight: "80px"}}>
                     <Input
                         type="number"
-                        id="capacity"
-                        name="capacity"
-                        placeholder="Enter stadium capacity"
                         label="Capacity"
-                        value={capacity}
-                        inputRef={capacityRef}
-                        onChange={handleCapacityChange}
+                        value={watch("capacity") || ""}
+                        {...register("capacity", {
+                            required: "This field cannot be empty",
+                            pattern: {
+                                value: positiveIntegerPattern,
+                                message:
+                                    "This field must contain only positive integers",
+                            },
+                        })}
+                        onKeyDown={(e) => {
+                            if (e.key === "e" || e.key === "E") {
+                                e.preventDefault();
+                            }
+                        }}
                     />
-                    {capacityError && (
+                    {errors.capacity && (
                         <Stack
                             direction="row"
                             gap={1}
-                            sx={{
-                                color: theme.palette.error.light,
-                            }}
+                            sx={{color: theme.palette.error.light}}
                         >
                             <ErrorIcon fontSize="small" />
                             <Typography variant="body2">
-                                {capacityError}
+                                {errors.capacity.message}
                             </Typography>
                         </Stack>
                     )}
@@ -245,14 +188,14 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                         <InputLabel id="field-type">Field type</InputLabel>
                         <Select
                             id="field-type"
-                            name="fieldType"
                             label="Field type"
+                            value={watch("fieldType") || ""}
                             options={fieldTypeOptions}
-                            onChange={handleFieldTypeChange}
-                            selectRef={fieldTypeRef}
-                            value={fieldType}
+                            {...register("fieldType", {
+                                required: "Please select an option",
+                            })}
                         />
-                        {fieldTypeError && (
+                        {errors.fieldType && (
                             <Stack
                                 direction="row"
                                 gap={1}
@@ -260,7 +203,7 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                             >
                                 <ErrorIcon fontSize="small" />
                                 <Typography variant="body2">
-                                    {fieldTypeError}
+                                    {errors.fieldType.message}
                                 </Typography>
                             </Stack>
                         )}
@@ -270,7 +213,6 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                     <Button
                         variant="contained"
                         type="submit"
-                        onClick={handleSubmit}
                         endIcon={<AddIcon />}
                         sx={{flexGrow: 1}}
                     >
@@ -279,7 +221,6 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                     <Button
                         variant="outlined"
                         type="reset"
-                        onClick={handleFormReset}
                         endIcon={<ClearIcon />}
                         sx={{flexGrow: 1}}
                     >
