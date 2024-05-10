@@ -42,6 +42,7 @@ const CardList: React.FC<CardListProps> = ({ blocks, removeBlock }) => {
               backgroundColor: "primary.main",
               boxShadow: 5,
               marginTop: theme.spacing(2),
+              textAlign: 'center',
               "@media screen and (max-width: 426px)": {
                 width: theme.spacing(40),
               },
