@@ -1,38 +1,47 @@
 import MenuItem from "@mui/material/MenuItem";
 import MuiSelect, {SelectChangeEvent} from "@mui/material/Select";
-import React from "react";
+import {UseFormRegister} from "react-hook-form";
+type StadiumFormValues = {
+    stadiumName: string;
+    city: string;
+    capacity: string;
+    fieldType: string;
+};
 interface SelectProps {
     options: {label: string; value: string | number}[];
     value?: string;
     label: string;
     id?: string;
     name?: string;
-    selectRef?: React.Ref<HTMLSelectElement>;
-    onChange: (e: SelectChangeEvent<string>) => void;
+    onChange?: (e: SelectChangeEvent<string>) => void;
+    register: UseFormRegister<StadiumFormValues>;
 }
-
-const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-    ({options, label, onChange, ...props}, ref) => {
-        return (
-            <MuiSelect
-                defaultValue=" "
-                labelId={props.id}
-                inputRef={ref}
-                {...props}
-                label={label}
-                onChange={onChange}
-            >
-                <MenuItem value="" disabled hidden>
-                    {label}
+const Select = ({
+    options,
+    label,
+    onChange,
+    register,
+    ...props
+}: SelectProps) => {
+    return (
+        <MuiSelect
+            defaultValue=" "
+            labelId={props.id}
+            {...register}
+            {...props}
+            label={label}
+            onChange={onChange}
+        >
+            <MenuItem value="" disabled hidden>
+                {label}
+            </MenuItem>
+            {options.map((option, index) => (
+                <MenuItem key={index} value={option.value}>
+                    {option.label}
                 </MenuItem>
-                {options.map((option, index) => (
-                    <MenuItem key={index} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))}
-            </MuiSelect>
-        );
-    }
-);
+            ))}
+        </MuiSelect>
+    );
+};
 
 export default Select;

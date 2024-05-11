@@ -7,7 +7,7 @@ import {
     excludeSpecialCharsAndNumbersPattern,
     positiveIntegerPattern,
 } from "../../utils/validationPatterns";
-import {useForm} from "react-hook-form";
+import {UseFormRegister, useForm} from "react-hook-form";
 import {
     Typography,
     Stack,
@@ -15,6 +15,7 @@ import {
     Paper,
     InputLabel,
     FormControl,
+    SelectChangeEvent,
 } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 import AddIcon from "@mui/icons-material/Add";
@@ -37,6 +38,8 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
         register,
         reset,
         watch,
+        setValue,
+        clearErrors,
         formState: {errors, isValid},
     } = useForm<StadiumFormValues>({
         defaultValues: {
@@ -91,20 +94,24 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                     <Input
                         type="text"
                         label="Stadium name"
-                        value={watch("stadiumName") || ""} // отримання значення з форми
-                        {...register("stadiumName", {
-                            required: "This field cannot be empty",
-                            maxLength: {
-                                value: 40,
-                                message:
-                                    "The field length must be less than 40 characters",
-                            },
-                            pattern: {
-                                value: excludeSpecialCharsPattern,
-                                message:
-                                    "This field cannot contain special chars",
-                            },
-                        })}
+                        value={watch("stadiumName") || ""}
+                        register={
+                            {
+                                ...register("stadiumName", {
+                                    required: "This field cannot be empty",
+                                    maxLength: {
+                                        value: 40,
+                                        message:
+                                            "The field length must be less than 40 characters",
+                                    },
+                                    pattern: {
+                                        value: excludeSpecialCharsPattern,
+                                        message:
+                                            "This field cannot contain special chars",
+                                    },
+                                }),
+                            } as unknown as UseFormRegister<StadiumFormValues>
+                        }
                     />
                     {errors.stadiumName && (
                         <Stack
@@ -124,19 +131,23 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                         type="text"
                         label="City"
                         value={watch("city") || ""}
-                        {...register("city", {
-                            required: "This field cannot be empty",
-                            maxLength: {
-                                value: 40,
-                                message:
-                                    "The field length must be less than 40 characters",
-                            },
-                            pattern: {
-                                value: excludeSpecialCharsAndNumbersPattern,
-                                message:
-                                    "This field cannot contain special chars and numbers",
-                            },
-                        })}
+                        register={
+                            {
+                                ...register("city", {
+                                    required: "This field cannot be empty",
+                                    maxLength: {
+                                        value: 40,
+                                        message:
+                                            "The field length must be less than 40 characters",
+                                    },
+                                    pattern: {
+                                        value: excludeSpecialCharsAndNumbersPattern,
+                                        message:
+                                            "This field cannot contain special chars and numbers",
+                                    },
+                                }),
+                            } as unknown as UseFormRegister<StadiumFormValues>
+                        }
                     />
                     {errors.city && (
                         <Stack
@@ -156,14 +167,18 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                         type="number"
                         label="Capacity"
                         value={watch("capacity") || ""}
-                        {...register("capacity", {
-                            required: "This field cannot be empty",
-                            pattern: {
-                                value: positiveIntegerPattern,
-                                message:
-                                    "This field must contain only positive integers",
-                            },
-                        })}
+                        register={
+                            {
+                                ...register("capacity", {
+                                    required: "This field cannot be empty",
+                                    pattern: {
+                                        value: positiveIntegerPattern,
+                                        message:
+                                            "This field must contain only positive integers",
+                                    },
+                                }),
+                            } as unknown as UseFormRegister<StadiumFormValues>
+                        }
                         onKeyDown={(e) => {
                             if (e.key === "e" || e.key === "E") {
                                 e.preventDefault();
@@ -191,9 +206,19 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                             label="Field type"
                             value={watch("fieldType") || ""}
                             options={fieldTypeOptions}
-                            {...register("fieldType", {
-                                required: "Please select an option",
-                            })}
+                            register={
+                                {
+                                    ...register("fieldType", {
+                                        required: "Please select an option",
+                                    }),
+                                } as unknown as UseFormRegister<StadiumFormValues>
+                            }
+                            onChange={(e: SelectChangeEvent<string>) => {
+                                setValue("fieldType", e.target.value);
+                                if (errors.fieldType) {
+                                    clearErrors("fieldType");
+                                }
+                            }}
                         />
                         {errors.fieldType && (
                             <Stack
