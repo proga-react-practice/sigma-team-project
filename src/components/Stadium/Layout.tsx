@@ -24,7 +24,7 @@ const Layout: React.FC = () => {
             </Slide>
             <Slide direction="right" in={true} timeout={1000}>
                 <Box sx={{flex: "2", padding: {xs: 0, sm: 4}}}>
-                    <CardList cards={cards} />
+                    <CardList cards={cards} setCards={setCards} />
                 </Box>
             </Slide>
         </Box>

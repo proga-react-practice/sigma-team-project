@@ -12,6 +12,8 @@ import StadiumIcon from "@mui/icons-material/Stadium";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import GrassIcon from "@mui/icons-material/Grass";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
+import {useSortable} from "@dnd-kit/sortable";
+import {CSS} from "@dnd-kit/utilities";
 
 export interface CardProps {
     stadiumName: string;
@@ -33,9 +35,22 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
     const handleRemove = () => {
         onClick(id);
     };
+    const {attributes, listeners, setNodeRef, transform, transition} =
+        useSortable({id});
 
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
     return (
-        <MiuCard id={id} sx={{padding: 0.5}}>
+        <MiuCard
+            ref={setNodeRef}
+            {...attributes}
+            {...listeners}
+            id={id}
+            sx={{padding: 0.5}}
+            style={style}
+        >
             <CardContent sx={{padding: 0.5}}>
                 <Stack direction="row" spacing={0.5}>
                     <StadiumIcon fontSize="small" />
