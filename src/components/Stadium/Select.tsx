@@ -1,31 +1,36 @@
 import MenuItem from "@mui/material/MenuItem";
 import MuiSelect, {SelectChangeEvent} from "@mui/material/Select";
+import {UseFormRegister} from "react-hook-form";
+type StadiumFormValues = {
+    stadiumName: string;
+    city: string;
+    capacity: string;
+    fieldType: string;
+};
 interface SelectProps {
     options: {label: string; value: string | number}[];
-    value: string;
+    value?: string;
     label: string;
     id?: string;
     name?: string;
-    selectRef?: React.Ref<HTMLSelectElement>;
-    onChange: (e: SelectChangeEvent<string>) => void;
+    onChange?: (e: SelectChangeEvent<string>) => void;
+    register: UseFormRegister<StadiumFormValues>;
 }
-
-const Select: React.FC<SelectProps> = ({
+const Select = ({
     options,
-    value,
     label,
     onChange,
-    selectRef,
+    register,
     ...props
-}) => {
+}: SelectProps) => {
     return (
         <MuiSelect
+            defaultValue=" "
             labelId={props.id}
-            value={value}
-            onChange={onChange}
-            inputRef={selectRef}
+            {...register}
             {...props}
             label={label}
+            onChange={onChange}
         >
             <MenuItem value="" disabled hidden>
                 {label}
