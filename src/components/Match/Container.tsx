@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Grid, ThemeProvider, Typography } from "@mui/material";
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import Form from "./Form";
 import CardList from "./CardList";
 import { theme } from "../../utils/theme-2";
@@ -29,9 +30,19 @@ const Container: React.FC = () => {
     setBlocks(blocks.map(block => block.id === id ? { ...block, ...updatedBlock } : block));
   };
 
+  const handleDragEnd = (result: DropResult) => { 
+    if (!result.destination) return;
+    
+    const reorderedBlocks = Array.from(blocks);
+    const [removed] = reorderedBlocks.splice(result.source.index, 1);
+    reorderedBlocks.splice(result.destination.index, 0, removed);
+    
+    setBlocks(reorderedBlocks);
+  };
+
   return (
     <>
-    <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <Box
           sx={{
             display: "flex",
@@ -78,9 +89,11 @@ const Container: React.FC = () => {
             </Typography>
             <Form addButtonHandler={addButtonHandler} />
           </Grid>
-          {isVisible && <CardList blocks={blocks} removeBlock={removeBlock} updateBlock={updateBlock} />}
+          <DragDropContext onDragEnd={handleDragEnd}>
+            {isVisible && <CardList blocks={blocks} removeBlock={removeBlock} updateBlock={updateBlock} />}
+          </DragDropContext>
         </Box>
-        </ThemeProvider>
+      </ThemeProvider>
     </>
   );
 };
