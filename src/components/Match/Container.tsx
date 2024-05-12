@@ -24,6 +24,11 @@ const Container: React.FC = () => {
   const removeBlock = (id: number) => {
     setBlocks(blocks.filter((block) => block.id !== id));
   };
+
+  const updateBlock = (id: number, updatedBlock: Partial<Block>) => {
+    setBlocks(blocks.map(block => block.id === id ? { ...block, ...updatedBlock } : block));
+  };
+
   return (
     <>
     <ThemeProvider theme={theme}>
@@ -46,7 +51,7 @@ const Container: React.FC = () => {
               paddingLeft: theme.spacing(5),
               paddingRight: theme.spacing(5),
               borderRadius: theme.spacing(8),
-              maxHeight: '420px',
+              maxHeight: '480px',
               "@media screen and (max-width: 426px)": {
                 pl: theme.spacing(2),
                 pr: theme.spacing(2)
@@ -73,7 +78,7 @@ const Container: React.FC = () => {
             </Typography>
             <Form addButtonHandler={addButtonHandler} />
           </Grid>
-          {isVisible && <CardList blocks={blocks} removeBlock={removeBlock} />}
+          {isVisible && <CardList blocks={blocks} removeBlock={removeBlock} updateBlock={updateBlock} />}
         </Box>
         </ThemeProvider>
     </>
