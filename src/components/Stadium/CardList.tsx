@@ -32,7 +32,20 @@ const CardList: React.FC<CardListProps> = ({cards, setCards}) => {
             },
         })
     );
-
+    const handleRemoveCard = (id: string) => {
+        setCards((prevCardInfo) =>
+            prevCardInfo.filter((card) => card.id !== id)
+        );
+    };
+    const handleUpdateCard = (updatedCard: CardProps) => {
+        setCards((prevCards) =>
+            prevCards.map((card) =>
+                card.id === updatedCard.id
+                    ? {...updatedCard, onClick: () => updatedCard.id}
+                    : card
+            )
+        );
+    };
     function handleDragEnd(event: DragEndEvent) {
         const {active, over} = event;
         if (over && active.id !== over.id) {
@@ -45,7 +58,6 @@ const CardList: React.FC<CardListProps> = ({cards, setCards}) => {
             });
         }
     }
-
     return (
         <Box mt={1}>
             <Typography variant="h4">Stadium list</Typography>
@@ -75,7 +87,11 @@ const CardList: React.FC<CardListProps> = ({cards, setCards}) => {
                             <SortableContext items={cards}>
                                 {cards.map((card) => (
                                     <Grid key={card.id} item xs={0.98}>
-                                        <Card {...card} />
+                                        <Card
+                                            {...card}
+                                            updateCard={handleUpdateCard}
+                                            removeCard={handleRemoveCard}
+                                        />
                                     </Grid>
                                 ))}
                             </SortableContext>

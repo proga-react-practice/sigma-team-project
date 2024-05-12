@@ -1,7 +1,8 @@
-import React from "react";
+import {useState} from "react";
 import Button from "./Button";
+import Edit from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import MiuCard from "@mui/material/Card";
+import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
@@ -14,6 +15,7 @@ import GrassIcon from "@mui/icons-material/Grass";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
 import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
+import EditCardModal from "./EditCardModal";
 
 export interface CardProps {
     stadiumName: string;
@@ -24,26 +26,35 @@ export interface CardProps {
     onClick: (id: string) => void;
 }
 
-const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
-    stadiumName,
-    city,
-    capacity,
-    fieldType,
-    id,
-    onClick,
-}) => {
+const Card: React.FC<
+    CardProps & {
+        updateCard: (updatedCard: CardProps) => void;
+        removeCard: (id: string) => void;
+    } & Omit<MuiCardProps, "onClick">
+> = ({stadiumName, city, capacity, fieldType, id, updateCard, removeCard}) => {
+    const [editModalOpen, setEditModalOpen] = useState(false);
+
     const handleRemove = () => {
-        onClick(id);
+        removeCard(id);
     };
     const {attributes, listeners, setNodeRef, transform, transition} =
         useSortable({id});
+
+    const openEditModal = () => {
+        setEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setEditModalOpen(false);
+    };
 
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
     };
+
     return (
-        <MiuCard
+        <MuiCard
             ref={setNodeRef}
             {...attributes}
             {...listeners}
@@ -73,24 +84,52 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                     <Typography variant="body1">Field - {fieldType}</Typography>
                 </Stack>
             </CardContent>
-            <CardActions sx={{paddingTop: 0, justifyContent: "flex-end"}}>
+            <CardActions
+                sx={{paddingTop: 0, marginX: 5, justifyContent: "flex-end"}}
+            >
+                <Button
+                    variant="contained"
+                    type="button"
+                    size="small"
+                    onClick={openEditModal}
+                    sx={{flex: 1}}
+                    startIcon={<Edit />}
+                >
+                    Edit
+                </Button>
                 <Button
                     sx={{
                         backgroundColor: theme.palette.error.dark,
                         "&:hover": {
                             backgroundColor: theme.palette.error.main,
                         },
+                        flex: 1,
                     }}
                     variant="contained"
                     type="button"
                     size="small"
                     onClick={handleRemove}
-                    endIcon={<DeleteIcon />}
+                    startIcon={<DeleteIcon />}
                 >
                     Remove
                 </Button>
             </CardActions>
-        </MiuCard>
+            <EditCardModal
+                open={editModalOpen}
+                onClose={closeEditModal}
+                initialData={{
+                    stadiumName,
+                    city,
+                    capacity,
+                    fieldType,
+                    id,
+                    onClick: () => handleRemove(),
+                }}
+                id={id}
+                updateCard={updateCard}
+                removeCard={removeCard}
+            />
+        </MuiCard>
     );
 };
 
