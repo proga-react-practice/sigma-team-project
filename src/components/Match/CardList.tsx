@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Typography, Box, Grid, TextField } from "@mui/material";
+import { Button, Typography, Box, Grid } from "@mui/material";
 import { theme } from "../../utils/theme-2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DropResult } from "react-beautiful-dnd";
-
+import EditableTextField from "./EditableTextField";
 
 const deleteAnimationClass = "delete-animation";
 
@@ -162,7 +162,7 @@ const CardList: React.FC<CardListProps> = ({
               padding: theme.spacing(5),
               borderRadius: theme.spacing(2),
               boxShadow: 5,
-              backgroundImage: "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
+              backgroundImage: theme.palette.background.gradient,
               WebkitOverflowScrolling: "touch",
               "&::-webkit-scrollbar": {
                 width: theme.spacing(2),
@@ -222,65 +222,33 @@ const CardList: React.FC<CardListProps> = ({
                                   >
                                     Editing Mode:
                                   </Typography>
-                                  <TextField
+                                  <EditableTextField
                                     value={editedBlock.firstTeam || ""}
-                                    variant="standard"
-                                    onChange={(e) =>
-                                      handleChange("firstTeam", e.target.value)
+                                    label="First Team"
+                                    onChange={(value) =>
+                                      handleChange("firstTeam", value)
                                     }
-                                    sx={{
-                                      width: "70%",
-                                      fontFamily: "Platypi",
-                                      fontSize: theme.spacing(3),
-                                      marginTop: theme.spacing(2),
-                                      marginLeft: theme.spacing(5),
-                                      marginRight: 0,
-                                    }}
                                   />
-                                  <TextField
+                                  <EditableTextField
                                     value={editedBlock.secondTeam || ""}
-                                    variant="standard"
-                                    onChange={(e) =>
-                                      handleChange("secondTeam", e.target.value)
+                                    label="Second Team"
+                                    onChange={(value) =>
+                                      handleChange("secondTeam", value)
                                     }
-                                    sx={{
-                                      width: "70%",
-                                      fontFamily: "Platypi",
-                                      fontSize: theme.spacing(3),
-                                      marginTop: theme.spacing(2),
-                                      marginLeft: theme.spacing(5),
-                                      marginRight: 0,
-                                    }}
                                   />
-                                  <TextField
+                                  <EditableTextField
                                     value={editedBlock.tickets || ""}
-                                    variant="standard"
-                                    onChange={(e) =>
-                                      handleChange("tickets", e.target.value)
+                                    label="Number of Tickets"
+                                    onChange={(value) =>
+                                      handleChange("tickets", value)
                                     }
-                                    sx={{
-                                      width: "70%",
-                                      fontFamily: "Platypi",
-                                      fontSize: theme.spacing(3),
-                                      marginTop: theme.spacing(2),
-                                      marginLeft: theme.spacing(5),
-                                      marginRight: 0,
-                                    }}
                                   />
-                                  <TextField
+                                  <EditableTextField
                                     value={editedBlock.stadium || ""}
-                                    variant="standard"
-                                    onChange={(e) =>
-                                      handleChange("stadium", e.target.value)
+                                    label="Stadium"
+                                    onChange={(value) =>
+                                      handleChange("stadium", value)
                                     }
-                                    sx={{
-                                      width: "70%",
-                                      fontFamily: "Platypi",
-                                      fontSize: theme.spacing(3),
-                                      marginTop: theme.spacing(2),
-                                      marginLeft: theme.spacing(5),
-                                      marginRight: 0,
-                                    }}
                                   />
                                   <Button
                                     onClick={() => handleSave(block.id)}
