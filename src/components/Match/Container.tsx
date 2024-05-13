@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Box, Grid, ThemeProvider, Typography } from "@mui/material";
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import Form from "./Form";
 import CardList from "./CardList";
+import CustomLoader from "./CustomLoader";
 import { theme } from "../../utils/theme-2";
 
 interface Block {
@@ -16,6 +17,13 @@ interface Block {
 const Container: React.FC = () => {
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [isVisible, setIsVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
 
   const addButtonHandler = (block: Block) => {
     setBlocks([...blocks, block]);
@@ -27,72 +35,94 @@ const Container: React.FC = () => {
   };
 
   const updateBlock = (id: number, updatedBlock: Partial<Block>) => {
-    setBlocks(blocks.map(block => block.id === id ? { ...block, ...updatedBlock } : block));
+    setBlocks(
+      blocks.map((block) =>
+        block.id === id ? { ...block, ...updatedBlock } : block
+      )
+    );
   };
 
-  const handleDragEnd = (result: DropResult) => { 
+  const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    
+
     const reorderedBlocks = Array.from(blocks);
     const [removed] = reorderedBlocks.splice(result.source.index, 1);
     reorderedBlocks.splice(result.destination.index, 0, removed);
-    
+
     setBlocks(reorderedBlocks);
   };
 
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            gap: theme.spacing(5),
+        {loading ? (
+          <Box sx={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
             justifyContent: 'center',
-            "@media screen and (max-width: 770px)": {
-              flexDirection: "column",
-            },
-          }}
-        >
-          <Grid
+             alignItems: 'center'
+          }}>
+            <CustomLoader />
+          </Box>
+        ) : (
+          <Box
             sx={{
-              mt: theme.spacing(20),
-              paddingTop: theme.spacing(10),
-              paddingBottom: theme.spacing(8),
-              paddingLeft: theme.spacing(5),
-              paddingRight: theme.spacing(5),
-              borderRadius: theme.spacing(8),
-              maxHeight: '480px',
-              "@media screen and (max-width: 426px)": {
-                pl: theme.spacing(2),
-                pr: theme.spacing(2)
+              display: "flex",
+              flexDirection: "row",
+              gap: theme.spacing(5),
+              justifyContent: "center",
+              "@media screen and (max-width: 770px)": {
+                flexDirection: "column",
               },
-              backgroundColor: theme.palette.primary.main,
-              boxShadow: 5,
-              color: "secondary.main",
             }}
           >
-            <Typography
+            <Grid
               sx={{
-                marginBottom: theme.spacing(3),
-                fontSize: theme.spacing(5),
-                fontFamily: "Platypi",
-                fontWeight: 600,
-                color: theme.palette.secondary.main,
-                textAlign: 'center',
+                mt: theme.spacing(20),
+                paddingTop: theme.spacing(10),
+                paddingBottom: theme.spacing(8),
+                paddingLeft: theme.spacing(5),
+                paddingRight: theme.spacing(5),
+                borderRadius: theme.spacing(8),
+                maxHeight: "480px",
                 "@media screen and (max-width: 426px)": {
-                  fontSize: theme.spacing(4),
+                  pl: theme.spacing(2),
+                  pr: theme.spacing(2),
                 },
+                backgroundColor: theme.palette.primary.main,
+                boxShadow: 5,
+                color: "secondary.main",
               }}
             >
-              Football Match Form
-            </Typography>
-            <Form addButtonHandler={addButtonHandler} />
-          </Grid>
-          <DragDropContext onDragEnd={handleDragEnd}>
-            {isVisible && <CardList blocks={blocks} removeBlock={removeBlock} updateBlock={updateBlock} />}
-          </DragDropContext>
-        </Box>
+              <Typography
+                sx={{
+                  marginBottom: theme.spacing(3),
+                  fontSize: theme.spacing(5),
+                  fontFamily: "Platypi",
+                  fontWeight: 600,
+                  color: theme.palette.secondary.main,
+                  textAlign: "center",
+                  "@media screen and (max-width: 426px)": {
+                    fontSize: theme.spacing(4),
+                  },
+                }}
+              >
+                Football Match Form
+              </Typography>
+              <Form addButtonHandler={addButtonHandler} />
+            </Grid>
+            <DragDropContext onDragEnd={handleDragEnd}>
+              {isVisible && (
+                <CardList
+                  blocks={blocks}
+                  removeBlock={removeBlock}
+                  updateBlock={updateBlock}
+                />
+              )}
+            </DragDropContext>
+          </Box>
+        )}
       </ThemeProvider>
     </>
   );

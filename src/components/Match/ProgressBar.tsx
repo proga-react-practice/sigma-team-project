@@ -29,7 +29,13 @@ const ProgressBar: React.FC = () => {
         l: '0',
         r: '0',
         zIndex:999,
-        b: '0'
+        b: '0',
+        overflow: 'hidden',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
+        '&::-webkit-scrollbar': {
+            display: 'none',
+        },
     }}>
         <Box sx={{
             width: '100%',

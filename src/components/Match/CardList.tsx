@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button, Typography, Box, Grid, TextField } from "@mui/material";
 import { theme } from "../../utils/theme-2";
 
+const deleteAnimationClass = "delete-animation";
+
 interface Block {
   id: number;
   firstTeam: string;
@@ -24,6 +26,7 @@ const CardList: React.FC<CardListProps> = ({
   const [editMode, setEditMode] = useState<number | null>(null);
   const [editedBlock, setEditedBlock] = useState<Partial<Block>>({});
   const [sortedBlocks, setSortedBlocks] = useState<Block[]>(blocks);
+  const [, setDeletingId] = useState<number | null>(null);
 
   useEffect(() => {
     setSortedBlocks(blocks);
@@ -71,7 +74,20 @@ const CardList: React.FC<CardListProps> = ({
     setSortedBlocks(sorted);
   };
 
+  const handleDelete = (id: number) => {
+    setDeletingId(id);
+    const card = document.getElementById(`card-${id}`);
+    if (card) {
+      card.classList.add(deleteAnimationClass);
+    }
+    setTimeout(() => {
+      removeBlock(id);
+    }, 300);
+  };
+
   return (
+    <>
+    {sortedBlocks.length === 0 ? null : (
     <Box
       sx={{
         mt: theme.spacing(20),
@@ -82,40 +98,67 @@ const CardList: React.FC<CardListProps> = ({
         },
       }}
     >
-      <Button
-        onClick={sortByTickets}
-        sx={{ height: theme.spacing(8), marginBottom: theme.spacing(1) }}
-      >
-        Sort by tickets
-      </Button>
-      <Button
-        onClick={sortByFirstTeamLetter}
+      <Box
         sx={{
-          height: theme.spacing(8),
-          marginLeft: theme.spacing(1),
-          marginRight: theme.spacing(1),
-          marginBottom: theme.spacing(1),
+          width: "70%",
+          margin: "0 auto",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        Sort by 1st Team
-      </Button>
-      <Button
-        onClick={sortBySecondTeamLetter}
-        sx={{ height: theme.spacing(8), marginBottom: theme.spacing(1) }}
-      >
-        Sort by 2nd Team
-      </Button>
+        <Button
+          onClick={sortByTickets}
+          sx={{
+            height: theme.spacing(12),
+            marginBottom: theme.spacing(1),
+            width: "20%",
+          }}
+        >
+          Sort by tickets
+        </Button>
+        <Button
+          onClick={sortByFirstTeamLetter}
+          sx={{
+            height: theme.spacing(12),
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(1),
+            marginBottom: theme.spacing(1),
+            width: "20%",
+          }}
+        >
+          Sort by 1st Team
+        </Button>
+        <Button
+          onClick={sortBySecondTeamLetter}
+          sx={{
+            height: theme.spacing(12),
+            marginBottom: theme.spacing(1),
+            width: "20%",
+          }}
+        >
+          Sort by 2nd Team
+        </Button>
+      </Box>
       <Box
         sx={{
           marginTop: theme.spacing(1.5),
           overflow: "auto",
-          maxHeight: "70vh",
+          maxHeight: "40vh",
           padding: theme.spacing(5),
+          borderRadius: theme.spacing(2),
+          boxShadow: 5,
+          backgroundImage: "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
+          WebkitOverflowScrolling: "touch",
+          "&::-webkit-scrollbar": {
+            width: theme.spacing(2),
+            display: "none",
+          },
         }}
       >
         {sortedBlocks.map((block) => (
           <Grid
             key={block.id}
+            id={`card-${block.id}`}
             sx={{
               paddingLeft: theme.spacing(6),
               paddingRight: theme.spacing(6),
@@ -128,6 +171,10 @@ const CardList: React.FC<CardListProps> = ({
               boxShadow: 5,
               marginTop: theme.spacing(2),
               textAlign: "center",
+              transition: "transform 0.3s ease-in-out",
+              "&.delete-animation": {
+                transform: "scale(0)",
+              },
               "@media screen and (max-width: 426px)": {
                 width: "auto",
               },
@@ -197,8 +244,7 @@ const CardList: React.FC<CardListProps> = ({
                     marginRight: 0,
                   }}
                 />
-                <Button
-                  onClick={() => handleSave(block.id)}
+                <Button onClick={() => handleSave(block.id)}
                   sx={{
                     marginLeft: "auto",
                     marginRight: "auto",
@@ -260,7 +306,7 @@ const CardList: React.FC<CardListProps> = ({
                   Edit
                 </Button>
                 <Button
-                  onClick={() => removeBlock(block.id)}
+                  onClick={() => handleDelete(block.id)}
                   sx={{
                     marginLeft: "auto",
                     marginRight: "auto",
@@ -276,6 +322,8 @@ const CardList: React.FC<CardListProps> = ({
         ))}
       </Box>
     </Box>
+    )}
+    </>
   );
 };
 

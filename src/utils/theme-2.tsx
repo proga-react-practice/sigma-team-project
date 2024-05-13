@@ -26,7 +26,7 @@ export const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           borderRadius: '8px',
           fontSize: '12px',
           marginTop: '20px',
@@ -35,11 +35,12 @@ export const theme = createTheme({
           mb: '20px',
           color: "#000",
           border: '1px solid',
+          backgroundColor: theme.palette.primary.main,
           "&:hover": {
             color: "#fff",
             backgroundColor: color,
           },
-        },
+        }),
       },
     },
     MuiTextField: {
