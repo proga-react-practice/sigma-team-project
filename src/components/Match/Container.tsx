@@ -80,10 +80,8 @@ const Container: React.FC = () => {
             <Grid
               sx={{
                 mt: theme.spacing(20),
-                paddingTop: theme.spacing(10),
-                paddingBottom: theme.spacing(8),
-                paddingLeft: theme.spacing(5),
-                paddingRight: theme.spacing(5),
+                py: theme.spacing(8),
+                px: theme.spacing(5),
                 borderRadius: theme.spacing(8),
                 maxHeight: "480px",
                 "@media screen and (max-width: 426px)": {

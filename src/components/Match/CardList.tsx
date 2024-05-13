@@ -274,31 +274,19 @@ const CardList: React.FC<CardListProps> = ({
                                   >
                                     Match Info:
                                   </Typography>
-                                  <Typography
-                                    sx={{
-                                      fontFamily: "Platypi",
-                                      fontSize: theme.spacing(3),
-                                      marginTop: theme.spacing(2),
-                                    }}
-                                  >
+                                  <Typography sx={{
+                                    marginTop: theme.spacing(2)
+                                  }}>
                                     {block.firstTeam} - {block.secondTeam}
                                   </Typography>
-                                  <Typography
-                                    sx={{
-                                      fontFamily: "Platypi",
-                                      fontSize: theme.spacing(3),
-                                      marginTop: theme.spacing(2),
-                                    }}
-                                  >
+                                  <Typography sx={{
+                                    marginTop: theme.spacing(2)
+                                  }}>
                                     Number of tickets - "{block.tickets}"
                                   </Typography>
-                                  <Typography
-                                    sx={{
-                                      fontFamily: "Platypi",
-                                      fontSize: theme.spacing(3),
-                                      marginTop: theme.spacing(2),
-                                    }}
-                                  >
+                                  <Typography sx={{
+                                    marginTop: theme.spacing(2)
+                                  }}>
                                     Field - "{block.stadium}"
                                   </Typography>
                                   <Button

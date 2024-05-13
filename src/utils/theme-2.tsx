@@ -23,6 +23,10 @@ export const theme = createTheme({
   },
 },
   spacing: 5,
+  typography: {
+    fontFamily: "Platypi",
+    fontSize: 15,
+  },
   components: {
     MuiButton: {
       styleOverrides: {
