@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import {Link} from "react-router-dom";
-import sigmaLogoFavicon from "/sigma-team-favicon-black.png";
+import sigmaLogoFavicon from "/sigma-team-favicon-black.svg";
 import {HOME, STADIUM_ROUTE, MATCH_ROUTE} from "../router/pathConstants";
 import MenuIcon from "@mui/icons-material/Menu";
 
