@@ -13,7 +13,7 @@ import StadiumIcon from "@mui/icons-material/Stadium";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
+import { motion } from "framer-motion";
 
 interface FormProps {
   addButtonHandler: (block: Block) => void;
@@ -28,7 +28,7 @@ interface Block {
 }
 
 const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
-  const { register, control, reset, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>();
+  const { register, reset, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>();
 
   type FormValues = {
     firstTeam: string;
@@ -53,8 +53,15 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
     reset();
     setValue("stadium", "");
   };
+
+
   return (
     <>
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -230,7 +237,7 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
           </Button>
         </Grid>
       </Box>
-      <DevTool control={control} />
+      </motion.div>
     </>
   );
 };
