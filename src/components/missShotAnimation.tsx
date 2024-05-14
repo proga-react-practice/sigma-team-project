@@ -1,8 +1,9 @@
 import {theme} from "../utils/theme";
 
 const MissShotAnimation = () => {
-    const svgWidth = 500;
-    const svgHeight = 400;
+    const svgWidth = "100%";
+    const viewBoxWidth = 500;
+    const viewBoxHeight = 400;
     const gateLeftX = 100;
     const gateRightX = 400;
     const gateY = 100;
@@ -14,7 +15,12 @@ const MissShotAnimation = () => {
     const ballColor = theme.palette.primary.main;
     const gateColor = theme.palette.secondary.main;
     return (
-        <svg width={svgWidth} height={svgHeight}>
+        <svg
+            width={svgWidth}
+            height={viewBoxHeight}
+            viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+            preserveAspectRatio="xMidYMin meet"
+        >
             <defs>
                 <pattern
                     id="netPattern"
