@@ -1,8 +1,6 @@
 import {createTheme} from "@mui/material/styles";
 import {teal} from "@mui/material/colors";
 
-
-
 const theme = createTheme({
     palette: {
         primary: teal,
@@ -21,7 +19,10 @@ const theme = createTheme({
     components: {
         MuiInputLabel: {
             styleOverrides: {
-                root: {fontSize: "18px", color: teal[900]},
+                root: ({theme}) => ({
+                    fontSize: "18px",
+                    color: theme.palette.primary.dark,
+                }),
             },
         },
         MuiTextField: {
@@ -61,22 +62,22 @@ const theme = createTheme({
         },
         MuiOutlinedInput: {
             styleOverrides: {
-                root: {
+                root: ({theme}) => ({
                     width: "100%",
 
                     "&:hover .MuiOutlinedInput-notchedOutline": {
-                        borderColor: teal[500],
+                        borderColor: theme.palette.primary.main,
                         borderWidth: "3px",
                         transition: "border-color 0.5s, box-shadow 0.5s",
                     },
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: teal[700],
+                        borderColor: theme.palette.primary.main,
                         boxShadow: `0 0 10px ${teal[500]}`,
                         borderWidth: "3px",
                         transition: "border-color 0.5s, box-shadow 0.5s",
                         transform: "translateY(-2px)",
                     },
-                },
+                }),
                 notchedOutline: {
                     borderColor: teal[300],
                     borderWidth: "2px",

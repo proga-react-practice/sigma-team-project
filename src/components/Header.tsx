@@ -8,9 +8,8 @@ import {
     CardMedia,
 } from "@mui/material";
 import React from "react";
-import ProgressBar from "./Match/ProgressBar";
 import {Link} from "react-router-dom";
-import sigmaLogoFavicon from "/sigma-team-favicon-black.png";
+import sigmaLogoFavicon from "/sigma-team-favicon-black.svg";
 import {HOME, STADIUM_ROUTE, MATCH_ROUTE} from "../router/pathConstants";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -35,7 +34,6 @@ const Header: React.FC = () => {
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="absolute">
-                <ProgressBar />
                 <Toolbar
                     sx={{
                         display: "flex",
