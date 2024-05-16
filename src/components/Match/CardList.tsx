@@ -159,13 +159,13 @@ const CardList: React.FC<CardListProps> = ({
           <Box
             sx={{
               marginTop: theme.spacing(1.5),
-              overflow: "auto",
               maxHeight: "100%",
               padding: theme.spacing(5),
               borderRadius: theme.spacing(2),
               boxShadow: 5,
               backgroundImage: theme.palette.background.gradient,
               WebkitOverflowScrolling: "touch",
+              overflowX: "auto",
               "&::-webkit-scrollbar": {
                 width: theme.spacing(2),
                 display: "none",

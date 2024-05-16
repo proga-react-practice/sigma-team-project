@@ -83,7 +83,6 @@ const Container: React.FC = () => {
                 py: theme.spacing(8),
                 px: theme.spacing(5),
                 borderRadius: theme.spacing(8),
-                maxHeight: "490px",
                 "@media screen and (max-width: 426px)": {
                   pl: theme.spacing(2),
                   pr: theme.spacing(2),
@@ -91,6 +90,7 @@ const Container: React.FC = () => {
                 backgroundColor: theme.palette.primary.main,
                 boxShadow: 5,
                 color: "secondary.main",
+                height: "fit-content",
               }}
             >
               <Typography
