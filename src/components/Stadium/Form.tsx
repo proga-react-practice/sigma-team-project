@@ -21,6 +21,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import {theme} from "../../utils/theme";
+import {useStadiumCardContext} from "./StadiumCardContext";
 
 type StadiumFormValues = {
     stadiumName: string;
@@ -28,11 +29,8 @@ type StadiumFormValues = {
     capacity: string;
     fieldType: string;
 };
-interface FormProps {
-    setCardInfo: React.Dispatch<React.SetStateAction<CardProps[]>>;
-}
 
-const Form: React.FC<FormProps> = ({setCardInfo}) => {
+const Form: React.FC = () => {
     const {
         handleSubmit,
         register,
@@ -50,17 +48,13 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
         },
         mode: "onChange",
     });
-
+    const {addCard, removeCard} = useStadiumCardContext();
     const fieldTypeOptions = [
         {label: "Natural", value: "natural"},
         {label: "Synthetic", value: "synthetic"},
         {label: "Mixed", value: "mixed"},
     ];
-    const removeCard = (id: string) => {
-        setCardInfo((prevCardInfo) =>
-            prevCardInfo.filter((card) => card.id !== id)
-        );
-    };
+
     const onSubmit = (data: StadiumFormValues) => {
         if (isValid) {
             const newCard: CardProps = {
@@ -71,8 +65,7 @@ const Form: React.FC<FormProps> = ({setCardInfo}) => {
                 id: Date.now().toString(),
                 onClick: (id) => removeCard(id),
             };
-
-            setCardInfo((prevCardInfo) => [newCard, ...prevCardInfo]);
+            addCard(newCard);
             handleReset();
         }
     };

@@ -16,6 +16,7 @@ import EventSeatIcon from "@mui/icons-material/EventSeat";
 import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import EditCardModal from "./EditCardModal";
+import {useStadiumCardContext} from "./StadiumCardContext";
 
 export interface CardProps {
     stadiumName: string;
@@ -26,14 +27,15 @@ export interface CardProps {
     onClick: (id: string) => void;
 }
 
-const Card: React.FC<
-    CardProps & {
-        updateCard: (updatedCard: CardProps) => void;
-        removeCard: (id: string) => void;
-    } & Omit<MuiCardProps, "onClick">
-> = ({stadiumName, city, capacity, fieldType, id, updateCard, removeCard}) => {
+const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
+    stadiumName,
+    city,
+    capacity,
+    fieldType,
+    id,
+}) => {
     const [editModalOpen, setEditModalOpen] = useState(false);
-
+    const {removeCard} = useStadiumCardContext();
     const handleRemove = () => {
         removeCard(id);
     };
@@ -126,8 +128,6 @@ const Card: React.FC<
                     onClick: () => handleRemove(),
                 }}
                 id={id}
-                updateCard={updateCard}
-                removeCard={removeCard}
             />
         </MuiCard>
     );
