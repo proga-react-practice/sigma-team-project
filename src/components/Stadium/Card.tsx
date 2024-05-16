@@ -35,7 +35,7 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
     id,
 }) => {
     const [editModalOpen, setEditModalOpen] = useState(false);
-    const {removeCard, updateCard} = useStadiumCardContext();
+    const {removeCard} = useStadiumCardContext();
     const handleRemove = () => {
         removeCard(id);
     };
@@ -128,8 +128,6 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                     onClick: () => handleRemove(),
                 }}
                 id={id}
-                updateCard={updateCard}
-                removeCard={removeCard}
             />
         </MuiCard>
     );
