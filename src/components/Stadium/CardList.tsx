@@ -1,7 +1,6 @@
-import Card, {CardProps} from "./Card";
+import Card from "./Card";
 import {
     DndContext,
-    DragEndEvent,
     MouseSensor,
     TouchSensor,
     closestCenter,
@@ -11,14 +10,11 @@ import {
 import {restrictToFirstScrollableAncestor} from "@dnd-kit/modifiers";
 import {Grid, Typography, Box, Container} from "@mui/material";
 import {theme} from "../../utils/theme";
-import {SortableContext, arrayMove} from "@dnd-kit/sortable";
+import {SortableContext} from "@dnd-kit/sortable";
+import {useStadiumCardContext} from "./StadiumCardContext";
 
-interface CardListProps {
-    cards: CardProps[];
-    setCards: React.Dispatch<React.SetStateAction<CardProps[]>>;
-}
-
-const CardList: React.FC<CardListProps> = ({cards, setCards}) => {
+const CardList: React.FC = () => {
+    const {cards, dndCard} = useStadiumCardContext();
     const sensors = useSensors(
         useSensor(MouseSensor, {
             activationConstraint: {
@@ -32,32 +28,7 @@ const CardList: React.FC<CardListProps> = ({cards, setCards}) => {
             },
         })
     );
-    const handleRemoveCard = (id: string) => {
-        setCards((prevCardInfo) =>
-            prevCardInfo.filter((card) => card.id !== id)
-        );
-    };
-    const handleUpdateCard = (updatedCard: CardProps) => {
-        setCards((prevCards) =>
-            prevCards.map((card) =>
-                card.id === updatedCard.id
-                    ? {...updatedCard, onClick: () => updatedCard.id}
-                    : card
-            )
-        );
-    };
-    function handleDragEnd(event: DragEndEvent) {
-        const {active, over} = event;
-        if (over && active.id !== over.id) {
-            setCards((items) => {
-                const oldIndex = items.findIndex(
-                    (item) => item.id === active.id
-                );
-                const newIndex = items.findIndex((item) => item.id === over.id);
-                return arrayMove(items, oldIndex, newIndex);
-            });
-        }
-    }
+
     return (
         <Box mt={1}>
             <Typography variant="h4">Stadium list</Typography>
@@ -66,7 +37,7 @@ const CardList: React.FC<CardListProps> = ({cards, setCards}) => {
                     <DndContext
                         sensors={sensors}
                         collisionDetection={closestCenter}
-                        onDragEnd={handleDragEnd}
+                        onDragEnd={dndCard}
                         modifiers={[restrictToFirstScrollableAncestor]}
                     >
                         <Grid
@@ -87,11 +58,7 @@ const CardList: React.FC<CardListProps> = ({cards, setCards}) => {
                             <SortableContext items={cards}>
                                 {cards.map((card) => (
                                     <Grid key={card.id} item xs={0.98}>
-                                        <Card
-                                            {...card}
-                                            updateCard={handleUpdateCard}
-                                            removeCard={handleRemoveCard}
-                                        />
+                                        <Card {...card} />
                                     </Grid>
                                 ))}
                             </SortableContext>
