@@ -4,6 +4,8 @@ import { theme } from "../../utils/theme-2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DropResult } from "react-beautiful-dnd";
 import EditableTextField from "./EditableTextField";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 const deleteAnimationClass = "delete-animation";
 
@@ -168,12 +170,28 @@ const CardList: React.FC<CardListProps> = ({
                 width: theme.spacing(2),
                 display: "none",
               },
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: theme.spacing(2),
+              "@media screen and (max-width: 770px)": {
+                flexDirection: "column",
+              },
             }}
           >
             <DragDropContext onDragEnd={handleDragEnd}>
-              <Droppable droppableId="droppable">
+              <Droppable droppableId="droppable" direction="horizontal">
                 {(provided) => (
-                  <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: theme.spacing(2),
+                      width: "100%",
+                    }}
+                  >
                     {sortedBlocks.map((block, index) => (
                       <Draggable
                         key={block.id}
@@ -185,6 +203,11 @@ const CardList: React.FC<CardListProps> = ({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
+                            style={{
+                              ...provided.draggableProps.style,
+                              flex: "1 1 calc(33.333% - 16px)",
+                              boxSizing: "border-box",
+                            }}
                           >
                             <Grid
                               key={block.id}
@@ -195,8 +218,7 @@ const CardList: React.FC<CardListProps> = ({
                                 display: "flex",
                                 flexDirection: "column",
                                 borderRadius: theme.spacing(6),
-                                width: "auto",
-                                height: "auto",
+                                width: "100%",
                                 backgroundColor: "primary.main",
                                 boxShadow: 5,
                                 marginTop: theme.spacing(2),
@@ -282,12 +304,12 @@ const CardList: React.FC<CardListProps> = ({
                                   <Typography sx={{
                                     marginTop: theme.spacing(2)
                                   }}>
-                                    Number of tickets - "{block.tickets}"
+                                    Number of tickets: {block.tickets}
                                   </Typography>
                                   <Typography sx={{
                                     marginTop: theme.spacing(2)
                                   }}>
-                                    Field - "{block.stadium}"
+                                    Field: {block.stadium}
                                   </Typography>
                                   <Button
                                     onClick={() => handleEdit(block.id, block)}

@@ -28,7 +28,7 @@ interface Block {
 }
 
 const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
-  const { register, reset, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>();
+  const { register, reset, handleSubmit, setValue, formState: { errors }, watch } = useForm<FormValues>();
 
   type FormValues = {
     firstTeam: string;
@@ -54,6 +54,10 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
     setValue("stadium", "");
   };
 
+  const firstTeamValue = watch("firstTeam");
+  const secondTeamValue = watch("secondTeam");
+  const numberOfTicketsValue = watch("numberOfTickets");
+  const stadiumValue = watch("stadium");
 
   return (
     <>
@@ -68,7 +72,7 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
-          maxHeight: "500px",
+          marginLeft: theme.spacing(2)
         }}
         component = 'form'
         onSubmit={handleSubmit(onSubmit)}
@@ -92,7 +96,7 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
             label="First Team:"
             variant="standard"
             type="text"
-            placeholder="Enter first team..."
+            placeholder="Enter first team.."
             {...register("firstTeam", {
               required: {
                 value: true,
@@ -111,6 +115,8 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
                 message: "Only letters and spaces are allowed!",
               },
             })}
+            value={firstTeamValue || ""}
+            onChange={(e) => setValue("firstTeam", e.target.value)}
             error={!!errors.firstTeam}
           />
         </Box>
@@ -130,7 +136,7 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
             label="Second Team:"
             variant="standard"
             type="text"
-            placeholder="Enter second team..."
+            placeholder="Enter second team.."
             {...register("secondTeam", {
               required: {
                 value: true,
@@ -138,17 +144,19 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
               },
               minLength: {
                 value: 5,
-                message: "Minimum length is 5 characters",
+                message: "Minimum length is 5 characters!",
               },
               maxLength: {
                 value: 30,
-                message: "Maximum length is 30 characters",
+                message: "Maximum length is 30 characters!",
               },
               pattern: {
                 value: /^[a-zA-Z\s]+$/,
-                message: "Only letters and spaces are allowed",
+                message: "Only letters and spaces are allowed!",
               },
             })}
+            value={secondTeamValue || ""}
+            onChange={(e) => setValue("secondTeam", e.target.value)}
             error={!!errors.secondTeam}
           />
         </Box>
@@ -183,6 +191,8 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
                   value >= 0 || "Value must be a positive number!",
               },
             })}
+            value={numberOfTicketsValue || ""}
+            onChange={(e) => setValue("numberOfTickets", parseInt(e.target.value))}
             error={!!errors.numberOfTickets}
           />
         </Box>
@@ -202,14 +212,15 @@ const Form: React.FC<FormProps> = ({ addButtonHandler }) => {
             select
             label="Stadium:"
             variant="standard"
-            placeholder="Choose Stadium..."
+            placeholder="Please, choose the stadium..."
             {...register("stadium", {
               required: {
                 value: true,
                 message: "Please, select an option!",
               },
             })}
-            defaultValue=""
+            value={stadiumValue || ""}
+            onChange={(e) => setValue("stadium", e.target.value)}
             error={!!errors.stadium}
           >
             <MenuItem value="">
