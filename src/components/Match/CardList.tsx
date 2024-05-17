@@ -4,8 +4,7 @@ import { theme } from "../../utils/theme-2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DropResult } from "react-beautiful-dnd";
 import EditableTextField from "./EditableTextField";
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+import { useFormContext } from "./FormContext"; // Importing the context hook
 
 const deleteAnimationClass = "delete-animation";
 
@@ -17,17 +16,8 @@ interface Block {
   stadium: string;
 }
 
-interface CardListProps {
-  blocks: Block[];
-  removeBlock: (id: number) => void;
-  updateBlock: (id: number, updatedBlock: Partial<Block>) => void;
-}
-
-const CardList: React.FC<CardListProps> = ({
-  blocks,
-  removeBlock,
-  updateBlock,
-}) => {
+const CardList: React.FC = () => {
+  const { blocks, removeBlock, updateBlock } = useFormContext();
   const [editMode, setEditMode] = useState<number | null>(null);
   const [editedBlock, setEditedBlock] = useState<Partial<Block>>({});
   const [sortedBlocks, setSortedBlocks] = useState<Block[]>(blocks);
