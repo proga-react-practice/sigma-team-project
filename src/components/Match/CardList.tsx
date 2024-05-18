@@ -4,6 +4,7 @@ import { theme } from "../../utils/theme-2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DropResult } from "react-beautiful-dnd";
 import EditableTextField from "./EditableTextField";
+import { useFormContext } from "./FormContext"; // Importing the context hook
 
 const deleteAnimationClass = "delete-animation";
 
@@ -15,17 +16,8 @@ interface Block {
   stadium: string;
 }
 
-interface CardListProps {
-  blocks: Block[];
-  removeBlock: (id: number) => void;
-  updateBlock: (id: number, updatedBlock: Partial<Block>) => void;
-}
-
-const CardList: React.FC<CardListProps> = ({
-  blocks,
-  removeBlock,
-  updateBlock,
-}) => {
+const CardList: React.FC = () => {
+  const { blocks, removeBlock, updateBlock } = useFormContext();
   const [editMode, setEditMode] = useState<number | null>(null);
   const [editedBlock, setEditedBlock] = useState<Partial<Block>>({});
   const [sortedBlocks, setSortedBlocks] = useState<Block[]>(blocks);
@@ -157,23 +149,39 @@ const CardList: React.FC<CardListProps> = ({
           <Box
             sx={{
               marginTop: theme.spacing(1.5),
-              overflow: "auto",
               maxHeight: "100%",
               padding: theme.spacing(5),
               borderRadius: theme.spacing(2),
               boxShadow: 5,
               backgroundImage: theme.palette.background.gradient,
               WebkitOverflowScrolling: "touch",
+              overflowX: "auto",
               "&::-webkit-scrollbar": {
                 width: theme.spacing(2),
                 display: "none",
               },
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: theme.spacing(2),
+              "@media screen and (max-width: 770px)": {
+                flexDirection: "column",
+              },
             }}
           >
             <DragDropContext onDragEnd={handleDragEnd}>
-              <Droppable droppableId="droppable">
+              <Droppable droppableId="droppable" direction="horizontal">
                 {(provided) => (
-                  <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: theme.spacing(2),
+                      width: "100%",
+                    }}
+                  >
                     {sortedBlocks.map((block, index) => (
                       <Draggable
                         key={block.id}
@@ -185,6 +193,11 @@ const CardList: React.FC<CardListProps> = ({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
+                            style={{
+                              ...provided.draggableProps.style,
+                              flex: "1 1 calc(33.333% - 16px)",
+                              boxSizing: "border-box",
+                            }}
                           >
                             <Grid
                               key={block.id}
@@ -195,8 +208,7 @@ const CardList: React.FC<CardListProps> = ({
                                 display: "flex",
                                 flexDirection: "column",
                                 borderRadius: theme.spacing(6),
-                                width: "auto",
-                                height: "auto",
+                                width: "100%",
                                 backgroundColor: "primary.main",
                                 boxShadow: 5,
                                 marginTop: theme.spacing(2),
@@ -282,12 +294,12 @@ const CardList: React.FC<CardListProps> = ({
                                   <Typography sx={{
                                     marginTop: theme.spacing(2)
                                   }}>
-                                    Number of tickets - "{block.tickets}"
+                                    Number of tickets: {block.tickets}
                                   </Typography>
                                   <Typography sx={{
                                     marginTop: theme.spacing(2)
                                   }}>
-                                    Field - "{block.stadium}"
+                                    Field: {block.stadium}
                                   </Typography>
                                   <Button
                                     onClick={() => handleEdit(block.id, block)}
