@@ -29,7 +29,7 @@ const NotFound = () => {
                     component={Link}
                     to={HOME}
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                 >
                     Back to home{" "}
                 </Button>
