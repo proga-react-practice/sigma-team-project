@@ -54,7 +54,7 @@ const HomePage = () => {
                         component={Link}
                         to="/match"
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         sx={{flex: 1}}
                     >
                         Move to match form page
