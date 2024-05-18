@@ -23,6 +23,7 @@ import {
     positiveIntegerPattern,
 } from "../../utils/validationPatterns";
 import {theme} from "../../utils/theme";
+import {useStadiumCardContext} from "./StadiumCardContext";
 
 type StadiumFormValues = {
     stadiumName: string;
@@ -36,8 +37,6 @@ interface EditCardModalProps {
     onClose: () => void;
     initialData: CardProps;
     id: string;
-    updateCard: (updatedCard: CardProps) => void;
-    removeCard: (id: string) => void;
 }
 
 const fieldTypeOptions = [
@@ -51,8 +50,6 @@ const EditCardModal: React.FC<EditCardModalProps> = ({
     onClose,
     initialData,
     id,
-    updateCard,
-    removeCard,
 }) => {
     const {
         handleSubmit,
@@ -71,7 +68,7 @@ const EditCardModal: React.FC<EditCardModalProps> = ({
         },
         mode: "onChange",
     });
-
+    const {updateCard, removeCard} = useStadiumCardContext();
     const onSubmit: SubmitHandler<StadiumFormValues> = (data) => {
         if (isValid) {
             const updatedCard: CardProps = {
