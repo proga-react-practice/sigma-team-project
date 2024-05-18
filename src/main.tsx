@@ -2,16 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import {ThemeProvider} from "@mui/material/styles";
-import {theme} from "./utils/theme";
+
 import {StadiumCardProvider} from "./components/Stadium/StadiumCardContext.tsx";
+import {ColorModeProvider} from "./components/ColorModeContext.tsx";
+import {CssBaseline} from "@mui/material";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-    <ThemeProvider theme={theme}>
+    <ColorModeProvider>
+        <CssBaseline />
         <StadiumCardProvider>
             <React.StrictMode>
                 <App />
             </React.StrictMode>
         </StadiumCardProvider>
-    </ThemeProvider>
+    </ColorModeProvider>
 );
