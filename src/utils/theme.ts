@@ -90,6 +90,11 @@ const theme = createTheme({
                         borderColor: theme.palette.primary.main,
                         borderWidth: "2px",
                     },
+                    "& input:-webkit-autofill": {
+                        WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.default} inset`,
+                        WebkitTextFillColor: theme.palette.text.primary,
+                        caretColor: theme.palette.text.primary,
+                    },
                 }),
             },
         },
