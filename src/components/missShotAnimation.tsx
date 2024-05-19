@@ -1,6 +1,6 @@
-import {theme} from "../utils/theme";
-
+import {useTheme} from "@mui/material/styles";
 const MissShotAnimation = () => {
+    const theme = useTheme();
     const svgWidth = "100%";
     const viewBoxWidth = 500;
     const viewBoxHeight = 400;
@@ -13,7 +13,7 @@ const MissShotAnimation = () => {
     const netPatternHeight = 10;
 
     const ballColor = theme.palette.primary.main;
-    const gateColor = theme.palette.secondary.main;
+    const gateColor = theme.palette.primary.main;
     return (
         <svg
             width={svgWidth}

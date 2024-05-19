@@ -1,8 +1,13 @@
 import {Link} from "react-router-dom";
 import {Container, Typography, Button, Box, CardMedia} from "@mui/material";
-import sigmaLogo from "../assets/sigma-team-logo-black.svg";
+import sigmaLogoBlack from "../assets/sigma-team-logo-black.svg";
+import sigmaLogoWhite from "../assets/sigma-team-logo-white.svg";
+import {useTheme} from "@mui/material/styles";
 
 const HomePage = () => {
+    const theme = useTheme();
+    const sigmaLogo =
+        theme.palette.mode === "dark" ? sigmaLogoWhite : sigmaLogoBlack;
     return (
         <Container
             sx={{
@@ -49,7 +54,7 @@ const HomePage = () => {
                         component={Link}
                         to="/match"
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         sx={{flex: 1}}
                     >
                         Move to match form page

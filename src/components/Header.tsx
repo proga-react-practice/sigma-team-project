@@ -9,11 +9,18 @@ import {
 } from "@mui/material";
 import React from "react";
 import {Link} from "react-router-dom";
-import sigmaLogoFavicon from "/sigma-team-favicon-black.svg";
+import sigmaLogoFaviconBlack from "/sigma-team-favicon-black.svg";
+import sigmaLogoFaviconWhite from "/sigma-team-favicon-white.svg";
 import {HOME, STADIUM_ROUTE, MATCH_ROUTE} from "../router/pathConstants";
 import MenuIcon from "@mui/icons-material/Menu";
-
+import ColorModeSwitch from "./ColorModeSwitch";
+import {useTheme} from "@mui/material/styles";
 const Header: React.FC = () => {
+    const theme = useTheme();
+    const sigmaLogoFavicon =
+        theme.palette.mode === "dark"
+            ? sigmaLogoFaviconWhite
+            : sigmaLogoFaviconBlack;
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
@@ -84,7 +91,7 @@ const Header: React.FC = () => {
                                         key={page.label}
                                         sx={{
                                             my: 2,
-                                            color: "black",
+                                            color: theme.palette.text.primary,
                                             display: "block",
                                         }}
                                     >
@@ -105,6 +112,7 @@ const Header: React.FC = () => {
                             variant="h6"
                             sx={{
                                 fontWeight: 700,
+                                color: theme.palette.text.primary,
                             }}
                         >
                             Team Sigma
@@ -122,7 +130,7 @@ const Header: React.FC = () => {
                                     key={page.label}
                                     sx={{
                                         my: 2,
-                                        color: "black",
+                                        color: theme.palette.text.primary,
                                         display: "block",
                                     }}
                                 >
@@ -131,6 +139,7 @@ const Header: React.FC = () => {
                             ))}
                         </Box>
                     </Box>
+                    <ColorModeSwitch />
                 </Toolbar>
             </AppBar>
         </Box>

@@ -1,27 +1,38 @@
+import {PaletteMode} from "@mui/material";
+import {grey, purple, teal} from "@mui/material/colors";
 import {createTheme} from "@mui/material/styles";
-import {teal} from "@mui/material/colors";
-
-const theme = createTheme({
+export const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
-        primary: teal,
-        secondary: {
-            main: "#10776b",
-        },
-        background: {
-            default: "#f0f8ff",
-        },
-        text: {
-            primary: "#0C0C0C",
-            secondary: "#10776b",
-        },
+        mode,
+        ...(mode === "light"
+            ? {
+                  primary: teal,
+                  divider: teal[200],
+                  text: {
+                      primary: "#000",
+                      secondary: grey[500],
+                  },
+              }
+            : {
+                  primary: purple,
+                  divider: purple[700],
+                  background: {
+                      default: purple[900],
+                      paper: purple[900],
+                  },
+                  text: {
+                      primary: "#fff",
+                      secondary: grey[500],
+                  },
+              }),
     },
-
+});
+const theme = createTheme({
     components: {
         MuiInputLabel: {
             styleOverrides: {
                 root: ({theme}) => ({
-                    fontSize: "18px",
-                    color: theme.palette.primary.dark,
+                    color: theme.palette.primary.main,
                 }),
             },
         },
@@ -38,24 +49,24 @@ const theme = createTheme({
                 root: ({theme}) => ({
                     width: "100%",
                     backgroundColor: theme.palette.background.default,
+                    icon: {
+                        color: theme.palette.primary.main,
+                    },
                 }),
-                icon: {
-                    color: teal[500],
-                },
             },
         },
         MuiCard: {
             styleOverrides: {
                 root: ({theme}) => ({
-                    border: "2px solid #009879",
+                    border: `2px solid${theme.palette.primary.main}`,
                     borderRadius: "5px",
                     padding: "10px",
                     marginBottom: "10px",
                     backgroundColor: theme.palette.background.default,
-                    boxShadow: "10px 7px 10px #20a78c",
+                    boxShadow: `10px 7px 10px ${theme.palette.primary.main}`,
                     transition: "box-shadow 0.3s",
                     "&:hover": {
-                        boxShadow: "0px 0px 10px #20a78c",
+                        boxShadow: `0px 0px 10px ${theme.palette.primary.main}`,
                     },
                 }),
             },
@@ -64,7 +75,6 @@ const theme = createTheme({
             styleOverrides: {
                 root: ({theme}) => ({
                     width: "100%",
-
                     "&:hover .MuiOutlinedInput-notchedOutline": {
                         borderColor: theme.palette.primary.main,
                         borderWidth: "3px",
@@ -72,32 +82,25 @@ const theme = createTheme({
                     },
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                         borderColor: theme.palette.primary.main,
-                        boxShadow: `0 0 10px ${teal[500]}`,
+
                         borderWidth: "3px",
                         transition: "border-color 0.5s, box-shadow 0.5s",
-                        transform: "translateY(-2px)",
+                    },
+                    ".MuiOutlinedInput-notchedOutline": {
+                        borderColor: theme.palette.primary.main,
+                        borderWidth: "2px",
                     },
                 }),
-                notchedOutline: {
-                    borderColor: teal[300],
-                    borderWidth: "2px",
-                },
-                input: {
-                    color: teal[900],
-                },
             },
         },
         MuiMenuItem: {
             styleOverrides: {
-                root: {
+                root: ({theme}) => ({
                     padding: "10px",
                     "&:hover": {
-                        backgroundColor: teal[200],
+                        backgroundColor: theme.palette.primary.main,
                     },
-                    "&:selected": {
-                        backgroundColor: teal[300],
-                    },
-                },
+                }),
             },
         },
     },
