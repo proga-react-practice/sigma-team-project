@@ -1,7 +1,7 @@
 import * as React from "react";
 import {createContext, useContext, useMemo, useState, ReactNode} from "react";
-import {ThemeProvider, createTheme, PaletteMode} from "@mui/material";
-import {purple, teal, grey} from "@mui/material/colors";
+import {ThemeProvider, createTheme} from "@mui/material";
+import {getDesignTokens} from "../utils/theme";
 import {theme as baseTheme} from "../utils/theme";
 
 interface ColorModeContextType {
@@ -20,33 +20,6 @@ export const useColorMode = () => {
     }
     return context;
 };
-
-const getDesignTokens = (mode: PaletteMode) => ({
-    palette: {
-        mode,
-        ...(mode === "light"
-            ? {
-                  primary: teal,
-                  divider: teal[200],
-                  text: {
-                      primary: "#000",
-                      secondary: grey[500],
-                  },
-              }
-            : {
-                  primary: purple,
-                  divider: purple[700],
-                  background: {
-                      default: purple[900],
-                      paper: purple[900],
-                  },
-                  text: {
-                      primary: "#fff",
-                      secondary: grey[500],
-                  },
-              }),
-    },
-});
 
 export const ColorModeProvider: React.FC<{children: ReactNode}> = ({
     children,

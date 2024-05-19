@@ -1,5 +1,32 @@
+import {PaletteMode} from "@mui/material";
+import {grey, purple, teal} from "@mui/material/colors";
 import {createTheme} from "@mui/material/styles";
-
+export const getDesignTokens = (mode: PaletteMode) => ({
+    palette: {
+        mode,
+        ...(mode === "light"
+            ? {
+                  primary: teal,
+                  divider: teal[200],
+                  text: {
+                      primary: "#000",
+                      secondary: grey[500],
+                  },
+              }
+            : {
+                  primary: purple,
+                  divider: purple[700],
+                  background: {
+                      default: purple[900],
+                      paper: purple[900],
+                  },
+                  text: {
+                      primary: "#fff",
+                      secondary: grey[500],
+                  },
+              }),
+    },
+});
 const theme = createTheme({
     components: {
         MuiInputLabel: {
