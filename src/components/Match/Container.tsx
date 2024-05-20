@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Box, Grid, ThemeProvider, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import Form from "./Form";
 import CardList from "./CardList";
 import CustomLoader from "./CustomLoader";
-import { theme } from "../../utils/theme-2";
+import { theme } from "../../utils/theme";
 import { useFormContext } from './FormContext';
 
 
@@ -19,7 +19,7 @@ const Container: React.FC = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       {loading ? (
         <Box
           sx={{
@@ -49,15 +49,14 @@ const Container: React.FC = () => {
               mt: theme.spacing(20),
               py: theme.spacing(8),
               px: theme.spacing(5),
-              borderRadius: theme.spacing(8),
+              borderRadius: theme.spacing(2),
               '@media screen and (max-width: 426px)': {
                 pl: theme.spacing(2),
                 pr: theme.spacing(2),
               },
-              backgroundColor: theme.palette.primary.main,
               boxShadow: 5,
-              color: 'secondary.main',
               height: 'fit-content',
+              border: '2px solid'
             }}
           >
             <Typography
@@ -66,7 +65,6 @@ const Container: React.FC = () => {
                 fontSize: theme.spacing(5),
                 fontFamily: 'Platypi',
                 fontWeight: 600,
-                color: theme.palette.secondary.main,
                 textAlign: 'center',
                 '@media screen and (max-width: 426px)': {
                   fontSize: theme.spacing(4),
@@ -82,7 +80,7 @@ const Container: React.FC = () => {
           )}
         </Box>
       )}
-    </ThemeProvider>
+      </>
   );
 };
 

@@ -1,6 +1,7 @@
 import {PaletteMode} from "@mui/material";
 import {grey, purple, teal} from "@mui/material/colors";
 import {createTheme} from "@mui/material/styles";
+
 export const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
         mode,
@@ -9,7 +10,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                   primary: teal,
                   divider: teal[200],
                   text: {
-                      primary: "#000",
+                      primary: teal[200],
                       secondary: grey[500],
                   },
               }
@@ -21,13 +22,14 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                       paper: purple[900],
                   },
                   text: {
-                      primary: "#fff",
+                      primary: purple[200],
                       secondary: grey[500],
                   },
               }),
     },
 });
 const theme = createTheme({
+    spacing: 5,
     components: {
         MuiInputLabel: {
             styleOverrides: {
