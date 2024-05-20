@@ -14,10 +14,12 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { useFormContext } from './FormContext';
+import { useStadiumCardContext } from '../Stadium/StadiumCardContext';
 
 const Form: React.FC = () => {
   const { addBlock } = useFormContext();
   const { register, reset, handleSubmit, setValue, formState: { errors }, watch } = useForm<FormValues>();
+  const {cards} = useStadiumCardContext();
 
   type FormValues = {
     firstTeam: string;
@@ -123,8 +125,16 @@ const Form: React.FC = () => {
             placeholder="Enter the quantity of tickets..."
             {...register('numberOfTickets', {
               required: { value: true, message: 'Input cannot be empty!' },
-              max: { value: 300000, message: 'Maximum number of tickets is 300000!' },
-              validate: { positiveNumber: (value) => value >= 0 || 'Value must be a positive number!' },
+              validate: { positiveNumber: (value) => value >= 0 || 'Value must be a positive number!',
+              stadiumCapacity: (value) => {
+                if (stadiumValue === '') {
+                  return true;
+                }
+                const selectedStadium = cards.find((card) => card.stadiumName === stadiumValue);
+                const capacity = selectedStadium ? parseInt(selectedStadium.capacity) : 0;
+                return value <= capacity || `Number of tickets exceeds stadium capacity (${capacity})`;
+              },
+               },
             })}
             value={numberOfTicketsValue || ''}
             onChange={(e) => setValue('numberOfTickets', parseInt(e.target.value))}
@@ -153,8 +163,11 @@ const Form: React.FC = () => {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value="Parc des Princes">Parc des Princes</MenuItem>
-            <MenuItem value="Camp Nou">Camp Nou</MenuItem>
+            {cards.map((card) => (
+                <MenuItem key={card.id} value={card.stadiumName}>
+                    {card.stadiumName}
+                </MenuItem>
+            ))}
           </TextField>
         </Box>
         <FormHelperText error={!!errors.stadium}>
