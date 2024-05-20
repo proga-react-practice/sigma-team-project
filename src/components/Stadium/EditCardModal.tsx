@@ -24,6 +24,7 @@ import {
 } from "../../utils/validationPatterns";
 import {theme} from "../../utils/theme";
 import {useStadiumCardContext} from "./StadiumCardContext";
+import {fieldTypeOptions} from "../../utils/fieldTypeOptions";
 
 type StadiumFormValues = {
     stadiumName: string;
@@ -38,12 +39,6 @@ interface EditCardModalProps {
     initialData: CardProps;
     id: string;
 }
-
-const fieldTypeOptions = [
-    {label: "Natural", value: "natural"},
-    {label: "Synthetic", value: "synthetic"},
-    {label: "Mixed", value: "mixed"},
-];
 
 const EditCardModal: React.FC<EditCardModalProps> = ({
     open,

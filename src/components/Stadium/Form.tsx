@@ -22,6 +22,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import {theme} from "../../utils/theme";
 import {useStadiumCardContext} from "./StadiumCardContext";
+import {fieldTypeOptions} from "../../utils/fieldTypeOptions";
 
 type StadiumFormValues = {
     stadiumName: string;
@@ -49,11 +50,6 @@ const Form: React.FC = () => {
         mode: "onChange",
     });
     const {addCard, removeCard} = useStadiumCardContext();
-    const fieldTypeOptions = [
-        {label: "Natural", value: "natural"},
-        {label: "Synthetic", value: "synthetic"},
-        {label: "Mixed", value: "mixed"},
-    ];
 
     const onSubmit = (data: StadiumFormValues) => {
         if (isValid) {
