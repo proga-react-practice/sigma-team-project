@@ -17,6 +17,7 @@ import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import EditCardModal from "./EditCardModal";
 import {useStadiumCardContext} from "./StadiumCardContext";
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 
 export interface CardProps {
     stadiumName: string;
@@ -25,6 +26,7 @@ export interface CardProps {
     fieldType: string;
     id: string;
     onClick: (id: string) => void;
+    showMatchButton?: boolean;
 }
 
 const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
@@ -33,6 +35,7 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
     capacity,
     fieldType,
     id,
+    showMatchButton: showStadiumButton = false,
 }) => {
     const [editModalOpen, setEditModalOpen] = useState(false);
     const {removeCard} = useStadiumCardContext();
@@ -86,9 +89,7 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                     <Typography variant="body1">Field - {fieldType}</Typography>
                 </Stack>
             </CardContent>
-            <CardActions
-                sx={{paddingTop: 0, marginX: 5, justifyContent: "flex-end"}}
-            >
+            <CardActions sx={{paddingTop: 0, justifyContent: "flex-end"}}>
                 <Button
                     variant="contained"
                     type="button"
@@ -99,6 +100,24 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                 >
                     Edit
                 </Button>
+                {showStadiumButton && (
+                    <Button
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            "&:hover": {
+                                backgroundColor: theme.palette.secondary.dark,
+                            },
+                            flex: 1,
+                        }}
+                        variant="contained"
+                        type="button"
+                        size="small"
+                        startIcon={<SportsSoccerIcon />}
+                        onClick={() => alert("Search button clicked")}
+                    >
+                        Match
+                    </Button>
+                )}
                 <Button
                     sx={{
                         backgroundColor: theme.palette.error.dark,
