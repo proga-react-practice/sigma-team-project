@@ -39,6 +39,8 @@ const Form: React.FC = () => {
         watch,
         setValue,
         clearErrors,
+        setError,
+        setFocus,
         formState: {errors, isValid},
     } = useForm<StadiumFormValues>({
         defaultValues: {
@@ -49,26 +51,37 @@ const Form: React.FC = () => {
         },
         mode: "onChange",
     });
-    const {addCard, removeCard} = useStadiumCardContext();
+    const {cards, addCard, removeCard} = useStadiumCardContext();
 
     const onSubmit = (data: StadiumFormValues) => {
         if (isValid) {
-            const newCard: CardProps = {
-                stadiumName: data.stadiumName,
-                city: data.city,
-                capacity: data.capacity,
-                fieldType: data.fieldType,
-                id: Date.now().toString(),
-                onClick: (id) => removeCard(id),
-            };
-            addCard(newCard);
-            handleReset();
+            const existedStadiumName = cards.find(
+                (item) => item.stadiumName === data.stadiumName
+            );
+            if (existedStadiumName) {
+                setError("stadiumName", {
+                    message: "Stadium with this name already exist",
+                });
+                setFocus("stadiumName");
+            } else {
+                const newCard: CardProps = {
+                    stadiumName: data.stadiumName,
+                    city: data.city,
+                    capacity: data.capacity,
+                    fieldType: data.fieldType,
+                    id: Date.now().toString(),
+                    onClick: (id) => removeCard(id),
+                };
+                addCard(newCard);
+                handleReset();
+            }
         }
     };
 
     const handleReset = () => {
         reset();
     };
+
     return (
         <Paper elevation={0} sx={{width: {xs: "100%", lg: "80%"}}}>
             <Typography variant="h4">Stadium form</Typography>
