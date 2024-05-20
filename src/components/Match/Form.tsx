@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   MenuItem,
   Grid,
   TextField,
@@ -14,6 +13,7 @@ import ReceiptIcon from "@mui/icons-material/Receipt";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useFormContext } from "./FormContext";
+import FormButton from "./FormButton";
 
 const Form: React.FC = () => {
   const { addBlock } = useFormContext();
@@ -240,36 +240,17 @@ const Form: React.FC = () => {
           justifyContent="space-around"
           alignItems="center"
         >
-          <Button
+          <FormButton
             type="reset"
             variant="contained"
             onClick={handleReset}
-            sx={{
-              borderRadius: theme.spacing(1),
-              fontSize: theme.spacing(2.4),
-              marginTop: theme.spacing(4),
-              height: theme.spacing(5),
-              width: theme.spacing(20),
-              mb: theme.spacing(4),
-            }}
-          >
-            Reset
-          </Button>
-          <Button
+            label="Reset"
+          />
+          <FormButton type="submit"
             variant="contained"
-            type="submit"
             onClick={handleSubmit(onSubmit)}
-            sx={{
-              borderRadius: theme.spacing(1),
-              fontSize: theme.spacing(2.4),
-              marginTop: theme.spacing(4),
-              height: theme.spacing(5),
-              width: theme.spacing(20),
-              mb: theme.spacing(4),
-            }}
-          >
-            <span className="button-content">Add</span>
-          </Button>
+            label="Add"
+            />
         </Grid>
       </Box>
     </motion.div>

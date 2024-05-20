@@ -168,7 +168,6 @@ const CardList: React.FC = () => {
               maxHeight: "100%",
               padding: theme.spacing(5),
               borderRadius: theme.spacing(2),
-              backgroundImage: "",
               WebkitOverflowScrolling: "touch",
               overflowX: "auto",
               "&::-webkit-scrollbar": {
