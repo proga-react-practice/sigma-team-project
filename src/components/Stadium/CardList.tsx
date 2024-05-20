@@ -9,11 +9,11 @@ import {
 } from "@dnd-kit/core";
 import {restrictToFirstScrollableAncestor} from "@dnd-kit/modifiers";
 import {Grid, Typography, Box, Container} from "@mui/material";
-import {theme} from "../../utils/theme";
 import {SortableContext} from "@dnd-kit/sortable";
 import {useStadiumCardContext} from "./StadiumCardContext";
-
+import {useTheme} from "@mui/material/styles";
 const CardList: React.FC = () => {
+    const theme = useTheme();
     const {cards, dndCard} = useStadiumCardContext();
     const sensors = useSensors(
         useSensor(MouseSensor, {
@@ -47,7 +47,7 @@ const CardList: React.FC = () => {
                             sx={{
                                 overflowX: {xs: "hidden"},
                                 overflowY: {xs: "hidden", sm: "auto"},
-                                maxHeight: {sm: "80vh"},
+                                maxHeight: {sm: "70vh"},
                                 "&::-webkit-scrollbar": {width: "0.4em"},
                                 "&::-webkit-scrollbar-thumb": {
                                     backgroundColor: theme.palette.primary.dark,
