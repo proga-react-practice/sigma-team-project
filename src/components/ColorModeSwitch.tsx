@@ -9,8 +9,8 @@ const ColorModeSwitch = () => {
     return (
         <Switch
             sx={{
-                width: theme.spacing(7.5),
-                height: theme.spacing(4),
+                width: theme.spacing(11.5),
+                height: theme.spacing(6.4),
                 padding: 1,
                 "& .MuiSwitch-switchBase": {
                     padding: 0,
@@ -32,8 +32,8 @@ const ColorModeSwitch = () => {
                     },
                 },
                 "& .MuiSwitch-thumb": {
-                    width: theme.spacing(4),
-                    height: theme.spacing(4),
+                    width: theme.spacing(6.4),
+                    height: theme.spacing(6.4),
                     backgroundColor:
                         theme.palette.mode === "dark" ? "#003892" : "#001e3c",
                     "&::before": {

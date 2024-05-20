@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Typography, Box, Grid } from "@mui/material";
-import { theme } from "../../utils/theme-2";
+import { useTheme } from "@mui/material/styles";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DropResult } from "react-beautiful-dnd";
 import EditableTextField from "./EditableTextField";
@@ -17,6 +17,7 @@ interface Block {
 }
 
 const CardList: React.FC = () => {
+  const theme = useTheme();
   const { blocks, removeBlock, updateBlock } = useFormContext();
   const [editMode, setEditMode] = useState<number | null>(null);
   const [editedBlock, setEditedBlock] = useState<Partial<Block>>({});
@@ -114,33 +115,48 @@ const CardList: React.FC = () => {
             }}
           >
             <Button
+              variant="outlined"
               onClick={sortByTickets}
               sx={{
-                height: theme.spacing(12),
+                borderRadius: theme.spacing(1),
+                fontSize: theme.spacing(2.4),
                 marginBottom: theme.spacing(1),
-                width: "20%",
+                marginTop: theme.spacing(4),
+                height: '100%',
+                width: '100%',
+                mb: theme.spacing(4),
               }}
             >
               Sort by tickets
             </Button>
             <Button
+              variant="outlined"
               onClick={sortByFirstTeamLetter}
               sx={{
-                height: theme.spacing(12),
+                borderRadius: theme.spacing(1),
+                fontSize: theme.spacing(2.4),
+                marginTop: theme.spacing(4),
+                height: '100%',
+                width: '100%',
+                mb: theme.spacing(4),
                 marginLeft: theme.spacing(1),
                 marginRight: theme.spacing(1),
                 marginBottom: theme.spacing(1),
-                width: "20%",
               }}
             >
               Sort by 1st Team
             </Button>
             <Button
+              variant="outlined"
               onClick={sortBySecondTeamLetter}
               sx={{
-                height: theme.spacing(12),
+                borderRadius: theme.spacing(1),
+                fontSize: theme.spacing(2.4),
                 marginBottom: theme.spacing(1),
-                width: "20%",
+                marginTop: theme.spacing(4),
+                height: '100%',
+                width: '100%',
+                mb: theme.spacing(4),
               }}
             >
               Sort by 2nd Team
@@ -152,8 +168,7 @@ const CardList: React.FC = () => {
               maxHeight: "100%",
               padding: theme.spacing(5),
               borderRadius: theme.spacing(2),
-              boxShadow: 5,
-              backgroundImage: theme.palette.background.gradient,
+              backgroundImage: "",
               WebkitOverflowScrolling: "touch",
               overflowX: "auto",
               "&::-webkit-scrollbar": {
@@ -172,14 +187,18 @@ const CardList: React.FC = () => {
             <DragDropContext onDragEnd={handleDragEnd}>
               <Droppable droppableId="droppable" direction="horizontal">
                 {(provided) => (
-                  <div
+                  <Box
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    style={{
+                    sx={{
                       display: "flex",
                       flexWrap: "wrap",
                       gap: theme.spacing(2),
                       width: "100%",
+                      maxWidth: "calc(100% - 10px)",
+                      "@media screen and (max-width: 770px)": {
+                        flexDirection: "column",
+                      },
                     }}
                   >
                     {sortedBlocks.map((block, index) => (
@@ -197,6 +216,9 @@ const CardList: React.FC = () => {
                               ...provided.draggableProps.style,
                               flex: "1 1 calc(33.333% - 16px)",
                               boxSizing: "border-box",
+                              maxWidth: "calc(33.333% - 16px)",
+                              minWidth: "250px",
+                              margin: "0 auto",
                             }}
                           >
                             <Grid
@@ -209,10 +231,11 @@ const CardList: React.FC = () => {
                                 flexDirection: "column",
                                 borderRadius: theme.spacing(6),
                                 width: "100%",
-                                backgroundColor: "primary.main",
                                 boxShadow: 5,
                                 marginTop: theme.spacing(2),
                                 textAlign: "center",
+                                backgroundColor:
+                                  theme.palette.custom.cardBackground,
                                 transition: "transform 0.3s ease-in-out",
                                 "&.delete-animation": {
                                   transform: "scale(0)",
@@ -263,12 +286,17 @@ const CardList: React.FC = () => {
                                     }
                                   />
                                   <Button
+                                    variant="outlined"
                                     onClick={() => handleSave(block.id)}
                                     sx={{
                                       marginLeft: "auto",
                                       marginRight: "auto",
-                                      marginTop: theme.spacing(3),
-                                      marginBottom: theme.spacing(3),
+                                      borderRadius: theme.spacing(1),
+                                      fontSize: theme.spacing(2.4),
+                                      marginTop: theme.spacing(4),
+                                      height: theme.spacing(5),
+                                      width: theme.spacing(20),
+                                      mb: theme.spacing(4),
                                     }}
                                   >
                                     Save
@@ -286,39 +314,55 @@ const CardList: React.FC = () => {
                                   >
                                     Match Info:
                                   </Typography>
-                                  <Typography sx={{
-                                    marginTop: theme.spacing(2)
-                                  }}>
+                                  <Typography
+                                    sx={{
+                                      marginTop: theme.spacing(2),
+                                    }}
+                                  >
                                     {block.firstTeam} - {block.secondTeam}
                                   </Typography>
-                                  <Typography sx={{
-                                    marginTop: theme.spacing(2)
-                                  }}>
+                                  <Typography
+                                    sx={{
+                                      marginTop: theme.spacing(2),
+                                    }}
+                                  >
                                     Number of tickets: {block.tickets}
                                   </Typography>
-                                  <Typography sx={{
-                                    marginTop: theme.spacing(2)
-                                  }}>
+                                  <Typography
+                                    sx={{
+                                      marginTop: theme.spacing(2),
+                                    }}
+                                  >
                                     Field: {block.stadium}
                                   </Typography>
                                   <Button
+                                    variant="outlined"
                                     onClick={() => handleEdit(block.id, block)}
                                     sx={{
                                       marginLeft: "auto",
                                       marginRight: "auto",
-                                      marginTop: theme.spacing(3),
-                                      marginBottom: theme.spacing(3),
+                                      borderRadius: theme.spacing(1),
+                                      fontSize: theme.spacing(2.4),
+                                      marginTop: theme.spacing(4),
+                                      height: theme.spacing(5),
+                                      width: theme.spacing(20),
+                                      mb: theme.spacing(2),
                                     }}
                                   >
                                     Edit
                                   </Button>
                                   <Button
+                                    variant="outlined"
                                     onClick={() => handleDelete(block.id)}
                                     sx={{
                                       marginLeft: "auto",
                                       marginRight: "auto",
-                                      marginTop: theme.spacing(1),
-                                      marginBottom: theme.spacing(3),
+                                      borderRadius: theme.spacing(1),
+                                      fontSize: theme.spacing(2.4),
+                                      marginTop: theme.spacing(2),
+                                      height: theme.spacing(5),
+                                      width: theme.spacing(20),
+                                      mb: theme.spacing(4),
                                     }}
                                   >
                                     Delete
@@ -331,7 +375,7 @@ const CardList: React.FC = () => {
                       </Draggable>
                     ))}
                     {provided.placeholder}
-                  </div>
+                  </Box>
                 )}
               </Droppable>
             </DragDropContext>

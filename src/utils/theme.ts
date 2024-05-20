@@ -1,6 +1,24 @@
 import {PaletteMode} from "@mui/material";
-import {grey, purple, teal} from "@mui/material/colors";
+import { grey, purple, teal} from "@mui/material/colors";
 import {createTheme} from "@mui/material/styles";
+
+const darkCardColor = '#452c63';
+const lightCardColor = '#18453B';
+
+
+declare module "@mui/material/styles" {
+    interface Palette {
+      custom: {
+        cardBackground: string;
+      };
+    }
+  
+    interface PaletteOptions {
+      custom?: {
+        cardBackground?: string;
+      };
+    }
+  }
 
 export const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
@@ -13,6 +31,9 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                       primary: teal[200],
                       secondary: grey[500],
                   },
+                  custom: {
+                    cardBackground: lightCardColor,
+                  },
               }
             : {
                   primary: purple,
@@ -24,6 +45,9 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                   text: {
                       primary: purple[200],
                       secondary: grey[500],
+                  },
+                  custom: {
+                    cardBackground: darkCardColor,
                   },
               }),
     },

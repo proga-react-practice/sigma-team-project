@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { theme } from '../../utils/theme-2'
+import { theme } from '../../utils/theme'
 
 interface EditableTextFieldProps {
   value: string;

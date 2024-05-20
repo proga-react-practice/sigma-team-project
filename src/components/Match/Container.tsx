@@ -56,7 +56,7 @@ const Container: React.FC = () => {
               },
               boxShadow: 5,
               height: 'fit-content',
-              border: '2px solid'
+              border: '2px solid',
             }}
           >
             <Typography
