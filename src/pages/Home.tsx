@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Container, Typography, Button, Box, CardMedia } from "@mui/material";
-// import sigmaLogoBlack from "../assets/sigma-team-logo-black.svg";
-// import sigmaLogoWhite from "../assets/sigma-team-logo-white.svg";
+import sigmaLogoBlack from "../assets/sigma-team-logo-black.svg";
+import sigmaLogoWhite from "../assets/sigma-team-logo-white.svg";
 import { useTheme } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -14,25 +14,21 @@ const quotes = [
     img: "src/assets/lionel-messi.jpg",
     name: "Lionel Messi",
   },
-
   {
     text: "«Football is played with your head. Your feet are just the tools.»",
     img: "src/assets/pirlo.jpg",
     name: "Andrea Pirlo",
   },
-
   {
     text: "«In football, the greatest satisfaction is winning when they say you can’t.»",
     img: "src/assets/lewandowski.jpg",
     name: "Robert Lewandowski",
   },
-
   {
     text: "«Football, like life, is filled with ups and downs, and the most important thing is to keep moving forward and never give up.»",
     img: "src/assets/maradona.jpg",
     name: "Diego Maradona",
   },
-
   {
     text: "«There is no pressure when you're making a dream come true.»",
     img: "src/assets/neymar.jpg",
@@ -42,7 +38,8 @@ const quotes = [
 
 const HomePage = () => {
   const theme = useTheme();
-  // const sigmaLogo = theme.palette.mode === "dark" ? sigmaLogoWhite : sigmaLogoBlack;
+  const sigmaLogo =
+    theme.palette.mode === "dark" ? sigmaLogoWhite : sigmaLogoBlack;
 
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
 
@@ -65,67 +62,127 @@ const HomePage = () => {
   };
 
   return (
-    <Container
-      sx={{
-        textAlign: "center",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <Container sx={{ padding: 0 }}>
-        {/* <Typography variant="h4" gutterBottom>
-                    Welcome to sigma team website
-                </Typography> */}
-        {/* <Box sx={{ maxWidth: 300, margin: "0 auto" }}>
-                    <CardMedia
-                        component="img"
-                        image={sigmaLogo}
-                        alt="Sigma Team Logo"
-                    />
-                </Box> */}
-        {/* <Typography paragraph>
-                    This is the main page. Enjoy using our website.
-                </Typography> */}
-        <Box sx={{ position: "relative", height: 180, marginBottom: 2 }}>
-          <TransitionGroup>
-            <CSSTransition
-              key={currentQuoteIndex}
-              timeout={500}
-              classNames={{
-                enter: "quote-enter",
-                enterActive: "quote-enter-active",
-                exit: "quote-exit",
-                exitActive: "quote-exit-active",
+    <>
+      <Box
+        sx={{
+          position: "relative",
+          height: "auto",
+          width: "100%",
+          marginBottom: 2,
+          padding: 3,
+          backgroundImage: `url(${"./src/assets/field2.jpg"})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          borderRadius: 2,
+          boxShadow: theme.shadows[10],
+          overflowX: "hidden",
+        }}
+      >
+        <Container
+          sx={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            maxWidth: "100%",
+            overflowX: "hidden",
+          }}
+        >
+          <Container sx={{ padding: 0, maxWidth: "100%" }}>
+            <Typography variant="h4" gutterBottom>
+              Welcome to sigma team website
+            </Typography>
+            <Box sx={{ maxWidth: 300, margin: "0 auto" }}>
+              <CardMedia
+                component="img"
+                image={sigmaLogo}
+                alt="Sigma Team Logo"
+              />
+            </Box>
+            <Typography paragraph>
+              This is the main page. Enjoy using our website.
+            </Typography>
+          </Container>
+        </Container>
+      </Box>
+
+      <Box
+        sx={{
+          position: "relative",
+          height: "100%",
+          marginBottom: 2,
+          color: theme.palette.custom.quotesColor
+        }}
+      >
+        <TransitionGroup>
+          <CSSTransition
+            key={currentQuoteIndex}
+            timeout={500}
+            classNames={{
+              enter: "quote-enter",
+              enterActive: "quote-enter-active",
+              exit: "quote-exit",
+              exitActive: "quote-exit-active",
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                width: "100%",
+                marginTop: theme.spacing(20),
+                transition: "opacity 500ms, transform 500ms",
+                "&.quote-enter": {
+                  opacity: 0,
+                  transform: "translateY(-10px)",
+                },
+                "&.quote-enter-active": {
+                  opacity: 1,
+                  transform: "translateY(0)",
+                },
+                "&.quote-exit": {
+                  opacity: 1,
+                  transform: "translateY(0)",
+                },
+                "&.quote-exit-active": {
+                  opacity: 0,
+                  transform: "translateY(10px)",
+                },
               }}
             >
               <Box
                 sx={{
-                  position: "absolute",
-                  width: "100%",
-                  transition: "opacity 500ms, transform 500ms",
-                  "&.quote-enter": {
-                    opacity: 0,
-                    transform: "translateY(-10px)",
-                  },
-                  "&.quote-enter-active": {
-                    opacity: 1,
-                    transform: "translateY(0)",
-                  },
-                  "&.quote-exit": {
-                    opacity: 1,
-                    transform: "translateY(0)",
-                  },
-                  "&.quote-exit-active": {
-                    opacity: 0,
-                    transform: "translateY(10px)",
-                  },
+                  width: "70%",
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  borderRadius: theme.spacing(5),
+                  paddingTop: theme.spacing(15),
+                  marginBottom: theme.spacing(25),
                 }}
               >
-                <Typography variant="h6" paragraph>
+                <Typography
+                  variant="h6"
+                  paragraph
+                  sx={{
+                    margin: "0 auto",
+                    textAlign: "center",
+                    width: '50%'
+                  }}
+                >
                   {quotes[currentQuoteIndex].text}
                 </Typography>
+                <Box
+                  sx={{
+                    border: "1px solid",
+                    width: "60%",
+                    margin: "0 auto",
+                    mt: theme.spacing(13),
+                    mb: theme.spacing(7),
+                  }}
+                ></Box>
                 <CardMedia
                   component="img"
                   image={quotes[currentQuoteIndex].img}
@@ -139,59 +196,66 @@ const HomePage = () => {
                     borderRadius: "50%",
                   }}
                 />
-                <Typography variant="h6" paragraph>
+                <Typography
+                  variant="h6"
+                  paragraph
+                  sx={{
+                    margin: "0 auto",
+                  }}
+                >
                   {quotes[currentQuoteIndex].name}
                 </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: 1,
+                    mb: 2,
+                    mt: theme.spacing(10),
+                  }}
+                >
+                  <Button variant="contained" onClick={handlePreviousQuote}>
+                    <KeyboardDoubleArrowLeftIcon />
+                  </Button>
+                  <Button variant="contained" onClick={handleNextQuote}>
+                    <KeyboardDoubleArrowRightIcon />
+                  </Button>
+                </Box>
               </Box>
-            </CSSTransition>
-          </TransitionGroup>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 1,
-            mb: 2,
-            mt: theme.spacing(11),
-          }}
+            </Box>
+          </CSSTransition>
+        </TransitionGroup>
+      </Box>
+
+      <Box
+        gap={1}
+        sx={{
+          display: "flex",
+          maxWidth: 500,
+          margin: "0 auto",
+          flexDirection: { xs: "column", sm: "row" },
+        }}
+      >
+        <Button
+          component={Link}
+          to="/stadium"
+          variant="contained"
+          color="primary"
+          sx={{ flex: 1 }}
         >
-          <Button variant="contained" onClick={handlePreviousQuote}>
-            <KeyboardDoubleArrowLeftIcon />
-          </Button>
-          <Button variant="contained" onClick={handleNextQuote}>
-            <KeyboardDoubleArrowRightIcon />
-          </Button>
-        </Box>
-        <Box
-          gap={1}
-          sx={{
-            display: "flex",
-            maxWidth: 500,
-            margin: "0 auto",
-            flexDirection: { xs: "column", sm: "row" },
-          }}
+          Move to stadium form page
+        </Button>
+        <Button
+          component={Link}
+          to="/match"
+          variant="contained"
+          color="primary"
+          sx={{ flex: 1 }}
         >
-          <Button
-            component={Link}
-            to="/stadium"
-            variant="contained"
-            color="primary"
-            sx={{ flex: 1 }}
-          >
-            Move to stadium form page
-          </Button>
-          <Button
-            component={Link}
-            to="/match"
-            variant="contained"
-            color="primary"
-            sx={{ flex: 1 }}
-          >
-            Move to match form page
-          </Button>
-        </Box>
-      </Container>
-    </Container>
+          Move to match form page
+        </Button>
+      </Box>
+    </>
   );
 };
 

@@ -10,12 +10,14 @@ declare module "@mui/material/styles" {
     interface Palette {
       custom: {
         cardBackground: string;
+        quotesColor: string;
       };
     }
   
     interface PaletteOptions {
       custom?: {
         cardBackground?: string;
+        quotesColor: string;
       };
     }
   }
@@ -33,6 +35,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                   },
                   custom: {
                     cardBackground: lightCardColor,
+                    quotesColor: 'teal'
                   },
               }
             : {
@@ -48,6 +51,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                   },
                   custom: {
                     cardBackground: darkCardColor,
+                    quotesColor: purple[200]
                   },
               }),
     },
