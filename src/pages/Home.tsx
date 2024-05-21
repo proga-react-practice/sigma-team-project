@@ -70,12 +70,24 @@ const HomePage = () => {
           width: "100%",
           marginBottom: 2,
           padding: 3,
-          backgroundImage: `url(${"./src/assets/field2.jpg"})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
           borderRadius: 2,
           boxShadow: theme.shadows[10],
           overflowX: "hidden",
+          "::before": {
+            content: '""',
+            position: "absolute",
+            opacity: "0.7",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundImage: `url(${"./src/assets/field2.jpg"})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            borderRadius: 2,
+            zIndex: -1,
+            filter: "blur(4px)",
+          },
         }}
       >
         <Container
@@ -90,20 +102,41 @@ const HomePage = () => {
             overflowX: "hidden",
           }}
         >
-          <Container sx={{ padding: 0, maxWidth: "100%" }}>
-            <Typography variant="h4" gutterBottom>
-              Welcome to sigma team website
-            </Typography>
-            <Box sx={{ maxWidth: 300, margin: "0 auto" }}>
+          <Container
+            sx={{
+              py: theme.spacing(10),
+              border: "2px solid",
+              height: "35vw",
+              width: "35vw",
+              minWidth: theme.spacing(52),
+              minHeight: theme.spacing(52),
+              maxHeight: "50%",
+              color: `${theme.palette.mode === "dark" ? "#fff" : "#000"}`,
+              borderRadius: "10%",
+              background: `${
+                theme.palette.mode === "dark"
+                  ? "linear-gradient(91.7deg, rgb(50, 25, 79) -4.3%, rgb(122, 101, 149) 101.8%)"
+                  : "radial-gradient(circle at 7.1% 15.6%, rgb(22, 160, 133) 0%, rgb(64, 240, 206) 100.3%)"
+              }`,
+            }}
+          >
+            <Box
+              sx={{
+                maxWidth: 300,
+                minWidth: 100,
+                margin: "0 auto",
+                "@media screen and (max-width: 768px)": {
+                  height: theme.spacing(40),
+                  width: theme.spacing(40),
+                },
+              }}
+            >
               <CardMedia
                 component="img"
                 image={sigmaLogo}
                 alt="Sigma Team Logo"
               />
             </Box>
-            <Typography paragraph>
-              This is the main page. Enjoy using our website.
-            </Typography>
           </Container>
         </Container>
       </Box>
@@ -113,7 +146,7 @@ const HomePage = () => {
           position: "relative",
           height: "100%",
           marginBottom: 2,
-          color: theme.palette.custom.quotesColor
+          color: theme.palette.custom.quotesColor,
         }}
       >
         <TransitionGroup>
@@ -169,7 +202,7 @@ const HomePage = () => {
                   sx={{
                     margin: "0 auto",
                     textAlign: "center",
-                    width: '50%'
+                    width: "50%",
                   }}
                 >
                   {quotes[currentQuoteIndex].text}
@@ -177,7 +210,7 @@ const HomePage = () => {
                 <Box
                   sx={{
                     border: "1px solid",
-                    width: "60%",
+                    width: "50%",
                     margin: "0 auto",
                     mt: theme.spacing(13),
                     mb: theme.spacing(7),
@@ -243,7 +276,7 @@ const HomePage = () => {
           color="primary"
           sx={{ flex: 1 }}
         >
-          Move to stadium form page
+          Stadium Form Page
         </Button>
         <Button
           component={Link}
@@ -252,7 +285,7 @@ const HomePage = () => {
           color="primary"
           sx={{ flex: 1 }}
         >
-          Move to match form page
+          Match Form Page
         </Button>
       </Box>
     </>

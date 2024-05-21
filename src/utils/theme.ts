@@ -5,12 +5,17 @@ import {createTheme} from "@mui/material/styles";
 const darkCardColor = '#452c63';
 const lightCardColor = '#18453B';
 
+const logoLightColorBackground = 'radial-gradient(circle at 7.1% 15.6%, rgb(22, 160, 133) 0%, rgb(64, 240, 206) 100.3%)';
+const logoDarkColorBackground = 'linear-gradient(91.7deg, rgb(50, 25, 79) -4.3%, rgb(122, 101, 149) 101.8%)';
+
 
 declare module "@mui/material/styles" {
     interface Palette {
       custom: {
         cardBackground: string;
         quotesColor: string;
+        logoLightColorBackground: string;
+        logoDarkColorBackground: string;
       };
     }
   
@@ -18,6 +23,8 @@ declare module "@mui/material/styles" {
       custom?: {
         cardBackground?: string;
         quotesColor: string;
+        logoLightColorBackground: string;
+        logoDarkColorBackground: string;
       };
     }
   }
@@ -29,13 +36,18 @@ export const getDesignTokens = (mode: PaletteMode) => ({
             ? {
                   primary: teal,
                   divider: teal[200],
+                  background: {
+                    default: teal[100],
+                    paper: teal[100],
+                },
                   text: {
-                      primary: teal[200],
+                      primary: teal[900],
                       secondary: grey[500],
                   },
                   custom: {
                     cardBackground: lightCardColor,
-                    quotesColor: 'teal'
+                    quotesColor: 'teal',
+                    logoBackground: logoLightColorBackground
                   },
               }
             : {
@@ -51,7 +63,8 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                   },
                   custom: {
                     cardBackground: darkCardColor,
-                    quotesColor: purple[200]
+                    quotesColor: purple[200],
+                    logoBackground: logoDarkColorBackground
                   },
               }),
     },
