@@ -6,6 +6,7 @@ interface Block {
   secondTeam: string;
   tickets: string;
   stadium: string;
+  stadiumId: string | null;
 }
 
 interface FormContextProps {

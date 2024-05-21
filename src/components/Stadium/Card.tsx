@@ -18,6 +18,7 @@ import {CSS} from "@dnd-kit/utilities";
 import EditCardModal from "./EditCardModal";
 import {useStadiumCardContext} from "./StadiumCardContext";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import MatchModal from "../MatchInfoModal";
 
 export interface CardProps {
     stadiumName: string;
@@ -38,6 +39,7 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
     showMatchButton: showStadiumButton = false,
 }) => {
     const [editModalOpen, setEditModalOpen] = useState(false);
+    const [MatchModalOpen, setMatchModalOpen] = useState(false);
     const {removeCard} = useStadiumCardContext();
     const handleRemove = () => {
         removeCard(id);
@@ -51,6 +53,14 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
 
     const closeEditModal = () => {
         setEditModalOpen(false);
+    };
+
+    const openMatchModal = () => {
+        setMatchModalOpen(true);
+    };
+
+    const closeMatchModal = () => {
+        setMatchModalOpen(false);
     };
 
     const style = {
@@ -113,7 +123,7 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                         type="button"
                         size="small"
                         startIcon={<SportsSoccerIcon />}
-                        onClick={() => alert("Search button clicked")}
+                        onClick={openMatchModal}
                     >
                         Match
                     </Button>
@@ -147,6 +157,11 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                     onClick: () => handleRemove(),
                 }}
                 id={id}
+            />
+            <MatchModal
+                open={MatchModalOpen}
+                onClose={closeMatchModal}
+                stadiumId={id}
             />
         </MuiCard>
     );

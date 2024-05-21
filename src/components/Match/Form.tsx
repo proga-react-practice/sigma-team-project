@@ -26,15 +26,19 @@ const Form: React.FC = () => {
     secondTeam: string;
     numberOfTickets: number;
     stadium: string;
+    stadiumId:string
   };
 
   const onSubmit = (data: FormValues) => {
+    const selectedStadium = cards.find((card) => card.stadiumName === data.stadium);
+    const stadiumId = selectedStadium ? selectedStadium.id : null;
     addBlock({
       id: Date.now(),
       firstTeam: data.firstTeam,
       secondTeam: data.secondTeam,
       tickets: data.numberOfTickets.toString(),
       stadium: data.stadium,
+      stadiumId: stadiumId, 
     });
     reset();
     setValue('stadium', '');
