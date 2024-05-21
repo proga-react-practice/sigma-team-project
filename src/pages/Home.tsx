@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import HomePreloader from "../components/HomePreloader";
 
 const quotes = [
   {
@@ -63,6 +64,7 @@ const HomePage = () => {
 
   return (
     <>
+    <HomePreloader />
       <Box
         sx={{
           position: "relative",
