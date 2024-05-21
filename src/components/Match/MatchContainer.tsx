@@ -1,13 +1,16 @@
-
-import Container from "./Container"
-import { FormProvider } from "./FormContext"
+import Container from "./Container";
+import { FormProvider } from "./FormContext";
+import { theme } from "../../utils/theme";
+import { ThemeProvider } from "@mui/material";
 
 const MatchContainer = () => {
   return (
-    <FormProvider>
-      <Container />
-    </FormProvider>
-  )
-}
+    <ThemeProvider theme={theme}>
+      <FormProvider>
+        <Container />
+      </FormProvider>
+    </ThemeProvider>
+  );
+};
 
-export default MatchContainer
+export default MatchContainer;

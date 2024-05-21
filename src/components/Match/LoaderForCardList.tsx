@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { theme } from '../../utils/theme-2';
+import { theme } from '../../utils/theme';
 
 const LoaderForCardList: React.FC = () => {
   return (
