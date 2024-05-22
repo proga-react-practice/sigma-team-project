@@ -25,5 +25,14 @@
         font-size: 26px;
         font-weight: 800;
         overflow: hidden;
-        color: #fff;
+        color: #fff;     
 }
+
+@media screen and (max-width: 768px) {
+    .preloader .texts-container {
+        height: 40px;
+        width: 300px;
+        font-size: 15px;
+        font-weight: 800;   
+}
+  }
