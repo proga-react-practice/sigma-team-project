@@ -1,30 +1,50 @@
-# React + TypeScript + Vite
+# Sigma Team Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+⚽This project helps to add and track football events based on stadiums and matches⚽
 
-Currently, two official plugins are available:
+-   [Installation/Usage](#installationusage)
+-   [How does it work?](#how-does-it-work)
+-   [What can I do with stadium and match cards?](#what-can-i-do-with-stadium-and-match-cards🤔)
+-   [Tips](#tips👇)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation/Usage
 
-## Expanding the ESLint configuration
+1. Clone the repository:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+ git clone https://github.com/proga-react-practice/sigma-team-project.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Install dependencies:
+
+```bash
+ npm install
+```
+
+3. To run the project, use the following command:
+
+```bash
+npm start
+```
+
+## How does it work?
+
+1. First, you need to create a stadium with a name, city, and capacity. 🏟️🏟️🏟️
+2. Second, you need to create a match between two teams, the number of tickets, and select a stadium from the available options. 🥅🥅🥅
+3. 🎉🎉🎉 Congratulations, you have created a football event 🎉🎉🎉
+4. You can view all available stadiums, filter by various criteria, and view the matches that take place at each stadium. 🔍🔍🔍
+5. You can create multiple stadiums and matches. 👌👌👌
+
+## What can I do with stadium and match cards?🤔
+
+-   Add
+-   Delete
+-   Edit
+-   Reorder
+
+## Tips👇
+
+-   Name of each stadium should be unique, pay attention to this when creating new stadiums
+-   You cannot select more tickets for match than stadium capacity
+-   You can update your data, so you may see a warning about outdated information, don't worry, just update the card
+-   No limit on adding cards.
