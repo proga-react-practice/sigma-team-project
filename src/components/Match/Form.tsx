@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useFormContext } from "./FormContext";
 import FormButton from "./FormButton";
+import { useStadiumCardContext } from '../Stadium/StadiumCardContext';
 
 const Form: React.FC = () => {
   const { addBlock } = useFormContext();
@@ -25,21 +26,26 @@ const Form: React.FC = () => {
     formState: { errors },
     watch,
   } = useForm<FormValues>();
-
+  const {cards} = useStadiumCardContext();
+  
   type FormValues = {
     firstTeam: string;
     secondTeam: string;
     numberOfTickets: number;
     stadium: string;
+    stadiumId:string
   };
 
   const onSubmit = (data: FormValues) => {
+    const selectedStadium = cards.find((card) => card.stadiumName === data.stadium);
+    const stadiumId = selectedStadium ? selectedStadium.id : null;
     addBlock({
       id: Date.now(),
       firstTeam: data.firstTeam,
       secondTeam: data.secondTeam,
       tickets: data.numberOfTickets.toString(),
       stadium: data.stadium,
+      stadiumId: stadiumId, 
     });
     reset();
     setValue("stadium", "");
@@ -172,16 +178,19 @@ const Form: React.FC = () => {
             variant="outlined"
             type="number"
             placeholder="Enter the quantity of tickets..."
-            {...register("numberOfTickets", {
-              required: { value: true, message: "Input cannot be empty!" },
-              max: {
-                value: 300000,
-                message: "Maximum number of tickets is 300000!",
+
+            {...register('numberOfTickets', {
+              required: { value: true, message: 'Input cannot be empty!' },
+              validate: { positiveNumber: (value) => value >= 0 || 'Value must be a positive number!',
+              stadiumCapacity: (value) => {
+                if (stadiumValue === '') {
+                  return true;
+                }
+                const selectedStadium = cards.find((card) => card.stadiumName === stadiumValue);
+                const capacity = selectedStadium ? parseInt(selectedStadium.capacity) : 0;
+                return value <= capacity || `Number of tickets exceeds stadium capacity (${capacity})`;
               },
-              validate: {
-                positiveNumber: (value) =>
-                  value >= 0 || "Value must be a positive number!",
-              },
+               },
             })}
             value={numberOfTicketsValue || ""}
             onChange={(e) =>
@@ -226,8 +235,11 @@ const Form: React.FC = () => {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value="Parc des Princes">Parc des Princes</MenuItem>
-            <MenuItem value="Camp Nou">Camp Nou</MenuItem>
+            {cards.map((card) => (
+                <MenuItem key={card.id} value={card.stadiumName}>
+                    {card.stadiumName}
+                </MenuItem>
+            ))}
           </TextField>
         </Box>
         <FormHelperText error={!!errors.stadium}>

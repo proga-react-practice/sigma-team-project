@@ -28,7 +28,7 @@ export const StadiumCardProvider: React.FC<{children: React.ReactNode}> = ({
     const [cards, setCards] = useState<CardProps[]>([]);
 
     const addCard = (card: CardProps) => {
-        setCards((prevCards) => [...prevCards, card]);
+        setCards((prevCards) => [card, ...prevCards]);
     };
 
     const removeCard = (id: string) => {

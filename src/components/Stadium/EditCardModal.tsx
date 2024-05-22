@@ -24,6 +24,7 @@ import {
 } from "../../utils/validationPatterns";
 import {theme} from "../../utils/theme";
 import {useStadiumCardContext} from "./StadiumCardContext";
+import {fieldTypeOptions} from "../../utils/fieldTypeOptions";
 
 type StadiumFormValues = {
     stadiumName: string;
@@ -39,12 +40,6 @@ interface EditCardModalProps {
     id: string;
 }
 
-const fieldTypeOptions = [
-    {label: "Natural", value: "natural"},
-    {label: "Synthetic", value: "synthetic"},
-    {label: "Mixed", value: "mixed"},
-];
-
 const EditCardModal: React.FC<EditCardModalProps> = ({
     open,
     onClose,
@@ -58,6 +53,8 @@ const EditCardModal: React.FC<EditCardModalProps> = ({
         reset,
         setValue,
         clearErrors,
+        setError,
+        setFocus,
         formState: {errors, isValid},
     } = useForm<StadiumFormValues>({
         defaultValues: {
@@ -68,20 +65,30 @@ const EditCardModal: React.FC<EditCardModalProps> = ({
         },
         mode: "onChange",
     });
-    const {updateCard, removeCard} = useStadiumCardContext();
+    const {cards, updateCard, removeCard} = useStadiumCardContext();
     const onSubmit: SubmitHandler<StadiumFormValues> = (data) => {
         if (isValid) {
-            const updatedCard: CardProps = {
-                stadiumName: data.stadiumName,
-                city: data.city,
-                capacity: data.capacity,
-                fieldType: data.fieldType,
-                id,
-                onClick: removeCard,
-            };
+            const existedStadiumName = cards.find(
+                (item) => item.stadiumName === data.stadiumName
+            );
+            if (existedStadiumName) {
+                setError("stadiumName", {
+                    message: "Stadium with this name already exist",
+                });
+                setFocus("stadiumName");
+            } else {
+                const updatedCard: CardProps = {
+                    stadiumName: data.stadiumName,
+                    city: data.city,
+                    capacity: data.capacity,
+                    fieldType: data.fieldType,
+                    id,
+                    onClick: removeCard,
+                };
 
-            updateCard(updatedCard);
-            onClose();
+                updateCard(updatedCard);
+                onClose();
+            }
         }
     };
 

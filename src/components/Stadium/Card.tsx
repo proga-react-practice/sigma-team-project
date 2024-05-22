@@ -17,6 +17,8 @@ import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 import EditCardModal from "./EditCardModal";
 import {useStadiumCardContext} from "./StadiumCardContext";
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import MatchModal from "../MatchInfoModal";
 
 export interface CardProps {
     stadiumName: string;
@@ -25,6 +27,7 @@ export interface CardProps {
     fieldType: string;
     id: string;
     onClick: (id: string) => void;
+    showMatchButton?: boolean;
 }
 
 const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
@@ -33,8 +36,10 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
     capacity,
     fieldType,
     id,
+    showMatchButton: showStadiumButton = false,
 }) => {
     const [editModalOpen, setEditModalOpen] = useState(false);
+    const [MatchModalOpen, setMatchModalOpen] = useState(false);
     const {removeCard} = useStadiumCardContext();
     const handleRemove = () => {
         removeCard(id);
@@ -48,6 +53,14 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
 
     const closeEditModal = () => {
         setEditModalOpen(false);
+    };
+
+    const openMatchModal = () => {
+        setMatchModalOpen(true);
+    };
+
+    const closeMatchModal = () => {
+        setMatchModalOpen(false);
     };
 
     const style = {
@@ -86,9 +99,7 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                     <Typography variant="body1">Field - {fieldType}</Typography>
                 </Stack>
             </CardContent>
-            <CardActions
-                sx={{paddingTop: 0, marginX: 5, justifyContent: "flex-end"}}
-            >
+            <CardActions sx={{paddingTop: 0, justifyContent: "flex-end"}}>
                 <Button
                     variant="contained"
                     type="button"
@@ -99,6 +110,24 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                 >
                     Edit
                 </Button>
+                {showStadiumButton && (
+                    <Button
+                        sx={{
+                            backgroundColor: theme.palette.secondary.light,
+                            "&:hover": {
+                                backgroundColor: theme.palette.secondary.dark,
+                            },
+                            flex: 1,
+                        }}
+                        variant="contained"
+                        type="button"
+                        size="small"
+                        startIcon={<SportsSoccerIcon />}
+                        onClick={openMatchModal}
+                    >
+                        Match
+                    </Button>
+                )}
                 <Button
                     sx={{
                         backgroundColor: theme.palette.error.dark,
@@ -128,6 +157,11 @@ const Card: React.FC<CardProps & Omit<MuiCardProps, "onClick">> = ({
                     onClick: () => handleRemove(),
                 }}
                 id={id}
+            />
+            <MatchModal
+                open={MatchModalOpen}
+                onClose={closeMatchModal}
+                stadiumId={id}
             />
         </MuiCard>
     );
