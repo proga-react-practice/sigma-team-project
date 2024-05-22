@@ -15,6 +15,7 @@ import {
     HOME,
     STADIUM_ROUTE,
     MATCH_ROUTE,
+    ABOUT,
     STADIUM_SEARCH_ROUTE,
 } from "../router/pathConstants";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -34,6 +35,7 @@ const Header: React.FC = () => {
         {label: "Stadium", path: STADIUM_ROUTE},
         {label: "Match", path: MATCH_ROUTE},
         {label: "Stadium Search", path: STADIUM_SEARCH_ROUTE},
+        {label: "About", path: ABOUT},
     ];
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

@@ -14,7 +14,7 @@ const NotFound = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
-                    mt: {xs: 10, md: 20},
+                    mt: 20,
                 }}
             >
                 <Typography variant="h5" align="center">
