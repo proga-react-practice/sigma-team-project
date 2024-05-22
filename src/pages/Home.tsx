@@ -64,7 +64,7 @@ const HomePage = () => {
 
   return (
     <>
-    <HomePreloader />
+      <HomePreloader />
       <Box
         sx={{
           position: "relative",
@@ -73,7 +73,6 @@ const HomePage = () => {
           marginBottom: 2,
           padding: 3,
           borderRadius: 2,
-          boxShadow: theme.shadows[10],
           overflowX: "hidden",
           "::before": {
             content: '""',
@@ -142,6 +141,14 @@ const HomePage = () => {
           </Container>
         </Container>
       </Box>
+      <Box
+        sx={{
+          width: "100%",
+          border: `5px solid ${theme.palette.custom.quotesColor}`,
+          position: "absolute",
+          top: "104vh",
+        }}
+      ></Box>
 
       <Box
         sx={{
@@ -266,29 +273,87 @@ const HomePage = () => {
         gap={1}
         sx={{
           display: "flex",
-          maxWidth: 500,
+          width: theme.spacing(80),
           margin: "0 auto",
           flexDirection: { xs: "column", sm: "row" },
+          justifyContent: 'space-between',
+          "@media screen and (max-width: 768px)": {
+            width: theme.spacing(40),
+          },
         }}
       >
-        <Button
-          component={Link}
-          to="/stadium"
-          variant="contained"
-          color="primary"
-          sx={{ flex: 1 }}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: theme.spacing(40),
+            mt: theme.spacing(2)
+
+          }}
         >
-          Stadium Form Page
-        </Button>
+          <Box
+            sx={{
+              backgroundImage: `url(${"./src/assets/friendship_1.png"})`,
+              height: theme.spacing(12),
+              width: theme.spacing(12),
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              margin: "0 auto",
+              border: `3px solid black`,
+              borderRadius: '50%',
+              mb: theme.spacing(1),
+              "@media screen and (max-width: 768px)": {
+                mt: theme.spacing(2),
+                display: 'none'
+              },
+            }}
+          ></Box>
+          <Button
+            component={Link}
+            to="/stadium"
+            variant="contained"
+            color="primary"
+            sx={{ flex: 1, textAlign: 'center'}}
+          >
+            Match Form Page
+          </Button>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: theme.spacing(40),
+            mt: theme.spacing(2),
+          }}
+        >
+          <Box
+            sx={{
+              backgroundImage: `url(${"./src/assets/stadium_1.png"})`,
+              height: theme.spacing(12),
+              width: theme.spacing(12),
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              margin: "0 auto",
+              border: `3px solid black`,
+              borderRadius: '50%',
+              mb: theme.spacing(1),
+              "@media screen and (max-width: 768px)": {
+                mt: theme.spacing(2),
+                display: 'none'
+              },
+            }}
+          ></Box>
         <Button
           component={Link}
           to="/match"
           variant="contained"
           color="primary"
-          sx={{ flex: 1 }}
+          sx={{ flex: 1, textAlign: 'center' }}
         >
-          Match Form Page
+          Stadium Form Page
         </Button>
+        </Box>
       </Box>
     </>
   );
