@@ -10,6 +10,7 @@ const Layout: React.FC = () => {
                 justifyContent: "space-evenly",
                 flexWrap: "wrap",
                 flexDirection: {xs: "column", sm: "row"},
+                overflow: "hidden",
             }}
             mt={10}
         >
