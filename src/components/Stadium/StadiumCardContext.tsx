@@ -19,6 +19,7 @@ const StadiumCardContext = createContext<StadiumCardContextType>({
     dndCard: () => {},
 });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useStadiumCardContext = () => useContext(StadiumCardContext);
 
 export const StadiumCardProvider: React.FC<{children: React.ReactNode}> = ({

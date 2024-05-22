@@ -11,7 +11,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import sigmaLogoFaviconBlack from "/sigma-team-favicon-black.svg";
 import sigmaLogoFaviconWhite from "/sigma-team-favicon-white.svg";
-import {HOME, STADIUM_ROUTE, MATCH_ROUTE} from "../router/pathConstants";
+import {HOME, STADIUM_ROUTE, MATCH_ROUTE, ABOUT} from "../router/pathConstants";
 import MenuIcon from "@mui/icons-material/Menu";
 import ColorModeSwitch from "./ColorModeSwitch";
 import {useTheme} from "@mui/material/styles";
@@ -28,6 +28,7 @@ const Header: React.FC = () => {
         {label: "Home", path: HOME},
         {label: "Stadium", path: STADIUM_ROUTE},
         {label: "Match", path: MATCH_ROUTE},
+        {label: "About", path: ABOUT},
     ];
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
