@@ -32,7 +32,7 @@ import {useTheme} from "@mui/material/styles";
 
 export const StadiumSearch = () => {
     const theme = useTheme();
-    const {cards, dndCard} = useStadiumCardContext();
+    const {cards, dndCard, deletingCardId} = useStadiumCardContext();
     const maxCapacity = Math.max(
         ...cards.map((card) => parseInt(card.capacity, 10))
     );
@@ -220,7 +220,13 @@ export const StadiumSearch = () => {
                                 >
                                     <SortableContext items={filteredCards}>
                                         {filteredCards.map((card) => (
-                                            <Grid key={card.id} item xs={0.98}>
+                                            <Grid key={card.id} item xs={0.98}
+                                                    sx={{
+                                                        opacity: deletingCardId === card.id ? 0 : 1,
+                                                        transform: deletingCardId === card.id ? 'scale(0.9)' : 'scale(1)',
+                                                        transition: 'opacity 0.3s, transform 0.3s',
+                                                    }}
+                                            >
                                                 <Card
                                                     {...card}
                                                     showMatchButton={true}

@@ -69,8 +69,11 @@ const EditCardModal: React.FC<EditCardModalProps> = ({
     const onSubmit: SubmitHandler<StadiumFormValues> = (data) => {
         if (isValid) {
             const existedStadiumName = cards.find(
-                (item) => item.stadiumName === data.stadiumName
-            );
+                (item) =>
+                  item.stadiumName.replace(/\s/g, '') ===
+                    data.stadiumName.replace(/\s/g, '') && item.id !== id
+              );
+            
             if (existedStadiumName) {
                 setError("stadiumName", {
                     message: "Stadium with this name already exist",
