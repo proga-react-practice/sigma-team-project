@@ -3,7 +3,6 @@ import { Modal, Box, Typography } from "@mui/material";
 import { useFormContext } from "./Match/FormContext";
 import Card from "./Match/Card";
 
-
 interface MatchModalProps {
   open: boolean;
   onClose: () => void;
@@ -21,7 +20,10 @@ const MatchModal: React.FC<MatchModalProps> = ({ open, onClose }) => {
   } = useFormContext();
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal
+      open={open}
+      onClose={onClose}
+    >
       <Box
         sx={{
           position: "absolute",
@@ -33,13 +35,14 @@ const MatchModal: React.FC<MatchModalProps> = ({ open, onClose }) => {
           p: 4,
           maxHeight: "80vh",
           overflowY: "auto",
+          width: "30%",
         }}
       >
         <Typography variant="h6" component="h2">
           Match Cards
         </Typography>
         {blocks.map((block) => (
-          <Box key={block.id} sx={{ mt: 2 }}>
+          <Box key={block.id} sx={{ mt: 2, maxWidth: "100%" }}>
             <Card
               block={block}
               editMode={editMode ?? null}
