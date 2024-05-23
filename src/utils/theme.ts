@@ -1,24 +1,26 @@
 import {PaletteMode} from "@mui/material";
-import { grey, purple, teal} from "@mui/material/colors";
+import {purple, teal} from "@mui/material/colors";
 import {createTheme} from "@mui/material/styles";
 
-const darkCardColor = '#452c63';
-const lightCardColor = '#18453B';
-
+const darkCardColor = "#452c63";
+const lightCardColor = "#18453B";
+const darkContrastText = '#00221c'
 
 declare module "@mui/material/styles" {
     interface Palette {
-      custom: {
-        cardBackground: string;
-      };
+        custom: {
+            cardBackground: string;
+            darkContrastText: string;
+        };
     }
-  
+
     interface PaletteOptions {
-      custom?: {
-        cardBackground?: string;
-      };
+        custom?: {
+            cardBackground?: string;
+            darkContrastText?: string;
+        };
     }
-  }
+}
 
 export const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
@@ -28,11 +30,12 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                   primary: teal,
                   divider: teal[200],
                   text: {
-                      primary: teal[200],
-                      secondary: grey[500],
+                      primary: teal[900],
+                      secondary: teal[200],
                   },
                   custom: {
-                    cardBackground: lightCardColor,
+                      cardBackground: lightCardColor,
+                      darkContrastText: darkContrastText
                   },
               }
             : {
@@ -43,11 +46,11 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                       paper: purple[900],
                   },
                   text: {
-                      primary: purple[200],
-                      secondary: grey[500],
+                      primary: purple[50],
+                      secondary: purple[50],
                   },
                   custom: {
-                    cardBackground: darkCardColor,
+                      cardBackground: darkCardColor,
                   },
               }),
     },
@@ -58,7 +61,10 @@ const theme = createTheme({
         MuiInputLabel: {
             styleOverrides: {
                 root: ({theme}) => ({
-                    color: theme.palette.primary.main,
+                    color: theme.palette.text.primary,
+                    "&.Mui-focused": {
+                        color: theme.palette.text.primary,
+                    },
                 }),
             },
         },
@@ -66,7 +72,12 @@ const theme = createTheme({
             styleOverrides: {
                 root: ({theme}) => ({
                     width: "100%",
-                    backgroundColor: theme.palette.background.default,
+
+                    "& input:-webkit-autofill": {
+                        WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.default} inset`,
+                        WebkitTextFillColor: theme.palette.text.primary,
+                        caretColor: theme.palette.text.primary,
+                    },
                 }),
             },
         },

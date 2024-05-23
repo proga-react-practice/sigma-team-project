@@ -73,7 +73,7 @@ const Header: React.FC = () => {
                                 onClick={handleOpenNavMenu}
                                 color="inherit"
                             >
-                                <MenuIcon fontSize="large" />
+                                <MenuIcon fontSize="large" sx={{ color: theme.palette.custom.darkContrastText,}} />
                             </IconButton>
                             <Menu
                                 anchorEl={anchorElNav}
@@ -120,7 +120,7 @@ const Header: React.FC = () => {
                             variant="h6"
                             sx={{
                                 fontWeight: 700,
-                                color: theme.palette.text.primary,
+                                color: theme.palette.custom.darkContrastText,
                             }}
                         >
                             Team Sigma
@@ -138,7 +138,7 @@ const Header: React.FC = () => {
                                     key={page.label}
                                     sx={{
                                         my: 2,
-                                        color: theme.palette.text.primary,
+                                        color: theme.palette.custom.darkContrastText,
                                         display: "block",
                                     }}
                                 >

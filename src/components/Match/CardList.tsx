@@ -309,6 +309,7 @@ const CardList: React.FC = () => {
                                       fontSize: theme.spacing(4),
                                       fontFamily: "Platypi",
                                       fontWeight: 600,
+                                      color:theme.palette.text.secondary,
                                     }}
                                   >
                                     Match Info:
@@ -316,6 +317,7 @@ const CardList: React.FC = () => {
                                   <Typography
                                     sx={{
                                       marginTop: theme.spacing(2),
+                                      color:theme.palette.text.secondary,
                                     }}
                                   >
                                     {block.firstTeam} - {block.secondTeam}
@@ -323,6 +325,7 @@ const CardList: React.FC = () => {
                                   <Typography
                                     sx={{
                                       marginTop: theme.spacing(2),
+                                      color:theme.palette.text.secondary,
                                     }}
                                   >
                                     Number of tickets: {block.tickets}
@@ -330,6 +333,7 @@ const CardList: React.FC = () => {
                                   <Typography
                                     sx={{
                                       marginTop: theme.spacing(2),
+                                      color:theme.palette.text.secondary,
                                     }}
                                   >
                                     Field: {block.stadium}
@@ -346,6 +350,7 @@ const CardList: React.FC = () => {
                                       height: theme.spacing(5),
                                       width: theme.spacing(20),
                                       mb: theme.spacing(2),
+                                      color:theme.palette.text.secondary,
                                     }}
                                   >
                                     Edit
@@ -362,6 +367,7 @@ const CardList: React.FC = () => {
                                       height: theme.spacing(5),
                                       width: theme.spacing(20),
                                       mb: theme.spacing(4),
+                                      color:theme.palette.text.secondary,
                                     }}
                                   >
                                     Delete
