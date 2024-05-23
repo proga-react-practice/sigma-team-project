@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Typography, Grid } from "@mui/material";
+import { Button, Typography, Grid, TextField, Box, FormHelperText } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import EditableTextField from "./EditableTextField";
+import { useForm } from "react-hook-form";
 import { Block } from "./CardList";
 
 interface CardProps {
@@ -24,6 +24,21 @@ const Card: React.FC<CardProps> = ({
   handleDelete,
 }) => {
   const theme = useTheme();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Partial<Block>>({
+    defaultValues: editedBlock,
+  });
+
+  const onSubmit = () => {
+    handleSave(block.id);
+  };
+
+  const textFieldStyle = {
+    backgroundColor: theme.palette.custom.cardBackground,
+  };
 
   return (
     <Grid
@@ -50,7 +65,7 @@ const Card: React.FC<CardProps> = ({
       }}
     >
       {editMode === block.id ? (
-        <>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Typography
             sx={{
               marginTop: theme.spacing(3),
@@ -61,29 +76,134 @@ const Card: React.FC<CardProps> = ({
           >
             Editing Mode:
           </Typography>
-          <EditableTextField
-            value={editedBlock.firstTeam || ""}
-            label="First Team"
-            onChange={(value) => handleChange("firstTeam", value)}
-          />
-          <EditableTextField
-            value={editedBlock.secondTeam || ""}
-            label="Second Team"
-            onChange={(value) => handleChange("secondTeam", value)}
-          />
-          <EditableTextField
-            value={editedBlock.tickets || ""}
-            label="Number of Tickets"
-            onChange={(value) => handleChange("tickets", value)}
-          />
-          <EditableTextField
-            value={editedBlock.stadium || ""}
-            label="Stadium"
-            onChange={(value) => handleChange("stadium", value)}
-          />
+          <Box sx={{ marginTop: theme.spacing(3) }}>
+            <TextField
+              id="firstTeam"
+              label="First Team"
+              variant="outlined"
+              sx={{
+                ...textFieldStyle,
+              }}
+              InputProps={{
+                sx: textFieldStyle,
+              }}
+              {...register("firstTeam", {
+                required: "Input cannot be empty!",
+                minLength: {
+                  value: 5,
+                  message: "Minimum length is 5 characters!",
+                },
+                maxLength: {
+                  value: 30,
+                  message: "Maximum length is 30 characters!",
+                },
+                pattern: {
+                  value: /^[a-zA-Z\s]+$/,
+                  message: "Only letters and spaces are allowed!",
+                },
+              })}
+              error={!!errors.firstTeam}
+              onChange={(e) => handleChange("firstTeam", e.target.value)}
+              fullWidth
+            />
+            {errors.firstTeam && (
+              <FormHelperText error={!!errors.firstTeam} sx={{ color: theme.palette.error.main }}>
+                {errors.firstTeam.message}
+              </FormHelperText>
+            )}
+          </Box>
+          <Box sx={{ marginTop: theme.spacing(3) }}>
+            <TextField
+              id="secondTeam"
+              label="Second Team"
+              variant="outlined"
+              sx={{
+                ...textFieldStyle,
+              }}
+              InputProps={{
+                sx: textFieldStyle,
+              }}
+              {...register("secondTeam", {
+                required: "Input cannot be empty!",
+                minLength: {
+                  value: 5,
+                  message: "Minimum length is 5 characters!",
+                },
+                maxLength: {
+                  value: 30,
+                  message: "Maximum length is 30 characters!",
+                },
+                pattern: {
+                  value: /^[a-zA-Z\s]+$/,
+                  message: "Only letters and spaces are allowed!",
+                },
+              })}
+              error={!!errors.secondTeam}
+              onChange={(e) => handleChange("secondTeam", e.target.value)}
+              fullWidth
+            />
+            {errors.secondTeam && (
+              <FormHelperText error={!!errors.secondTeam} sx={{ color: theme.palette.error.main }}>
+                {errors.secondTeam.message}
+              </FormHelperText>
+            )}
+          </Box>
+          <Box sx={{ marginTop: theme.spacing(3) }}>
+            <TextField
+              id="tickets"
+              label="Number of Tickets"
+              variant="outlined"
+              type="number"
+              sx={{
+                ...textFieldStyle,
+              }}
+              InputProps={{
+                sx: textFieldStyle,
+              }}
+              {...register("tickets", {
+                required: "Input cannot be empty!",
+                min: {
+                  value: 0,
+                  message: "Value must be a positive number!",
+                },
+              })}
+              error={!!errors.tickets}
+              onChange={(e) => handleChange("tickets", e.target.value)}
+              fullWidth
+            />
+            {errors.tickets && (
+              <FormHelperText error={!!errors.tickets} sx={{ color: theme.palette.error.main }}>
+                {errors.tickets.message}
+              </FormHelperText>
+            )}
+          </Box>
+          <Box sx={{ marginTop: theme.spacing(3) }}>
+            <TextField
+              id="stadium"
+              label="Stadium"
+              variant="outlined"
+              sx={{
+                ...textFieldStyle,
+              }}
+              InputProps={{
+                sx: textFieldStyle,
+              }}
+              {...register("stadium", {
+                required: "Please, select an option!",
+              })}
+              error={!!errors.stadium}
+              onChange={(e) => handleChange("stadium", e.target.value)}
+              fullWidth
+            />
+            {errors.stadium && (
+              <FormHelperText error={!!errors.stadium} sx={{ color: theme.palette.error.main }}>
+                {errors.stadium.message}
+              </FormHelperText>
+            )}
+          </Box>
           <Button
+            type="submit"
             variant="outlined"
-            onClick={() => handleSave(block.id)}
             sx={{
               marginLeft: "auto",
               marginRight: "auto",
@@ -97,7 +217,7 @@ const Card: React.FC<CardProps> = ({
           >
             Save
           </Button>
-        </>
+        </form>
       ) : (
         <>
           <Typography
