@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Button, Typography, Box, Grid } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DropResult } from "react-beautiful-dnd";
-import EditableTextField from "./EditableTextField";
-import { useFormContext } from "./FormContext"; // Importing the context hook
+import { useFormContext } from "./FormContext";
+import Card from "./Card";
 
-const deleteAnimationClass = "delete-animation";
-
-interface Block {
+export interface Block {
   id: number;
   firstTeam: string;
   secondTeam: string;
   tickets: string;
   stadium: string;
 }
+
+const deleteAnimationClass = "delete-animation";
 
 const CardList: React.FC = () => {
   const theme = useTheme();
@@ -220,155 +220,15 @@ const CardList: React.FC = () => {
                               margin: "0 auto",
                             }}
                           >
-                            <Grid
-                              key={block.id}
-                              id={`card-${block.id}`}
-                              sx={{
-                                paddingLeft: theme.spacing(6),
-                                paddingRight: theme.spacing(6),
-                                display: "flex",
-                                flexDirection: "column",
-                                borderRadius: theme.spacing(6),
-                                width: "100%",
-                                boxShadow: 5,
-                                marginTop: theme.spacing(2),
-                                textAlign: "center",
-                                backgroundColor:
-                                  theme.palette.custom.cardBackground,
-                                transition: "transform 0.3s ease-in-out",
-                                "&.delete-animation": {
-                                  transform: "scale(0)",
-                                },
-                                "@media screen and (max-width: 426px)": {
-                                  width: "auto",
-                                },
-                              }}
-                            >
-                              {editMode === block.id ? (
-                                <>
-                                  <Typography
-                                    sx={{
-                                      marginTop: theme.spacing(3),
-                                      fontSize: theme.spacing(4),
-                                      fontFamily: "Platypi",
-                                      fontWeight: 600,
-                                    }}
-                                  >
-                                    Editing Mode:
-                                  </Typography>
-                                  <EditableTextField
-                                    value={editedBlock.firstTeam || ""}
-                                    label="First Team"
-                                    onChange={(value) =>
-                                      handleChange("firstTeam", value)
-                                    }
-                                  />
-                                  <EditableTextField
-                                    value={editedBlock.secondTeam || ""}
-                                    label="Second Team"
-                                    onChange={(value) =>
-                                      handleChange("secondTeam", value)
-                                    }
-                                  />
-                                  <EditableTextField
-                                    value={editedBlock.tickets || ""}
-                                    label="Number of Tickets"
-                                    onChange={(value) =>
-                                      handleChange("tickets", value)
-                                    }
-                                  />
-                                  <EditableTextField
-                                    value={editedBlock.stadium || ""}
-                                    label="Stadium"
-                                    onChange={(value) =>
-                                      handleChange("stadium", value)
-                                    }
-                                  />
-                                  <Button
-                                    variant="outlined"
-                                    onClick={() => handleSave(block.id)}
-                                    sx={{
-                                      marginLeft: "auto",
-                                      marginRight: "auto",
-                                      borderRadius: theme.spacing(1),
-                                      fontSize: theme.spacing(2.4),
-                                      marginTop: theme.spacing(4),
-                                      height: theme.spacing(5),
-                                      width: theme.spacing(20),
-                                      mb: theme.spacing(4),
-                                    }}
-                                  >
-                                    Save
-                                  </Button>
-                                </>
-                              ) : (
-                                <>
-                                  <Typography
-                                    sx={{
-                                      marginTop: theme.spacing(3),
-                                      fontSize: theme.spacing(4),
-                                      fontFamily: "Platypi",
-                                      fontWeight: 600,
-                                    }}
-                                  >
-                                    Match Info:
-                                  </Typography>
-                                  <Typography
-                                    sx={{
-                                      marginTop: theme.spacing(2),
-                                    }}
-                                  >
-                                    {block.firstTeam} - {block.secondTeam}
-                                  </Typography>
-                                  <Typography
-                                    sx={{
-                                      marginTop: theme.spacing(2),
-                                    }}
-                                  >
-                                    Number of tickets: {block.tickets}
-                                  </Typography>
-                                  <Typography
-                                    sx={{
-                                      marginTop: theme.spacing(2),
-                                    }}
-                                  >
-                                    Field: {block.stadium}
-                                  </Typography>
-                                  <Button
-                                    variant="outlined"
-                                    onClick={() => handleEdit(block.id, block)}
-                                    sx={{
-                                      marginLeft: "auto",
-                                      marginRight: "auto",
-                                      borderRadius: theme.spacing(1),
-                                      fontSize: theme.spacing(2.4),
-                                      marginTop: theme.spacing(4),
-                                      height: theme.spacing(5),
-                                      width: theme.spacing(20),
-                                      mb: theme.spacing(2),
-                                    }}
-                                  >
-                                    Edit
-                                  </Button>
-                                  <Button
-                                    variant="outlined"
-                                    onClick={() => handleDelete(block.id)}
-                                    sx={{
-                                      marginLeft: "auto",
-                                      marginRight: "auto",
-                                      borderRadius: theme.spacing(1),
-                                      fontSize: theme.spacing(2.4),
-                                      marginTop: theme.spacing(2),
-                                      height: theme.spacing(5),
-                                      width: theme.spacing(20),
-                                      mb: theme.spacing(4),
-                                    }}
-                                  >
-                                    Delete
-                                  </Button>
-                                </>
-                              )}
-                            </Grid>
+                            <Card
+                              block={block}
+                              editMode={editMode}
+                              editedBlock={editedBlock}
+                              handleChange={handleChange}
+                              handleSave={handleSave}
+                              handleEdit={handleEdit}
+                              handleDelete={handleDelete}
+                            />
                           </div>
                         )}
                       </Draggable>
