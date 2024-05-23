@@ -56,7 +56,7 @@ const Form: React.FC = () => {
     const onSubmit = (data: StadiumFormValues) => {
         if (isValid) {
             const existedStadiumName = cards.find(
-                (item) => item.stadiumName === data.stadiumName
+                (item) => item.stadiumName === data.stadiumName.replace(/\s/g, '')
             );
             if (existedStadiumName) {
                 setError("stadiumName", {
