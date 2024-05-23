@@ -87,7 +87,7 @@ const HomePage = () => {
             backgroundPosition: "center",
             borderRadius: 2,
             zIndex: -1,
-            filter: "blur(4px)",
+            // filter: "blur(4px)",
           },
         }}
       >
