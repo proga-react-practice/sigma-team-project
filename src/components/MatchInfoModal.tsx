@@ -3,7 +3,6 @@ import { Modal, Box, Typography, Stack } from "@mui/material";
 import { useFormContext } from "./Match/FormContext";
 import Card from "./Match/Card";
 import { theme } from "../utils/theme";
-import WarningIcon from "@mui/icons-material/Warning";
 
 interface MatchModalProps {
   open: boolean;

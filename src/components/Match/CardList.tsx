@@ -166,11 +166,12 @@ const CardList: React.FC = () => {
           <Box
             sx={{
               marginTop: theme.spacing(1.5),
-              maxHeight: "100%",
+              maxHeight: "70vh", // Set a maxHeight to make the container scrollable
+              overflowY: "auto", // Enable vertical scrolling
               padding: theme.spacing(5),
               borderRadius: theme.spacing(2),
               WebkitOverflowScrolling: "touch",
-              overflowX: "auto",
+              overflowX: "hidden",
               "&::-webkit-scrollbar": {
                 width: theme.spacing(2),
                 display: "none",
