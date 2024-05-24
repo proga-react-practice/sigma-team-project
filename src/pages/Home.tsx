@@ -8,11 +8,11 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import HomePreloader from "../components/HomePreloader";
-
+import Messi from "../assets/lionel-messi.jpg";
 const quotes = [
   {
     text: "«You have to fight to reach your dream. You have to sacrifice and work hard for it.»",
-    img: "src/assets/lionel-messi.jpg",
+    img: Messi,
     name: "Lionel Messi",
   },
   {
