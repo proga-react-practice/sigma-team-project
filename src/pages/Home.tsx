@@ -9,6 +9,14 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import HomePreloader from "../components/HomePreloader";
 import Messi from "../assets/lionel-messi.jpg";
+import Pirlo from "../assets/pirlo.jpg";
+import Lewandowski from "../assets/lewandowski.jpg";
+import Maradona from "../assets/maradona.jpg";
+import Nayman from "../assets/neymar.jpg"
+import Field from "../assets/field2.jpg";
+import Icon1 from "../assets/friendship_1.png";
+import Icon2 from "./src/assets/stadium_1.png";
+
 const quotes = [
   {
     text: "«You have to fight to reach your dream. You have to sacrifice and work hard for it.»",
@@ -17,22 +25,22 @@ const quotes = [
   },
   {
     text: "«Football is played with your head. Your feet are just the tools.»",
-    img: "src/assets/pirlo.jpg",
+    img: Pirlo,
     name: "Andrea Pirlo",
   },
   {
     text: "«In football, the greatest satisfaction is winning when they say you can’t.»",
-    img: "src/assets/lewandowski.jpg",
+    img: Lewandowski,
     name: "Robert Lewandowski",
   },
   {
     text: "«Football, like life, is filled with ups and downs, and the most important thing is to keep moving forward and never give up.»",
-    img: "src/assets/maradona.jpg",
+    img: Maradona,
     name: "Diego Maradona",
   },
   {
     text: "«There is no pressure when you're making a dream come true.»",
-    img: "src/assets/neymar.jpg",
+    img: Nayman,
     name: "Neymar Jr.",
   },
 ];
@@ -82,7 +90,7 @@ const HomePage = () => {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundImage: `url(${"./src/assets/field2.jpg"})`,
+            backgroundImage: `url(${Field})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: 2,
@@ -293,7 +301,7 @@ const HomePage = () => {
         >
           <Box
             sx={{
-              backgroundImage: `url(${"./src/assets/friendship_1.png"})`,
+              backgroundImage: `url(${Icon1})`,
               height: theme.spacing(12),
               width: theme.spacing(12),
               backgroundSize: "cover",
@@ -329,7 +337,7 @@ const HomePage = () => {
         >
           <Box
             sx={{
-              backgroundImage: `url(${"./src/assets/stadium_1.png"})`,
+              backgroundImage: `url(${Icon2})`,
               height: theme.spacing(12),
               width: theme.spacing(12),
               backgroundSize: "cover",
