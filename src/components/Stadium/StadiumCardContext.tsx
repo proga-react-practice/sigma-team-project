@@ -9,6 +9,7 @@ export interface StadiumCardContextType {
     removeCard: (id: string) => void;
     updateCard: (updatedCard: CardProps) => void;
     dndCard: (event: DragEndEvent) => void;
+    deletingCardId: string | null;
 }
 
 const StadiumCardContext = createContext<StadiumCardContextType>({
@@ -17,22 +18,28 @@ const StadiumCardContext = createContext<StadiumCardContextType>({
     removeCard: () => {},
     updateCard: () => {},
     dndCard: () => {},
+    deletingCardId: null, 
 });
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useStadiumCardContext = () => useContext(StadiumCardContext);
 
-export const StadiumCardProvider: React.FC<{children: React.ReactNode}> = ({
+export const StadiumCardProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
     const [cards, setCards] = useState<CardProps[]>([]);
+    const [deletingCardId, setDeletingCardId] = useState<string | null>(null);
 
     const addCard = (card: CardProps) => {
         setCards((prevCards) => [card, ...prevCards]);
     };
 
     const removeCard = (id: string) => {
-        setCards((prevCards) => prevCards.filter((card) => card.id !== id));
+        setDeletingCardId(id);
+        setTimeout(() => {
+            setCards((prevCards) => prevCards.filter((card) => card.id !== id));
+            setDeletingCardId(null);
+        }, 400);
     };
     const updateCard = (updatedCard: CardProps) => {
         setCards((prevCards) =>
@@ -55,7 +62,14 @@ export const StadiumCardProvider: React.FC<{children: React.ReactNode}> = ({
     }
     return (
         <StadiumCardContext.Provider
-            value={{cards, addCard, removeCard, updateCard, dndCard}}
+            value={{
+                cards,
+                addCard,
+                removeCard,
+                updateCard,
+                dndCard,
+                deletingCardId,
+            }}
         >
             {children}
         </StadiumCardContext.Provider>

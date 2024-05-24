@@ -14,7 +14,7 @@ const CustomLoader: React.FC = () => {
       }}
     >
       <video autoPlay loop muted style={{ width: '100%', height: '100%' }}>
-        <source src="src\assets\ballPreloader.mp4" type="video/mp4" />
+        <source src="src\assets\preloader.webm" type="video/mp4" />
       </video>
     </Box>
   );

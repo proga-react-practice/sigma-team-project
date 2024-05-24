@@ -10,6 +10,7 @@ import {
     Checkbox,
     FormGroup,
     Autocomplete,
+    Slide
 } from "@mui/material";
 import Header from "../components/Header";
 import Card from "../components/Stadium/Card";
@@ -32,7 +33,7 @@ import {useTheme} from "@mui/material/styles";
 
 export const StadiumSearch = () => {
     const theme = useTheme();
-    const {cards, dndCard} = useStadiumCardContext();
+    const {cards, dndCard, deletingCardId} = useStadiumCardContext();
     const maxCapacity = Math.max(
         ...cards.map((card) => parseInt(card.capacity, 10))
     );
@@ -96,9 +97,15 @@ export const StadiumSearch = () => {
                     justifyContent: "space-evenly",
                     flexWrap: "wrap",
                     flexDirection: {xs: "column", sm: "row"},
+                    overflow: "hidden",
                 }}
+<<<<<<< dev/fix-styles
                 mt={12}
             >
+=======
+                mt={10}
+            ><Slide direction="left" in={true} timeout={1000}>
+>>>>>>> main
                 <Box sx={{flex: "1", padding: {xs: 1, sm: 4}}}>
                     <Typography variant="h4">Stadium Search</Typography>
 
@@ -188,6 +195,8 @@ export const StadiumSearch = () => {
                         ))}
                     </FormGroup>
                 </Box>
+                </Slide>
+                <Slide direction="right" in={true} timeout={1000}>
                 <Box sx={{flex: "2", padding: {xs: 0, sm: 4}}}>
                     <Typography variant="h4">Stadiums</Typography>
                     <Container sx={{padding: 1}}>
@@ -221,7 +230,13 @@ export const StadiumSearch = () => {
                                 >
                                     <SortableContext items={filteredCards}>
                                         {filteredCards.map((card) => (
-                                            <Grid key={card.id} item xs={0.98}>
+                                            <Grid key={card.id} item xs={0.98}
+                                                    sx={{
+                                                        opacity: deletingCardId === card.id ? 0 : 1,
+                                                        transform: deletingCardId === card.id ? 'scale(0.9)' : 'scale(1)',
+                                                        transition: 'opacity 0.3s, transform 0.3s',
+                                                    }}
+                                            >
                                                 <Card
                                                     {...card}
                                                     showMatchButton={true}
@@ -238,6 +253,7 @@ export const StadiumSearch = () => {
                         )}
                     </Container>
                 </Box>
+                </Slide>
             </Box>
         </>
     );

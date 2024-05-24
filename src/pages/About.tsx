@@ -24,6 +24,8 @@ import {
 import Root from "./Root";
 import sigmaLogoBlack from "../assets/sigma-team-logo-black.svg";
 import sigmaLogoWhite from "../assets/sigma-team-logo-white.svg";
+import { motion } from "framer-motion";
+
 
 const About = () => {
     const theme = useTheme();
@@ -42,6 +44,11 @@ const About = () => {
     return (
         <>
             <Root />
+         <motion.div
+            initial={{ opacity: 0, y: -300 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+        >
             <Box sx={{mt: 15}}>
                 <Typography textAlign="center" variant="h4" gutterBottom>
                     Team Sigma Project
@@ -207,7 +214,8 @@ const About = () => {
                         </Box>
                     </Grid>
                 </Grid>
-            </Box>
+            </Box>\
+            </motion.div>
         </>
     );
 };

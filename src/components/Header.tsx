@@ -1,3 +1,5 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
     AppBar,
     Box,
@@ -6,36 +8,35 @@ import {
     Typography,
     IconButton,
     CardMedia,
-} from "@mui/material";
-import React from "react";
-import {Link} from "react-router-dom";
-import sigmaLogoFaviconBlack from "/sigma-team-favicon-black.svg";
-import sigmaLogoFaviconWhite from "/sigma-team-favicon-white.svg";
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useTheme } from '@mui/material/styles';
+import sigmaLogoFaviconBlack from '/sigma-team-favicon-black.svg';
+import sigmaLogoFaviconWhite from '/sigma-team-favicon-white.svg';
+import ColorModeSwitch from './ColorModeSwitch';
 import {
     HOME,
     STADIUM_ROUTE,
     MATCH_ROUTE,
     ABOUT,
     STADIUM_SEARCH_ROUTE,
-} from "../router/pathConstants";
-import MenuIcon from "@mui/icons-material/Menu";
-import ColorModeSwitch from "./ColorModeSwitch";
-import {useTheme} from "@mui/material/styles";
+} from '../router/pathConstants';
+
 const Header: React.FC = () => {
     const theme = useTheme();
     const sigmaLogoFavicon =
-        theme.palette.mode === "dark"
+        theme.palette.mode === 'dark'
             ? sigmaLogoFaviconWhite
             : sigmaLogoFaviconBlack;
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
     const pages = [
-        {label: "Home", path: HOME},
-        {label: "Stadium", path: STADIUM_ROUTE},
-        {label: "Match", path: MATCH_ROUTE},
-        {label: "Stadium Search", path: STADIUM_SEARCH_ROUTE},
-        {label: "About", path: ABOUT},
+        { label: 'Home', path: HOME },
+        { label: 'Stadium', path: STADIUM_ROUTE },
+        { label: 'Match', path: MATCH_ROUTE },
+        { label: 'Stadium Search', path: STADIUM_SEARCH_ROUTE },
+        { label: 'About', path: ABOUT },
     ];
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -48,24 +49,24 @@ const Header: React.FC = () => {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="absolute">
+            <AppBar position="absolute" sx={{zIndex: '998'}}>
                 <Toolbar
                     sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
                     }}
                 >
                     <Box
                         sx={{
-                            display: "flex",
-                            alignItems: "center",
+                            display: 'flex',
+                            alignItems: 'center',
                         }}
                     >
                         <Box
                             sx={{
                                 flexGrow: 1,
-                                display: {xs: "flex", md: "none"},
+                                display: { xs: 'flex', md: 'none' },
                             }}
                         >
                             <IconButton
@@ -78,18 +79,18 @@ const Header: React.FC = () => {
                             <Menu
                                 anchorEl={anchorElNav}
                                 anchorOrigin={{
-                                    vertical: "bottom",
-                                    horizontal: "left",
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
                                 }}
                                 keepMounted
                                 transformOrigin={{
-                                    vertical: "top",
-                                    horizontal: "left",
+                                    vertical: 'top',
+                                    horizontal: 'left',
                                 }}
                                 open={Boolean(anchorElNav)}
                                 onClose={handleCloseNavMenu}
                                 sx={{
-                                    display: {xs: "block", md: "none"},
+                                    display: { xs: 'block', md: 'none' },
                                 }}
                             >
                                 {pages.map((page) => (
@@ -100,8 +101,9 @@ const Header: React.FC = () => {
                                         sx={{
                                             my: 2,
                                             color: theme.palette.text.primary,
-                                            display: "block",
+                                            display: 'block',
                                         }}
+                                        onClick={handleCloseNavMenu}
                                     >
                                         {page.label}
                                     </IconButton>
@@ -110,7 +112,7 @@ const Header: React.FC = () => {
                         </Box>
                         <Box component={Link} to={HOME}>
                             <CardMedia
-                                sx={{maxHeight: "50px"}}
+                                sx={{ maxHeight: '50px' }}
                                 component="img"
                                 image={sigmaLogoFavicon}
                                 alt="Sigma Team Logo"
@@ -128,7 +130,7 @@ const Header: React.FC = () => {
                         <Box
                             ml={10}
                             sx={{
-                                display: {xs: "none", md: "flex"},
+                                display: { xs: 'none', md: 'flex' },
                             }}
                         >
                             {pages.map((page) => (
@@ -138,8 +140,13 @@ const Header: React.FC = () => {
                                     key={page.label}
                                     sx={{
                                         my: 2,
+<<<<<<< dev/fix-styles
                                         color: theme.palette.custom.darkContrastText,
                                         display: "block",
+=======
+                                        color: theme.palette.text.primary,
+                                        display: 'block',
+>>>>>>> main
                                     }}
                                 >
                                     {page.label}

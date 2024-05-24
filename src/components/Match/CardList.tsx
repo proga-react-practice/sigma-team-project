@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Button, Typography, Box, Grid } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DropResult } from "react-beautiful-dnd";
-import EditableTextField from "./EditableTextField";
-import { useFormContext } from "./FormContext"; // Importing the context hook
+import { useFormContext } from "./FormContext";
+import Card from "./Card";
 
-const deleteAnimationClass = "delete-animation";
-
-interface Block {
+export interface Block {
   id: number;
   firstTeam: string;
   secondTeam: string;
   tickets: string;
   stadium: string;
+  stadiumId: string | null;
 }
+
+const deleteAnimationClass = "delete-animation";
 
 const CardList: React.FC = () => {
   const theme = useTheme();
@@ -165,11 +166,12 @@ const CardList: React.FC = () => {
           <Box
             sx={{
               marginTop: theme.spacing(1.5),
-              maxHeight: "100%",
+              maxHeight: "70vh", // Set a maxHeight to make the container scrollable
+              overflowY: "auto", // Enable vertical scrolling
               padding: theme.spacing(5),
               borderRadius: theme.spacing(2),
               WebkitOverflowScrolling: "touch",
-              overflowX: "auto",
+              overflowX: "hidden",
               "&::-webkit-scrollbar": {
                 width: theme.spacing(2),
                 display: "none",
@@ -220,6 +222,7 @@ const CardList: React.FC = () => {
                               margin: "0 auto",
                             }}
                           >
+<<<<<<< dev/fix-styles
                             <Grid
                               key={block.id}
                               id={`card-${block.id}`}
@@ -375,6 +378,17 @@ const CardList: React.FC = () => {
                                 </>
                               )}
                             </Grid>
+=======
+                            <Card
+                              block={block}
+                              editMode={editMode}
+                              editedBlock={editedBlock}
+                              handleChange={handleChange}
+                              handleSave={handleSave}
+                              handleEdit={handleEdit}
+                              handleDelete={handleDelete}
+                            />
+>>>>>>> main
                           </div>
                         )}
                       </Draggable>
