@@ -1,8 +1,9 @@
 import React from "react";
-import { Button, Typography, Grid, TextField, Box, FormHelperText } from "@mui/material";
+import { Button, Typography, Grid, TextField, Box, FormHelperText, MenuItem } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import { Block } from "./CardList";
+import { useStadiumCardContext } from "../Stadium/StadiumCardContext";
 
 interface CardProps {
   block: Block;
@@ -24,12 +25,13 @@ const Card: React.FC<CardProps> = ({
   handleDelete,
 }) => {
   const theme = useTheme();
+  const {cards} = useStadiumCardContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Partial<Block>>({
-    defaultValues: editedBlock,
+    defaultValues: block
   });
 
   const onSubmit = () => {
@@ -166,6 +168,16 @@ const Card: React.FC<CardProps> = ({
                   value: 0,
                   message: "Value must be a positive number!",
                 },
+                validate: {stadiumCapacity: (value) => {
+                  const parsedValue = value !== undefined ? parseInt(value) : NaN;
+                    if (editedBlock.stadium === "") {
+                      return true;
+                    }
+                    const selectedStadium = cards.find((card) => card.stadiumName === editedBlock.stadium);
+                    const capacity = selectedStadium ? parseInt(selectedStadium.capacity) : 0;
+                    return parsedValue <= capacity || `Number of tickets exceeds stadium capacity (${capacity})`;
+                  },
+                },
               })}
               error={!!errors.tickets}
               onChange={(e) => handleChange("tickets", e.target.value)}
@@ -180,10 +192,12 @@ const Card: React.FC<CardProps> = ({
           <Box sx={{ marginTop: theme.spacing(3) }}>
             <TextField
               id="stadium"
+              select
               label="Stadium"
               variant="outlined"
               sx={{
                 ...textFieldStyle,
+                  textAlign: 'left'
               }}
               InputProps={{
                 sx: textFieldStyle,
@@ -192,9 +206,23 @@ const Card: React.FC<CardProps> = ({
                 required: "Please, select an option!",
               })}
               error={!!errors.stadium}
-              onChange={(e) => handleChange("stadium", e.target.value)}
+              onChange={(e) => {
+                handleChange("stadium", e.target.value);
+                const selectedStadium = cards.find((card) => card.stadiumName === e.target.value);
+                handleChange("stadiumId", selectedStadium ? selectedStadium.id.toString() : "");
+              }}
               fullWidth
-            />
+              defaultValue={block.stadium}
+            >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {cards.map((card) => (
+              <MenuItem key={card.id} value={card.stadiumName}>
+                {card.stadiumName}
+              </MenuItem>
+            ))}
+            </ TextField >
             {errors.stadium && (
               <FormHelperText error={!!errors.stadium} sx={{ color: theme.palette.error.main }}>
                 {errors.stadium.message}
