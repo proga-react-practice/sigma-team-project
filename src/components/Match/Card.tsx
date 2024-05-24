@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, Typography, Grid, TextField, Box, FormHelperText, MenuItem } from "@mui/material";
+import { Button, Typography, Grid, TextField, Box, FormHelperText, MenuItem, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import { Block } from "./CardList";
 import { useStadiumCardContext } from "../Stadium/StadiumCardContext";
+import WarningIcon from '@mui/icons-material/Warning';
 
 interface CardProps {
   block: Block;
@@ -41,7 +42,11 @@ const Card: React.FC<CardProps> = ({
   const textFieldStyle = {
     backgroundColor: theme.palette.custom.cardBackground,
   };
-
+  const selectedStadium = cards.find((card) => card.id === block.stadiumId);
+  const stadiumRemoved = !selectedStadium;
+  const stadiumNameChanged = selectedStadium && selectedStadium.stadiumName !== block.stadium;
+  const capacityReduced = selectedStadium && parseInt(selectedStadium.capacity) < parseInt(block.tickets);
+  const needToUpdateData = stadiumRemoved || stadiumNameChanged || capacityReduced;
   return (
     <Grid
       key={block.id}
@@ -267,6 +272,15 @@ const Card: React.FC<CardProps> = ({
           <Typography sx={{ marginTop: theme.spacing(2) }}>
             Field: {block.stadium}
           </Typography>
+          {needToUpdateData && (
+          <Stack direction="row" justifyContent='center' spacing={0.5}
+             sx={{color:theme.palette.warning.main}}>
+            <WarningIcon fontSize="small"/>
+          <Typography sx={{color:theme.palette.warning.main}}>
+               Please update information.
+            </Typography>
+            </Stack>
+          )}
           <Button
             variant="outlined"
             onClick={() => handleEdit(block.id, block)}
