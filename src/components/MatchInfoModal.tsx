@@ -1,15 +1,21 @@
 import React from "react";
-import { Modal, Box, Typography } from "@mui/material";
+import { Modal, Box, Typography, Stack } from "@mui/material";
 import { useFormContext } from "./Match/FormContext";
 import Card from "./Match/Card";
+import { theme } from "../utils/theme";
+import WarningIcon from "@mui/icons-material/Warning";
 
 interface MatchModalProps {
   open: boolean;
   onClose: () => void;
-  stadiumId: string
+  stadiumId: string;
 }
 
-const MatchModal: React.FC<MatchModalProps> = ({ open, onClose, stadiumId }) => {
+const MatchModal: React.FC<MatchModalProps> = ({
+  open,
+  onClose,
+  stadiumId,
+}) => {
   const {
     blocks,
     editMode,
@@ -19,12 +25,11 @@ const MatchModal: React.FC<MatchModalProps> = ({ open, onClose, stadiumId }) => 
     handleEdit,
     handleDelete,
   } = useFormContext();
-  const filteredBlocks = blocks.filter((block) => block.stadiumId === stadiumId);
+  const filteredBlocks = blocks.filter(
+    (block) => block.stadiumId === stadiumId
+  );
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-    >
+    <Modal open={open} onClose={onClose}>
       <Box
         sx={{
           position: "absolute",
@@ -42,6 +47,22 @@ const MatchModal: React.FC<MatchModalProps> = ({ open, onClose, stadiumId }) => 
         <Typography variant="h6" component="h2">
           Match Cards
         </Typography>
+        {blocks.length === 0 && (
+          <>
+          <Stack direction="row" justifyContent='center' spacing={0.5}
+             sx={{color:theme.palette.warning.main}}>
+               <WarningIcon fontSize="small" />
+            <Typography
+              sx={{
+                marginTop: theme.spacing(3),
+                color: theme.palette.warning.main,
+              }}
+            >
+              No match cards available! Please add a match card.
+            </Typography>
+            </Stack>
+          </>
+        )}
         {filteredBlocks.map((block) => (
           <Box key={block.id} sx={{ mt: 2, maxWidth: "100%" }}>
             <Card

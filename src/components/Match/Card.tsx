@@ -47,6 +47,7 @@ const Card: React.FC<CardProps> = ({
   const stadiumNameChanged = selectedStadium && selectedStadium.stadiumName !== block.stadium;
   const capacityReduced = selectedStadium && parseInt(selectedStadium.capacity) < parseInt(block.tickets);
   const needToUpdateData = stadiumRemoved || stadiumNameChanged || capacityReduced;
+
   return (
     <Grid
       key={block.id}
