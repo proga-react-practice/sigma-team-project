@@ -1,33 +1,35 @@
 import {PaletteMode} from "@mui/material";
-import { grey, purple, teal} from "@mui/material/colors";
+import {purple, teal} from "@mui/material/colors";
 import {createTheme} from "@mui/material/styles";
 
-const darkCardColor = '#452c63';
-const lightCardColor = '#18453B';
-
+const darkCardColor = "#452c63";
+const lightCardColor = "#18453B";
+const darkContrastText = '#00221c'
 const logoLightColorBackground = 'radial-gradient(circle at 7.1% 15.6%, rgb(22, 160, 133) 0%, rgb(64, 240, 206) 100.3%)';
 const logoDarkColorBackground = 'linear-gradient(91.7deg, rgb(50, 25, 79) -4.3%, rgb(122, 101, 149) 101.8%)';
 
-
 declare module "@mui/material/styles" {
     interface Palette {
-      custom: {
-        cardBackground: string;
-        quotesColor: string;
-        logoLightColorBackground: string;
-        logoDarkColorBackground: string;
-      };
+        custom: {
+            cardBackground: string;
+            darkContrastText: string;
+            quotesColor: string;
+            logoLightColorBackground: string;
+            logoDarkColorBackground: string;
+        };
     }
-  
+
     interface PaletteOptions {
-      custom?: {
-        cardBackground?: string;
-        quotesColor: string;
-        logoLightColorBackground: string;
-        logoDarkColorBackground: string;
-      };
+        custom?: {
+            cardBackground?: string;
+            darkContrastText?: string;
+            quotesColor: string;
+            logoLightColorBackground: string;
+            logoDarkColorBackground: string;
+        };
+
     }
-  }
+}
 
 export const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
@@ -42,12 +44,14 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 },
                   text: {
                       primary: teal[900],
-                      secondary: grey[500],
+                      secondary: teal[200],
                   },
                   custom: {
-                    cardBackground: lightCardColor,
-                    quotesColor: 'teal',
-                    logoBackground: logoLightColorBackground
+                      cardBackground: lightCardColor,
+                      darkContrastText: darkContrastText,
+                      quotesColor: 'teal',
+                      logoBackground: logoLightColorBackground
+
                   },
               }
             : {
@@ -58,8 +62,8 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                       paper: purple[900],
                   },
                   text: {
-                      primary: purple[200],
-                      secondary: grey[500],
+                      primary: purple[50],
+                      secondary: purple[50],
                   },
                   custom: {
                     cardBackground: darkCardColor,
@@ -75,7 +79,10 @@ const theme = createTheme({
         MuiInputLabel: {
             styleOverrides: {
                 root: ({theme}) => ({
-                    color: theme.palette.primary.main,
+                    color: theme.palette.text.primary,
+                    "&.Mui-focused": {
+                        color: theme.palette.text.primary,
+                    },
                 }),
             },
         },
@@ -83,7 +90,12 @@ const theme = createTheme({
             styleOverrides: {
                 root: ({theme}) => ({
                     width: "100%",
-                    backgroundColor: theme.palette.background.default,
+
+                    "& input:-webkit-autofill": {
+                        WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.default} inset`,
+                        WebkitTextFillColor: theme.palette.text.primary,
+                        caretColor: theme.palette.text.primary,
+                    },
                 }),
             },
         },

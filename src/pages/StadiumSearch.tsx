@@ -99,7 +99,8 @@ export const StadiumSearch = () => {
                     flexDirection: {xs: "column", sm: "row"},
                     overflow: "hidden",
                 }}
-                mt={10}
+
+                mt={12}
             ><Slide direction="left" in={true} timeout={1000}>
                 <Box sx={{flex: "1", padding: {xs: 1, sm: 4}}}>
                     <Typography variant="h4">Stadium Search</Typography>
@@ -150,7 +151,7 @@ export const StadiumSearch = () => {
                         sx={{
                             display: "flex",
                             justifyContent: "start",
-                            mt: 4,
+                            mt: 7,
                         }}
                     >
                         <Slider
@@ -161,7 +162,7 @@ export const StadiumSearch = () => {
                             max={maxCapacity}
                             sx={{
                                 maxWidth: "80%",
-                                ml: 2,
+                                ml: 3,
                                 "& .MuiSlider-valueLabel": {
                                     backgroundColor: theme.palette.primary.dark,
                                 },
@@ -193,6 +194,7 @@ export const StadiumSearch = () => {
                 </Slide>
                 <Slide direction="right" in={true} timeout={1000}>
                 <Box sx={{flex: "2", padding: {xs: 0, sm: 4}}}>
+                    <Typography variant="h4">Stadiums</Typography>
                     <Container sx={{padding: 1}}>
                         {filteredCards.length > 0 ? (
                             <DndContext

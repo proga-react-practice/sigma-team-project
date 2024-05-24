@@ -3,15 +3,15 @@ import { Box, Grid, Typography } from "@mui/material";
 import Form from "./Form";
 import CardList from "./CardList";
 import CustomLoader from "./CustomLoader";
-import { theme } from "../../utils/theme";
 import { useFormContext } from './FormContext';
+import {useTheme} from "@mui/material";
 
 
 
 const Container: React.FC = () => {
   const { blocks } = useFormContext();
   const [loading, setLoading] = useState(true);
-
+  const theme = useTheme();
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -56,7 +56,8 @@ const Container: React.FC = () => {
               },
               boxShadow: 5,
               height: 'fit-content',
-              border: '2px solid',
+              border: `2px solid ${theme.palette.custom.cardBackground}`,
+
             }}
           >
             <Typography

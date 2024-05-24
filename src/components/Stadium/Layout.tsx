@@ -12,7 +12,7 @@ const Layout: React.FC = () => {
                 flexDirection: {xs: "column", sm: "row"},
                 overflow: "hidden",
             }}
-            mt={10}
+            mt={12}
         >
             <Slide direction="left" in={true} timeout={1000}>
                 <Box sx={{flex: "1", padding: {xs: 0, sm: 4}}}>
