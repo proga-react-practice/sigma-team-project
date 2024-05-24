@@ -42,7 +42,12 @@ const Card: React.FC<CardProps> = ({
   const textFieldStyle = {
     backgroundColor: theme.palette.custom.cardBackground,
     color:theme.palette.text.secondary,
-    
+    "& .MuiInputLabel-root": {
+      color:theme.palette.text.secondary,
+      "&.Mui-focused": {
+        color:theme.palette.text.secondary,
+      },
+    }
   };
   const selectedStadium = cards.find((card) => card.id === block.stadiumId);
   const stadiumRemoved = !selectedStadium;
@@ -95,13 +100,7 @@ const Card: React.FC<CardProps> = ({
               variant="outlined"
               sx={{
                 ...textFieldStyle,
-                "& .MuiInputLabel-root": {
-                  color:theme.palette.text.secondary,
-                  "&.Mui-focused": {
-                    color:theme.palette.text.secondary,
-                  },
-     
-              }}}
+              }}
               InputProps={{
                 sx: textFieldStyle,
               }}
@@ -137,12 +136,7 @@ const Card: React.FC<CardProps> = ({
               variant="outlined"
               sx={{
                 ...textFieldStyle,
-                "& .MuiInputLabel-root": {
-                  color:theme.palette.text.secondary,
-                  "&.Mui-focused": {
-                    color:theme.palette.text.secondary,
-                  },
-              }}}
+                }}
               InputProps={{
                 sx: textFieldStyle,
               }}
@@ -179,13 +173,7 @@ const Card: React.FC<CardProps> = ({
               type="number"
               sx={{
                 ...textFieldStyle,
-                color:theme.palette.text.secondary,
-                "& .MuiInputLabel-root": {
-                  color:theme.palette.text.secondary,
-                  "&.Mui-focused": {
-                    color:theme.palette.text.secondary,
-                  },
-              }}}
+               }}
               InputProps={{
                 sx: textFieldStyle,
               }}
@@ -225,12 +213,7 @@ const Card: React.FC<CardProps> = ({
               sx={{
                 ...textFieldStyle,
                   textAlign: 'left',
-                  "& .MuiInputLabel-root": {
-                    color:theme.palette.text.secondary,
-                    "&.Mui-focused": {
-                      color:theme.palette.text.secondary,
-                    },
-              }}}
+              }}
               InputProps={{
                 sx: textFieldStyle,
               }}
