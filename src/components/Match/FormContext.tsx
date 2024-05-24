@@ -14,7 +14,15 @@ interface FormContextProps {
   addBlock: (block: Block) => void;
   removeBlock: (id: number) => void;
   updateBlock: (id: number, updatedBlock: Partial<Block>) => void;
+  editMode?: number | null;
+  editedBlock?: Partial<Block>;
+  handleChange?: (field: keyof Block, value: string) => void;
+  handleSave?: (id: number) => void;
+  handleEdit?: (id: number, block: Block) => void;
+  handleDelete?: (id: number) => void;
 }
+
+
 
 const FormContext = createContext<FormContextProps | undefined>(undefined);
 

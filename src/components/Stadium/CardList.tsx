@@ -14,7 +14,7 @@ import {useStadiumCardContext} from "./StadiumCardContext";
 import {useTheme} from "@mui/material/styles";
 const CardList: React.FC = () => {
     const theme = useTheme();
-    const {cards, dndCard} = useStadiumCardContext();
+    const { cards, dndCard, deletingCardId} = useStadiumCardContext();
     const sensors = useSensors(
         useSensor(MouseSensor, {
             activationConstraint: {
@@ -57,10 +57,21 @@ const CardList: React.FC = () => {
                         >
                             <SortableContext items={cards}>
                                 {cards.map((card) => (
-                                    <Grid key={card.id} item xs={0.98}>
+                                    <Grid
+                                        key={card.id}
+                                        item
+                                        xs={0.98}
+                                        sx={{
+                                            opacity: deletingCardId === card.id ? 0 : 1,
+                                            transform: deletingCardId === card.id ? 'scale(0.9)' : 'scale(1)',
+                                            transition: 'opacity 0.3s, transform 0.3s',
+                                            animation: 'fadeIn 0.3s forwards',
+                                        }}
+                                    >
                                         <Card {...card} />
                                     </Grid>
                                 ))}
+                                
                             </SortableContext>
                         </Grid>
                     </DndContext>

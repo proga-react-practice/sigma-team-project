@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useFormContext } from "./FormContext";
 import FormButton from "./FormButton";
-import { useStadiumCardContext } from '../Stadium/StadiumCardContext';
+import { useStadiumCardContext } from "../Stadium/StadiumCardContext";
 
 const Form: React.FC = () => {
   const { addBlock } = useFormContext();
@@ -26,18 +26,20 @@ const Form: React.FC = () => {
     formState: { errors },
     watch,
   } = useForm<FormValues>();
-  const {cards} = useStadiumCardContext();
-  
+  const { cards } = useStadiumCardContext();
+
   type FormValues = {
     firstTeam: string;
     secondTeam: string;
     numberOfTickets: number;
     stadium: string;
-    stadiumId:string
+    stadiumId: string;
   };
 
   const onSubmit = (data: FormValues) => {
-    const selectedStadium = cards.find((card) => card.stadiumName === data.stadium);
+    const selectedStadium = cards.find(
+      (card) => card.stadiumName === data.stadium
+    );
     const stadiumId = selectedStadium ? selectedStadium.id : null;
     addBlock({
       id: Date.now(),
@@ -45,7 +47,7 @@ const Form: React.FC = () => {
       secondTeam: data.secondTeam,
       tickets: data.numberOfTickets.toString(),
       stadium: data.stadium,
-      stadiumId: stadiumId, 
+      stadiumId: stadiumId,
     });
     reset();
     setValue("stadium", "");
@@ -118,9 +120,11 @@ const Form: React.FC = () => {
             }}
           />
         </Box>
-        <FormHelperText error={!!errors.firstTeam}>
-          {errors.firstTeam && errors.firstTeam.message}
-        </FormHelperText>
+        <Box sx={{ height: theme.spacing(3) }}>
+          <FormHelperText error={!!errors.firstTeam}>
+            {errors.firstTeam && errors.firstTeam.message}
+          </FormHelperText>
+        </Box>
 
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
           <GroupsIcon
@@ -160,9 +164,11 @@ const Form: React.FC = () => {
             }}
           />
         </Box>
-        <FormHelperText error={!!errors.secondTeam}>
-          {errors.secondTeam && errors.secondTeam.message}
-        </FormHelperText>
+        <Box sx={{ height: theme.spacing(3) }}>
+          <FormHelperText error={!!errors.secondTeam}>
+            {errors.secondTeam && errors.secondTeam.message}
+          </FormHelperText>
+        </Box>
 
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
           <ReceiptIcon
@@ -178,19 +184,27 @@ const Form: React.FC = () => {
             variant="outlined"
             type="number"
             placeholder="Enter the quantity of tickets..."
-
-            {...register('numberOfTickets', {
-              required: { value: true, message: 'Input cannot be empty!' },
-              validate: { positiveNumber: (value) => value >= 0 || 'Value must be a positive number!',
-              stadiumCapacity: (value) => {
-                if (stadiumValue === '') {
-                  return true;
-                }
-                const selectedStadium = cards.find((card) => card.stadiumName === stadiumValue);
-                const capacity = selectedStadium ? parseInt(selectedStadium.capacity) : 0;
-                return value <= capacity || `Number of tickets exceeds stadium capacity (${capacity})`;
+            {...register("numberOfTickets", {
+              required: { value: true, message: "Input cannot be empty!" },
+              validate: {
+                positiveNumber: (value) =>
+                  value >= 0 || "Value must be a positive number!",
+                stadiumCapacity: (value) => {
+                  if (stadiumValue === "") {
+                    return true;
+                  }
+                  const selectedStadium = cards.find(
+                    (card) => card.stadiumName === stadiumValue
+                  );
+                  const capacity = selectedStadium
+                    ? parseInt(selectedStadium.capacity)
+                    : 0;
+                  return (
+                    value <= capacity ||
+                    `Number of tickets exceeds stadium capacity (${capacity})`
+                  );
+                },
               },
-               },
             })}
             value={numberOfTicketsValue || ""}
             onChange={(e) =>
@@ -203,9 +217,11 @@ const Form: React.FC = () => {
             }}
           />
         </Box>
-        <FormHelperText error={!!errors.numberOfTickets}>
-          {errors.numberOfTickets && errors.numberOfTickets.message}
-        </FormHelperText>
+        <Box sx={{ height: theme.spacing(3) }}>
+          <FormHelperText error={!!errors.numberOfTickets}>
+            {errors.numberOfTickets && errors.numberOfTickets.message}
+          </FormHelperText>
+        </Box>
 
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
           <StadiumIcon
@@ -236,15 +252,17 @@ const Form: React.FC = () => {
               <em>None</em>
             </MenuItem>
             {cards.map((card) => (
-                <MenuItem key={card.id} value={card.stadiumName}>
-                    {card.stadiumName}
-                </MenuItem>
+              <MenuItem key={card.id} value={card.stadiumName}>
+                {card.stadiumName}
+              </MenuItem>
             ))}
           </TextField>
         </Box>
-        <FormHelperText error={!!errors.stadium}>
-          {errors.stadium && errors.stadium.message}
-        </FormHelperText>
+        <Box sx={{ height: theme.spacing(3) }}>
+          <FormHelperText error={!!errors.stadium}>
+            {errors.stadium && errors.stadium.message}
+          </FormHelperText>
+        </Box>
 
         <Grid
           container
@@ -258,11 +276,12 @@ const Form: React.FC = () => {
             onClick={handleReset}
             label="Reset"
           />
-          <FormButton type="submit"
+          <FormButton
+            type="submit"
             variant="contained"
             onClick={handleSubmit(onSubmit)}
             label="Add"
-            />
+          />
         </Grid>
       </Box>
     </motion.div>
