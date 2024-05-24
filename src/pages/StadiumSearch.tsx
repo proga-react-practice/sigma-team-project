@@ -10,6 +10,7 @@ import {
     Checkbox,
     FormGroup,
     Autocomplete,
+    Slide
 } from "@mui/material";
 import Header from "../components/Header";
 import Card from "../components/Stadium/Card";
@@ -96,9 +97,10 @@ export const StadiumSearch = () => {
                     justifyContent: "space-evenly",
                     flexWrap: "wrap",
                     flexDirection: {xs: "column", sm: "row"},
+                    overflow: "hidden",
                 }}
                 mt={10}
-            >
+            ><Slide direction="left" in={true} timeout={1000}>
                 <Box sx={{flex: "1", padding: {xs: 1, sm: 4}}}>
                     <Typography variant="h4">Stadium Search</Typography>
 
@@ -188,6 +190,8 @@ export const StadiumSearch = () => {
                         ))}
                     </FormGroup>
                 </Box>
+                </Slide>
+                <Slide direction="right" in={true} timeout={1000}>
                 <Box sx={{flex: "2", padding: {xs: 0, sm: 4}}}>
                     <Container sx={{padding: 1}}>
                         {filteredCards.length > 0 ? (
@@ -243,6 +247,7 @@ export const StadiumSearch = () => {
                         )}
                     </Container>
                 </Box>
+                </Slide>
             </Box>
         </>
     );
