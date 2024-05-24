@@ -48,8 +48,8 @@ const Header: React.FC = () => {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="absolute">
+        <Box sx={{flexGrow: 1}}>
+            <AppBar position="absolute" sx={{zIndex: '998'}}>
                 <Toolbar
                     sx={{
                         display: 'flex',
