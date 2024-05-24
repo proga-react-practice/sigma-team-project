@@ -15,7 +15,7 @@ import Maradona from "../assets/maradona.jpg";
 import Nayman from "../assets/neymar.jpg"
 import Field from "../assets/field2.jpg";
 import Icon1 from "../assets/friendship_1.png";
-import Icon2 from "./src/assets/stadium_1.png";
+import Icon2 from "../assets/stadium_1.png";
 
 const quotes = [
   {
