@@ -50,12 +50,11 @@ const MatchModal: React.FC<MatchModalProps> = ({
         {blocks.length === 0 && (
           <>
           <Stack direction="row" justifyContent='center' spacing={0.5}
-             sx={{color:theme.palette.warning.main}}>
-               <WarningIcon fontSize="small" />
+             sx={{color:theme.palette.text.secondary}}>
             <Typography
               sx={{
                 marginTop: theme.spacing(3),
-                color: theme.palette.warning.main,
+                color: theme.palette.text.secondary,
               }}
             >
               No match cards available! Please add a match card.
