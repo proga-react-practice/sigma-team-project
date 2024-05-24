@@ -274,12 +274,11 @@ const Card: React.FC<CardProps> = ({
             Field: {block.stadium}
           </Typography>
           {needToUpdateData && (
-          <Stack direction="row" justifyContent='center' spacing={0.5}
-             sx={{color:theme.palette.warning.main}}>
-            <WarningIcon fontSize="small"/>
-          <Typography sx={{color:theme.palette.warning.main}}>
-               Please update information.
-            </Typography>
+            <Stack direction="row" justifyContent="center" spacing={0.5} sx={{ color: theme.palette.warning.main }}>
+              <WarningIcon fontSize="small" />
+              <Typography sx={{ color: theme.palette.warning.main }}>
+                Please update {stadiumRemoved || stadiumNameChanged ? 'field information.' : 'tickets value.'}
+              </Typography>
             </Stack>
           )}
           <Button
