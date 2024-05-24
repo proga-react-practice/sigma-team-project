@@ -11,11 +11,10 @@ const logoDarkColorBackground = 'linear-gradient(91.7deg, rgb(50, 25, 79) -4.3%,
 declare module "@mui/material/styles" {
     interface Palette {
         custom: {
-            cardBackground: string;
-            darkContrastText: string;
+            cardBackground?: string;
+            darkContrastText?: string;
             quotesColor: string;
-            logoLightColorBackground: string;
-            logoDarkColorBackground: string;
+            logoBackground: string;
         };
     }
 
@@ -24,8 +23,7 @@ declare module "@mui/material/styles" {
             cardBackground?: string;
             darkContrastText?: string;
             quotesColor: string;
-            logoLightColorBackground: string;
-            logoDarkColorBackground: string;
+            logoBackground: string;
         };
 
     }
@@ -33,8 +31,8 @@ declare module "@mui/material/styles" {
 
 export const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
-        mode,
-        ...(mode === "light"
+        mode ,
+        ...(mode === "light" as PaletteMode
             ? {
                   primary: teal,
                   divider: teal[200],

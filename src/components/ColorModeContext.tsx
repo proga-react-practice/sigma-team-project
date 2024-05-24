@@ -1,6 +1,6 @@
 import * as React from "react";
 import {createContext, useContext, useMemo, useState, ReactNode} from "react";
-import {ThemeProvider, createTheme} from "@mui/material";
+import {PaletteMode, ThemeProvider, createTheme} from "@mui/material";
 import {getDesignTokens} from "../utils/theme";
 import {theme as baseTheme} from "../utils/theme";
 
@@ -24,7 +24,7 @@ export const useColorMode = () => {
 export const ColorModeProvider: React.FC<{children: ReactNode}> = ({
     children,
 }) => {
-    const [mode, setMode] = useState<"light" | "dark">("light");
+    const [mode, setMode] = useState<PaletteMode>("light");
 
     const colorMode = useMemo(
         () => ({
