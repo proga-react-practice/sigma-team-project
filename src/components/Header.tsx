@@ -140,13 +140,9 @@ const Header: React.FC = () => {
                                     key={page.label}
                                     sx={{
                                         my: 2,
-<<<<<<< dev/fix-styles
                                         color: theme.palette.custom.darkContrastText,
                                         display: "block",
-=======
-                                        color: theme.palette.text.primary,
-                                        display: 'block',
->>>>>>> main
+
                                     }}
                                 >
                                     {page.label}

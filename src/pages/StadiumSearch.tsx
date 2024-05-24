@@ -99,13 +99,9 @@ export const StadiumSearch = () => {
                     flexDirection: {xs: "column", sm: "row"},
                     overflow: "hidden",
                 }}
-<<<<<<< dev/fix-styles
+
                 mt={12}
-            >
-=======
-                mt={10}
             ><Slide direction="left" in={true} timeout={1000}>
->>>>>>> main
                 <Box sx={{flex: "1", padding: {xs: 1, sm: 4}}}>
                     <Typography variant="h4">Stadium Search</Typography>
 
