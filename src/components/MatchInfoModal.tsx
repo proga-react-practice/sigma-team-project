@@ -6,9 +6,10 @@ import Card from "./Match/Card";
 interface MatchModalProps {
   open: boolean;
   onClose: () => void;
+  stadiumId: string
 }
 
-const MatchModal: React.FC<MatchModalProps> = ({ open, onClose }) => {
+const MatchModal: React.FC<MatchModalProps> = ({ open, onClose, stadiumId }) => {
   const {
     blocks,
     editMode,
@@ -18,7 +19,7 @@ const MatchModal: React.FC<MatchModalProps> = ({ open, onClose }) => {
     handleEdit,
     handleDelete,
   } = useFormContext();
-
+  const filteredBlocks = blocks.filter((block) => block.stadiumId === stadiumId);
   return (
     <Modal
       open={open}
@@ -41,7 +42,7 @@ const MatchModal: React.FC<MatchModalProps> = ({ open, onClose }) => {
         <Typography variant="h6" component="h2">
           Match Cards
         </Typography>
-        {blocks.map((block) => (
+        {filteredBlocks.map((block) => (
           <Box key={block.id} sx={{ mt: 2, maxWidth: "100%" }}>
             <Card
               block={block}
