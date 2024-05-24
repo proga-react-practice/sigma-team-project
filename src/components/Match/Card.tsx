@@ -41,6 +41,8 @@ const Card: React.FC<CardProps> = ({
 
   const textFieldStyle = {
     backgroundColor: theme.palette.custom.cardBackground,
+    color:theme.palette.text.secondary,
+    
   };
   const selectedStadium = cards.find((card) => card.id === block.stadiumId);
   const stadiumRemoved = !selectedStadium;
@@ -63,6 +65,7 @@ const Card: React.FC<CardProps> = ({
         marginTop: theme.spacing(2),
         textAlign: "center",
         backgroundColor: theme.palette.custom.cardBackground,
+        color:theme.palette.text.secondary,
         transition: "transform 0.3s ease-in-out",
         "&.delete-animation": {
           transform: "scale(0)",
@@ -80,6 +83,7 @@ const Card: React.FC<CardProps> = ({
               fontSize: theme.spacing(4),
               fontFamily: "Platypi",
               fontWeight: 600,
+              color:theme.palette.text.secondary,
             }}
           >
             Editing Mode:
@@ -91,7 +95,13 @@ const Card: React.FC<CardProps> = ({
               variant="outlined"
               sx={{
                 ...textFieldStyle,
-              }}
+                "& .MuiInputLabel-root": {
+                  color:theme.palette.text.secondary,
+                  "&.Mui-focused": {
+                    color:theme.palette.text.secondary,
+                  },
+     
+              }}}
               InputProps={{
                 sx: textFieldStyle,
               }}
@@ -127,7 +137,12 @@ const Card: React.FC<CardProps> = ({
               variant="outlined"
               sx={{
                 ...textFieldStyle,
-              }}
+                "& .MuiInputLabel-root": {
+                  color:theme.palette.text.secondary,
+                  "&.Mui-focused": {
+                    color:theme.palette.text.secondary,
+                  },
+              }}}
               InputProps={{
                 sx: textFieldStyle,
               }}
@@ -164,7 +179,13 @@ const Card: React.FC<CardProps> = ({
               type="number"
               sx={{
                 ...textFieldStyle,
-              }}
+                color:theme.palette.text.secondary,
+                "& .MuiInputLabel-root": {
+                  color:theme.palette.text.secondary,
+                  "&.Mui-focused": {
+                    color:theme.palette.text.secondary,
+                  },
+              }}}
               InputProps={{
                 sx: textFieldStyle,
               }}
@@ -203,8 +224,13 @@ const Card: React.FC<CardProps> = ({
               variant="outlined"
               sx={{
                 ...textFieldStyle,
-                  textAlign: 'left'
-              }}
+                  textAlign: 'left',
+                  "& .MuiInputLabel-root": {
+                    color:theme.palette.text.secondary,
+                    "&.Mui-focused": {
+                      color:theme.palette.text.secondary,
+                    },
+              }}}
               InputProps={{
                 sx: textFieldStyle,
               }}
@@ -260,17 +286,18 @@ const Card: React.FC<CardProps> = ({
               fontSize: theme.spacing(4),
               fontFamily: "Platypi",
               fontWeight: 600,
+              color:theme.palette.text.secondary,
             }}
           >
             Match Info:
           </Typography>
-          <Typography sx={{ marginTop: theme.spacing(2) }}>
+          <Typography sx={{ marginTop: theme.spacing(2), color:theme.palette.text.secondary}}>
             {block.firstTeam} - {block.secondTeam}
           </Typography>
-          <Typography sx={{ marginTop: theme.spacing(2) }}>
+          <Typography sx={{ marginTop: theme.spacing(2), color:theme.palette.text.secondary}}>
             Number of tickets: {block.tickets}
           </Typography>
-          <Typography sx={{ marginTop: theme.spacing(2) }}>
+          <Typography sx={{ marginTop: theme.spacing(2),  color:theme.palette.text.secondary, }}>
             Field: {block.stadium}
           </Typography>
           {needToUpdateData && (
